@@ -1,0 +1,26 @@
+
+
+
+
+	~~ OBJETOS ~~
+	
+	- Boat:
+		Represents the conveyance the player controls. It may have some attributes such as speed, direction, position, moving methods, acceleration, deceleration,
+		brake, etc.
+	- Rivals:
+		Represents the environment where the race takes place. It may contain information about the present obstacles, such as logs and ducks position
+	- Obstacle (tree logs, ducks, etc):
+		Base class for the river obstacles. It may contain subclasses like "Log" and "Duck", each of them with specific attributes as position, speed, size, etc.
+	- Log:
+		Represents a floating log. It may have its own attributes such as position, speed of movement, size and moving methods (maybe following the river course)
+	- Duck:
+		Represents a duck getting in the player's way along the river. Similar to log, it may have position, speed, size and moving methods attributes
+	- Player:
+		Represents the player who interacts with the game thanks to the keyboard. It may have some attributes like name, score and boat-control methods
+	- Rivals:
+		This class represents the AI-controlled rival boats. The should have pretty similar to the player's ones, like speed, direction, position,
+		and methods to compete and dodge (avoid) obstacles
+	- Finish Line:
+		An Object that represents the race final location. It may have attributes like position and methods to verify if a boat have reached and
+		completely crossed it.
+		
