@@ -1,8 +1,18 @@
 ## ACLARACION
-  Esto es solo un doc incompleto, mas tarde pasaremos el oficial aunque no está lejos del definitivo
+Esto es solo un doc incompleto, mas tarde pasaremos el oficial aunque no está lejos del definitivo
 
 ## Functional requirements
 	//Functional requirements describe system capabilities (WHAT IT DOES)
+		-Levels
+		-Afterlife
+		-Power-ups
+		-Boats
+		-Rivals
+		-Obstacles
+		-Minigame
+
+
+
 		-Initialize the game
 		-Boat control -> As a player I want to be able to configure my own keybinds and I want the controls to be responsive with low latency, in order to have a more personalized and pleasant experience.
 		-Power ups -> As a player I want to have powerups that modify the way the game is played, in order to have as different an experience as possible in each run.
@@ -22,6 +32,10 @@
   		-Stun time -> As a player I would like to have a fair crash system that stuns me the right amount of time in order to have a challenging non-artifficial Miyazaki-From-	Software-Soulslike type difficulty.
 ## Non-Functional requirements
 	//Non-functional requirements describe system qualities (HOW IT DOES WHAT IT DOES)
+		-Java: As a developer I want to use Java language to devolp my game with its existing libraries (libGDX) to facilitate programming.
+		-Frame rate: As a developer I want the game running always at a constant 30fps to give a smooth gameplay and avoid penalties external to player skill.
+		-Low Latency Resonses: As a developer I want inputs to feel smooth, accurate and instant. 
+
 		-As a game developer I want the game to execute at a flawless 30 fps in order for the experience to be more pleasant park.
 		-Low latency and keybinds -> As a game developer I want the controls to be responsive and accurate for the player to have a smooth experience.
 		-Avoiding system errors -> As a developer I want the code to be roboust and free of errors in order to provide the player a satisfactory experience.
