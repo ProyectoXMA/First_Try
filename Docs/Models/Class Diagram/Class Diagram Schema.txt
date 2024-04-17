@@ -71,3 +71,11 @@
 		Class for the AI of the boats
 		Class that depends on the boat which is gonna be the different types of boats we are gonna have
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	STRUCTURE OF THE CLASS DIAGRAM:
+		CLASS OBJECT WITH ITS METHODS
+			SUBCLASSES WHICH ARE GONNA BE THE DIFFERENT TYPES OF BOATS
+		INTERFACE OBSTACLE WITH THE HEADERS
+			CLASSES FOR EVERY OBSTACLE THAT DEPENDS ON THE INTERFACE
+		CLASS FOR THE INICIALIZATION OF THE GAME
