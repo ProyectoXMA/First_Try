@@ -54,6 +54,20 @@
 
 
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+	Some suggests from Angel Escaño
+	
+	Apart from that features, we need to take care about every screen that we are going to load, cause we are gonna have a initial log screen, the game one, the menu, the end of the game as well and the minigame.
+	We need to control all areas of the game and that is gonna take much more classes than the casual object ones, well need as well events controllers who are gonna be the ones that detects the collisions with objects
+	and I think that it would be interesting to have the events all saved in another java class. Well need several classes to make sure everything is well structured and readable for everyone.
+	
+	The main classes should be:
+		Class boat and class obstacle
+		Class initgame and class event handlers
+		Class for the control of the game (movement and key detectors and stuff)
+		Class for the visual interfaces we are gonna handle
+		Class for the minigame
+		Class for the AI of the boats
+		Class that depends on the boat which is gonna be the different types of boats we are gonna have
 
