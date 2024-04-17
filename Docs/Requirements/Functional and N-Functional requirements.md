@@ -1,6 +1,3 @@
-## ACLARACION
-Esto es solo un doc incompleto, mas tarde pasaremos el oficial aunque no está lejos del definitivo
-
 ## Functional requirements
 	//Functional requirements describe system capabilities (WHAT IT DOES)
 		-Levels
@@ -10,6 +7,12 @@ Esto es solo un doc incompleto, mas tarde pasaremos el oficial aunque no está l
 		-Rivals
 		-Obstacles
 		-Minigame
+		-Main menu
+		-Level selection menu
+		-Boat selection menu
+		-Pause screen
+		-Loading screens
+		
 
 
 
