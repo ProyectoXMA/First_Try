@@ -24,3 +24,36 @@
 		An Object that represents the race final location. It may have attributes like position and methods to verify if a boat have reached and
 		completely crossed it.
 		
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+	17/04/2024
+	
+	BRAINSTORM (brief description of each class)
+
+	Game: Principal class that controls the game flow
+	Player: Represents the boat and its owner (player)
+	Boat: Class that models the characteristics and behaviours of the player's boat
+	AIBoat: Class that represents the AI-controlled boats
+	River: Represents the river and its features and properties (river flow, obstacles, etc.).
+	Obstacle: Base class for all the game obstacles
+		Duck: Subclass that represents ducks as obstacles.
+		Log: Subclass that represents logs as obstacles.
+		More obstacles if necessary...
+	FinishLine: Represents the finish line (where the race ends).
+	CollisionDetector: A class that handles the objects collisions in the game
+	Scoreboard: Class that saves and show the player overall score.
+	
+	The relation between classes could be:
+
+	Player tiene un Boat.
+	Game contiene múltiples instancias de Player, AIBoat, River, Obstacle, FinishLine y CollisionDetector.
+	CollisionDetector verifica las colisiones entre Boat/AIBoat y Obstacle/FinishLine.
+	Scoreboard está relacionado con Game para registrar y mostrar los puntajes.
+
+
+
+
+
+
