@@ -63,13 +63,14 @@
 	and I think that it would be interesting to have the events all saved in another java class. Well need several classes to make sure everything is well structured and readable for everyone.
 	
 	The main classes should be:
-		Class boat and class obstacle
+		Class boat and class obstacle (DONE)
 		Class initgame and class event handlers
 		Class for the control of the game (movement and key detectors and stuff)
 		Class for the visual interfaces we are gonna handle
 		Class for the minigame
 		Class for the AI of the boats
-		Class that depends on the boat which is gonna be the different types of boats we are gonna have
+		Class that depends on the boat which is gonna be the different types of boats we are gonna have (DONE)
+		Class for Power-ups (DONE)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 	
