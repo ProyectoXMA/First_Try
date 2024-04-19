@@ -38,6 +38,10 @@
 		As a player I want to have a menu screen before the race that allows to choose between boats.
 		-Scenery:
 		As a player I want to see a nice environment troughout the race.
+		-Visual efects
+		As a player I want simple animations after the trigger or certain events.
+		-Lanes
+		As a player I want boats to have their own lane to try staying in.
 
 
 ## Non-Functional requirements
