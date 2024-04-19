@@ -43,14 +43,12 @@
 ## Non-Functional requirements
 	//Non-functional requirements describe system qualities (HOW IT DOES WHAT IT DOES)
 		-Java:
-		As a developer I want to use Java language to devolp my game with its existing libraries (libGDX) to facilitate programming.
+		Using Java language to develop the game as it is a technical constraint imposed by the client.
 		-Frame rate:
 		As a developer I want the game running always at a constant 30fps to give a smooth gameplay and avoid penalties external to player skill.
 		-Low Latency Responses:
-		As a developer I want inputs to feel smooth, accurate and instant.
+		As a player I want inputs to feel smooth, accurate and instant.
 		-Compact:
-		As a developer I want to make the game as light as possible with efficient code.
+		As a user I want the executable files to be as ligth as possible (less than 1Gb).
 		-Resolution:
-		As a developer I want the game to be playable in most resolutions.
-		-Clean code:
-		As a developer I want the code to be organised in order to test different functionalities independently.
+		As a player I want the game to be playable in resolutions 1920x1080, 1280x720, 1024x768, 800x600.
