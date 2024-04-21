@@ -49,9 +49,9 @@
 		-Java:
 		Using Java language to develop the game as it is a technical constraint imposed by the client.
 		-Frame rate:
-		As a developer I want the game running always at a constant 30fps to give a smooth gameplay and avoid penalties external to player skill.
+		As a player I want the game running always at a constant 30fps to give a smooth gameplay and avoid penalties external to player skill.
 		-Low Latency Responses:
-		As a player I want inputs to feel smooth, accurate and instant.
+		As a player I want game responses not to take more than 50 ms.
 		-Compact:
 		As a user I want the executable files to be as ligth as possible (less than 1Gb).
 		-Resolution:
