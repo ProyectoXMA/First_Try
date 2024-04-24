@@ -1,33 +1,58 @@
-## ACLARACION
-  Esto es solo un doc incompleto, mas tarde pasaremos el oficial aunque no está lejos del definitivo
-
 ## Functional requirements
 	//Functional requirements describe system capabilities (WHAT IT DOES)
-		-Initialize the game
-		-Boat control -> As a player I want to be able to configure my own keybinds and I want the controls to be responsive with low latency, in order to have a more personalized and pleasant experience.
-		-Power ups -> As a player I want to have powerups that modify the way the game is played, in order to have as different an experience as possible in each run.
-		-Levels -> As I player I want to have different levels in order to get a sense of progress while I´m playing and also to raise the stakes whilst I advance in the game.
-		-Boat sprite -> As I player I want to be able to modify the way my boat looks to avoid a repetitive and dull gameplay.
-		-Difficulty -> As player not having an incrementally more difficult gameplay would make the gaming experience bland and boring. This goes together with the levels functional requirement
-		-Obstacles -> As a player I want to have different obstacles positioned in different places for the game to be challenging and engaging.
-		-Scenery -> As a player I want to experience a visual change once I advances through the levels, to have a notion of progress and risk.
-		-Afterlife -> As a player it would be engaging and fun to have an opportunity to come back if I die, nevertheless this ought to be hard enough for the game to be fair to thee
-		-Boat lanes -> As a player I want to have a boat lane in which I should stay during the race.
-		-Rivals -> As a player I want to be competing against other alleged players, in order for the game to have a little of competition.
-		-Penalty -> As a player I want to be punished and rewarded accordingly, for the game to have a bit of edge.
-		-Exitting the game -> As a player I want to be able to move fast between screens and to exit the game seamlessly in order to avoid annoyance.
-		-Boat stats -> As a player I want to be able to choose between boats with different characteristics that add depth to the way the game is played.
-		-Simon says minigame -> As a player I want to have a minigame inside the main game in order to have a more complete experience.
-		-Loading screens -> As a player I want to have an ejoyable experience while I wait for the game to load.
-  		-Stun time -> As a player I would like to have a fair crash system that stuns me the right amount of time in order to have a challenging non-artifficial Miyazaki-From-	Software-Soulslike type difficulty.
+		-Levels:
+		As a player I want to have different levels in order to get a sense of progress and feel an increasing difficulty as I advance.
+		-Afterlife:
+		As a player I want to have a second chance if my boat runs out of health.
+		-Power-ups:
+		As a player I want to have pick-ups throughout the race that make the game more engaging. 
+		-Player:
+		As a player I want to control a boat to reach the end of the race.
+		-Tutorial:
+		As a player I want to have an explanation of how the game works before playing.
+		-Controls:
+		As a player I want to be able to change the controls however I want.
+		-Rivals:
+		As a player I want to compete against other boats.
+		-Obstacles:
+		As a player I want things that impede my goal.
+		-Mini-game:
+		As a player I want a secondary minigame different in style from the main game.
+		-Main menu:
+		As a player I want a main screen that allows me to navigate through other screens.
+		-Level selection:
+		As a player I want to be able to select any level from a menu. 
+		-Pause screen:
+		As a player I want to be able to pause the game and resume it whenever I want.
+		-Loading screens:
+		As a player I want to see a nice loading screen while things are loading. 
+		-Leaderboard:
+		As a player I want to know in which position of the race I am.
+		-Timer:
+		As a player I want to know how long I am taking to finish the race.
+		-Health-bar:
+		As a player I want to know my boat's health throughout the race.
+		-Boats:
+		As a player I want to be able to choose between boats of different characteristics.
+		-Boat selection menu:
+		As a player I want to have a menu screen before the race that allows to choose between boats.
+		-Scenery:
+		As a player I want to see a nice environment troughout the race.
+		-Visual efects
+		As a player I want simple animations after the trigger or certain events.
+		-Lanes
+		As a player I want boats to have their own lane to try staying in.
+
+
 ## Non-Functional requirements
 	//Non-functional requirements describe system qualities (HOW IT DOES WHAT IT DOES)
-		-As a game developer I want the game to execute at a flawless 30 fps in order for the experience to be more pleasant park.
-		-Low latency and keybinds -> As a game developer I want the controls to be responsive and accurate for the player to have a smooth experience.
-		-Avoiding system errors -> As a developer I want the code to be roboust and free of errors in order to provide the player a satisfactory experience.
-		-Difficulty -> As a developer I want the experience to be easy and simple at first but harder as the player advances through the levels in order to have an entertaining game for all publics but a challenging one for the adventurous.
-		-Java language -> As a developer I really really want soo badly to use the Java language, a modern, fast and non-repetitive  object oriented programming language, I am also forced.
-		-LIbraries -> (Por determinar: Juanillo usa libGDX)
- 		-Collisions -> As a developer I want the game to have fair hit boxes in order for the game not be frustrating.
-		-Randomness -> Add randomness to obstacles to increase difficulty
-  		
+		-Java:
+		Using Java language to develop the game as it is a technical constraint imposed by the client.
+		-Frame rate:
+		As a player I want the game running always at a constant 30fps to give a smooth gameplay and avoid penalties external to player skill.
+		-Low Latency Responses:
+		As a player I want game responses not to take more than 50 ms.
+		-Compact:
+		As a user I want the executable files to be as ligth as possible (less than 1Gb).
+		-Resolution:
+		As a player I want the game to be playable in resolutions 1920x1080, 1280x720, 1024x768, 800x600.
