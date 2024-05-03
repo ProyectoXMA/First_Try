@@ -2,8 +2,6 @@
 	//Functional requirements describe system capabilities (WHAT IT DOES)
 		-Levels:
 		As a player I want to have different levels in order to get a sense of progress and feel an increasing difficulty as I advance.
-		-Afterlife:
-		As a player I want to have a second chance if my boat runs out of health.
 		-Power-ups:
 		As a player I want to have pick-ups throughout the race that alter my speed, health and give invincibility. 
 		-Player:
@@ -17,19 +15,19 @@
 		-Obstacles:
 		As a player I want things that impede my goal including random dynamic obstacles and static obstacles that do not change.
 		-Mini-game:
-		As a player I want a secondary minigame different in style from the main game.
+		As a player I want a secondary minigame different in style from the main game. This game gives a second chance to the player to continue the game.
 		-Main menu:
-		As a player I want a main screen that allows me to navigate through other screens.
+		As a player I want a main screen that allows me to navigate through other screens though buttons.
 		-Legs:
-		As a player I want there to be 3 legs.
+		As a player I want there to be 3 legs thoughout each game.
 		-Leg duration:
 		As a player I want legs not to exceed 2 minutes of duration.
 		-Pause screen:
 		As a player I want to be able to pause the game and resume it whenever I want.
 		-Loading screens:
-		As a player I want to see a nice loading screen while things are loading. 
+		As a player I want to see a decorated screen screen while things are loading, including a loading bar to keep the player informed of the progress. 
 		-Leaderboard:
-		As a player I want to know in which position of the race I am.
+		As a player I want to know in which position of the race I am with respect to rivals.
 		-Timer:
 		As a player I want to know how long I am taking to finish the race.
 		-Health-bar:
@@ -39,11 +37,11 @@
 		-Boat selection menu:
 		As a player I want to have a menu screen before the race that allows to choose between boats.
 		-Scenery:
-		As a player I want to see a nice dragon-themed environment throughout the race that becomes more epic every leg.
+		As a player I want to see a nice dragon-themed environment throughout the race that becomes more abundant every leg.
 		-Visual efects
-		As a player I want simple animations after the trigger or certain events.
+		As a player I want simple animations after the trigger or certain events, such as the crash of the boat with an obstacle or the end of the race.
 		-Lanes
-		As a player I want boats to have their own lane to try staying in.
+		As a player I want boats to have their own lane to try staying in, and to slow down whenever they go out.
 
 
 ## Non-Functional requirements
