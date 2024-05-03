@@ -8,7 +8,7 @@
 		As a player I want to control a boat to reach the end of the race.
 		-Tutorial:
 		As a player I want to have an explanation of how the game works before playing.
-		-Controls:
+		-Controls:g
 		As a player I want to be able to change the controls however I want.
 		-Rivals:
 		As a player I want to compete against other boats.
@@ -42,6 +42,8 @@
 		As a player I want simple animations after the trigger or certain events, such as the crash of the boat with an obstacle or the end of the race.
 		-Lanes
 		As a player I want boats to have their own lane to try staying in, and to slow down whenever they go out.
+		-Credits
+		As a player I want to know the developers of the game.
 
 
 ## Non-Functional requirements
