@@ -5,7 +5,7 @@
 		-Afterlife:
 		As a player I want to have a second chance if my boat runs out of health.
 		-Power-ups:
-		As a player I want to have pick-ups throughout the race that make the game more engaging. 
+		As a player I want to have pick-ups throughout the race that alter my speed, health and give invincibility. 
 		-Player:
 		As a player I want to control a boat to reach the end of the race.
 		-Tutorial:
@@ -15,7 +15,7 @@
 		-Rivals:
 		As a player I want to compete against other boats.
 		-Obstacles:
-		As a player I want things that impede my goal.
+		As a player I want things that impede my goal including random dynamic obstacles and static obstacles that do not change.
 		-Mini-game:
 		As a player I want a secondary minigame different in style from the main game.
 		-Main menu:
@@ -39,7 +39,7 @@
 		-Boat selection menu:
 		As a player I want to have a menu screen before the race that allows to choose between boats.
 		-Scenery:
-		As a player I want to see a nice environment troughout the race.
+		As a player I want to see a nice dragon-themed environment throughout the race that becomes more epic every leg.
 		-Visual efects
 		As a player I want simple animations after the trigger or certain events.
 		-Lanes
