@@ -20,8 +20,10 @@
 		As a player I want a secondary minigame different in style from the main game.
 		-Main menu:
 		As a player I want a main screen that allows me to navigate through other screens.
-		-Level selection:
-		As a player I want to be able to select any level from a menu. 
+		-Legs:
+		As a player I want there to be 3 legs.
+		-Leg duration:
+		As a player I want legs not to exceed 2 minutes of duration.
 		-Pause screen:
 		As a player I want to be able to pause the game and resume it whenever I want.
 		-Loading screens:
@@ -51,8 +53,8 @@
 		-Frame rate:
 		As a player I want the game running always at a constant 30fps to give a smooth gameplay and avoid penalties external to player skill.
 		-Low Latency Responses:
-		As a player I want game responses not to take more than 50 ms.
+		As a player I want game responses not to take more than 50ms.
 		-Compact:
-		As a user I want the executable files to be as ligth as possible (less than 1Gb).
+		As a user I want the executable files to be as light as possible (less than 1Gb).
 		-Resolution:
 		As a player I want the game to be playable in resolutions 1920x1080, 1280x720, 1024x768, 800x600.
