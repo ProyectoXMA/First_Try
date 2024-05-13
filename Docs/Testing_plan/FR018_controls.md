@@ -116,15 +116,16 @@ This test depends on the navigation and boat selection tests.
 ##########################################################################################################################################################################
 
 **Test case ID:**
-Boats
+Player
 
 **Purpose:**
 Verify that boats have the correct properties.
-This test cases involves FR016(Boat selection menu) and FR001(Player). 
+This test cases involves FR016(Boat selection menu), FR018(Controls), FR002(Boats) and FR001(Player).
 
 **Test case description:**
 This test case checks wether the selected boat by the player exists and is accurate with the one selected by the boat selection menu.
-JUnit tests related to this test case will check the numbers related to the player are equal to each property of the boat selected and with the test data, in case selection menu is incorrect.
+JUnit tests related to this test case will check the numbers related to the player are equal to each property of the boat selected and with the test data, in case selection menu is incorrect. After this, test will ensure player only controls a unique player boat and that it follows all restrictions provided for the player for example altering its x and y values appropriately with its speed property.
+
 **Pre-conditions:**
 -Prerequisites:
 Boat is selected in selection menu.
@@ -134,13 +135,15 @@ Structure with n number of boats with their properties.
 **Test steps:**
 -Steps description:
 1. Selecting the desired boat in the selection menu.
-2. Quitting the race.
-3. Selecting the next desired boat.
-4. Steps are repeated until all boats are tested.
+2. Movement of the player is tested.
+3. Quitting the race.
+4. Selecting the next desired boat.
+5. Steps are repeated until all boats are tested.
 
 **Post-conditions:**
 -Expected outcome:
 JUnit test verifies and returns if all boat properties were the same or not inside player, selection menu and test data.
+JUnit test verifies player can alter with input the properties it is allowed to change. 
 
 -Cleanup:
 Close the game.
