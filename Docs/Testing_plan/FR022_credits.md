@@ -1,7 +1,7 @@
 **Test case ID:**
 Credits
 **Purpose:**
-Verify that the user can see a final with all the people envolved in the creation of the proyect in the main menu section
+Verify that the user can see a final with all the people involved in the creation of the proyect in the main menu section
 **Test case description:**
 This test ensure that the user is able to unlock and see the final credits screen from the main menu
 **Pre-conditions:**
