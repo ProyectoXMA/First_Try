@@ -123,7 +123,7 @@ Verify that boats have the correct properties.
 This test cases involves FR016(Boat selection menu), FR018(Controls), FR002(Boats) and FR001(Player).
 
 **Test case description:**
-This test case checks wether the selected boat by the player exists and is accurate with the one selected by the boat selection menu.
+This test case checks wether the selected boat by the player exists and is accurate with the one selected by the boat selection menu and that the player is able to move perfectly.
 JUnit tests related to this test case will check the numbers related to the player are equal to each property of the boat selected and with the test data, in case selection menu is incorrect. After this, test will ensure player only controls a unique player boat and that it follows all restrictions provided for the player for example altering its x and y values appropriately with its speed property.
 
 **Pre-conditions:**
