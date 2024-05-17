@@ -1,8 +1,11 @@
 package com.mygdx.game.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.util.Config;
@@ -25,6 +28,11 @@ public class MainMenuScreen implements Screen {
         camera.setToOrtho(false, Config.WIDTH, Config.HEIGHT);
         MenuImage = new Texture(Gdx.files.internal("dragon2.jpeg"));
 
+
+        //Creacion de bottones
+        Skin buttonSkin = new Skin();
+        buttonSkin.add("button", new Texture("droplet.png"));
+        TextButton button1 = new TextButton("Test button", buttonSkin);
     }
 
     /**
