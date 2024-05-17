@@ -20,5 +20,23 @@ public class Duck extends Obstacle implements Movable {
     public MovementStrategy getMovementStrategy() {
         return movementStrategy;
     }
+    private double damageOnHit;
+    private double speed;
+    private boolean wasHit;
 
+    public Duck(double damage, double speed){
+        this.damageOnHit = damage;
+        this.speed = speed;
+        this.wasHit = false;
+    }
+
+    public double getDamageOnHit(){
+        return damageOnHit;
+    }
+    public double getSpeed(){
+        return speed;
+    }
+    public boolean getWasHit(){
+        return wasHit;
+    }
 }
