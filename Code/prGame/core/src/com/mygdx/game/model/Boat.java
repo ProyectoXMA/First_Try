@@ -76,6 +76,7 @@ public class Boat implements Movable {
         if(ob.getWasHit() || !isInvencible()){
             this.currentHealth -= ob.getDamageOnHit();
     }
+    }   
     //When the boat collides with a power up, its stats are increased depending on the type of power up it hits
     public double applyPowerUp(PowerUpType powerUp){
         if(powerUp == PowerUpType.HEALTH){
@@ -87,3 +88,4 @@ public class Boat implements Movable {
         }
     }
 }
+
