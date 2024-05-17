@@ -14,7 +14,6 @@ Provides methods for the view and controller to interact with it.
 
 Manages the display of data to the user (visual representation of the model).
 Provides a view of the model's state without assuming or storing it.
-Contains interactive controls that trigger events but does not handle them.
 Is a passive observer that does not affect the model.
 
 - Controller:
