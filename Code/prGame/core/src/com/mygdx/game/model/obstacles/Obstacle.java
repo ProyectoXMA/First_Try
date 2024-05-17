@@ -1,19 +1,18 @@
-package com.mygdx.game.model;
+package com.mygdx.game.model.obstacles;
 
 public abstract class Obstacle {
     //TODO: Implement abstract class Obstacle from which Duck, Stone and Log will inherit
-    private double damageOnHit;
-    private boolean wasHit;
-    private double speed;
-    public Obstacle(double damage, boolean wasHit){
-        this.damageOnHit = damage;
-        this.wasHit = wasHit;
+    private int damage;
+    private boolean wasHit = false;
+    public Obstacle(int damage){
+        this.damage = damage;
     }
     public boolean getWasHit(){
         return wasHit;
     }
-    public double getDamageOnHit(){
-        return damageOnHit;
+    public int getDamage(){
+        return damage;
     }
+    public abstract void accept(ObstacleVisitor visitor);
 }
 
