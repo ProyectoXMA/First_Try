@@ -1,24 +1,12 @@
-package com.mygdx.game.model;
+package com.mygdx.game.model.obstacles;
 
 public class Stone extends Obstacle {
     //Attributes for the Stone obstacle
-    private double damageOnHit;
-    private double speed;
-    private boolean wasHit;
     //Constructor for the Stone obstacle
-    public Stone(double damageOnHit, double speed, boolean wasHit){
-        this.damageOnHit = damageOnHit;
-        this.speed = speed;
-        this.wasHit = wasHit;
+    public Stone(int damage){
+        super(damage);
     }
-    //Methods for the Stone obstacle
-    public double getDamageOnHit(){
-        return damageOnHit; //return the damage on hit
-    }
-    public double getSpeed(){
-        return speed; //return the speed
-    }
-    public boolean getWasHit(){
-        return wasHit; //return if the stone was hit or not
+    public void accept(ObstacleVisitor visitor) {
+        visitor.visitStone(this);
     }
 }

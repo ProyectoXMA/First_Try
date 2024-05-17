@@ -1,24 +1,15 @@
-package com.mygdx.game.model;
+package com.mygdx.game.model.obstacles;
+
+import com.mygdx.game.model.movement.MoveObstacleVisitor;
+
 //This class is not dynamic because a log cannot move
 public class Log extends Obstacle {
     //Attributes for the log obstacle
-    private double damageOnHit;
-    private double speed;
-    private boolean wasHit;
     //Constructor for the log obstacle
-    public Log(double damage, double speed){
-        this.damageOnHit = damage;
-        this.speed = speed;
-        this.wasHit = false;
+    public Log(int damage){
+        super(damage);
     }
-    //Methods for the log obstacle
-    public boolean getWasHit(){
-        return wasHit; //Returns of the log was hit or not
-    }
-    public double getDamageOnHit(){
-        return damageOnHit; //Returns the damage on hit of the log obstacle
-    }
-    public double getSpeed(){
-        return speed; //Returns the speed of the log obstacle
+    public void accept(ObstacleVisitor visitor) {
+        visitor.visitLog(this);
     }
 }

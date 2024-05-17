@@ -1,4 +1,4 @@
-package com.mygdx.game.model;
+package com.mygdx.game.model.obstacles;
 
 import com.mygdx.game.model.movement.Movable;
 import com.mygdx.game.model.movement.MovementStrategy;
@@ -6,9 +6,11 @@ import com.mygdx.game.model.movement.MovementStrategy;
 public class Duck extends Obstacle implements Movable {
     //MovementStrategy is not implemented here, just the pattern
     MovementStrategy movementStrategy;
+    //attributes of the obstacle Duck
+    private int speed;
     @Override
-    public void move() {
-        movementStrategy.move();
+    public void move(float delta) {
+        movementStrategy.move(this, delta);
     }
 
     @Override
@@ -20,24 +22,19 @@ public class Duck extends Obstacle implements Movable {
     public MovementStrategy getMovementStrategy() {
         return movementStrategy;
     }
-    //attributes of the obstacle Duck
-    private double damageOnHit;
-    private double speed;
-    private boolean wasHit;
     //Constructor for the obstacle Duck
-    public Duck(double damage, double speed){
-        this.damageOnHit = damage;
+    public Duck(int damage, int speed){
+        super(damage);
         this.speed = speed;
-        this.wasHit = false;
     }
-    //Getters for the attributes of the obstacle Duck
-    public double getDamageOnHit(){
-        return damageOnHit; //returns the damage on hit
+    //Getters for the exclusive attributes of the obstacle Duck
+    public int getSpeed(){
+        return speed;
     }
-    public double getSpeed(){
-        return speed; //returns the speed
+    public void setSpeed(int speed){
+        this.speed = speed;
     }
-    public boolean getWasHit(){
-        return wasHit; //returns if the obstacle was hit or not
+    public void accept(ObstacleVisitor visitor) {
+        visitor.visitDuck(this);
     }
 }
