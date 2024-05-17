@@ -11,7 +11,7 @@ Author(s):
 
 **Test Case ID:**
 
-*Mini-game Test*
+*TC\_MiniGame*
 
 **Purpose:**
 
@@ -19,43 +19,34 @@ Author(s):
 
 **Test Case Description:**
 
-*Verifying the correct behavior of the mini-game first by launching the mini-game upon player death, checking functionality in response to different player actions such as detecting wrong sequences, and correctly restoring player’s HP and respawn point upon successful completion or displaying the Game Over message on failure.*
+*Verifying the correct behavior of the mini-game first by launching the mini-game upon player death, checking functionality in response to different player actions such as detecting correct/wrong sequences, and correctly restoring player’s HP and respawn point upon successful completion of the mini-game or displaying the Game Over message on failure.*
 
 ### Pre-Conditions
 **Prerequisites:**
 
-*The main game must be set correctly with the mini-game implementation complete so that when player fails in main game by dropping to zero HP the mini-game is triggered only upon death.*
+*The player collides in main game with enough obstacles that boat’s HP drops to zero, meaning its destroyed (player dies), then the mini-game is triggered upon death.*
 
 **Test Data:**
 
 *Initial player state (position of death and level progress to restore gameplay if successful) and boat’s HP.* 
 
+*Rival boats and obstacles states (current position).*
+
 ### Test Steps
 **Step Description:**
 
-1. *Launch Mini-game*
-   1. *Only on player's death within the main game due to boat’s HP is zero.*
-   1. *Verify that the mini-game launches properly (for instance, the commands the player must execute are visible and keystrokes register accordingly).*
-
-1. *Test Wrong Sequences*
-   1. *Input of wrong sequences multiple times and not being penalized.*
-   1. *Check wrong keystrokes punishes the player accordingly (killing the player and ending current run).*
-
-1. *Test Correct Sequences*
-   1. *Input of sufficient correct sequences returns the player to the point where they died in the main game with of their HP fully restored.*
-
-1. *Synchronization with NFRs*
-   1. *Measure the response time of player’s actions complying with NFR003.*
-   1. *Verify that the mini-game displays correctly as stated by NFR004.*
+1. *Launch mini-game only on player's death within the main game due to boat’s HP is zero.*
+1. *Verify that the mini-game launches properly (for instance, the commands the player must execute are visible and keystrokes register accordingly).*
+1. *While the mini-game is being played, rival boats should not continue the race and only resume movement when the player re-enters the race.*
+1. *Test player’s input sequences. If enough incorrect keystrokes punish the player by ending current run triggering a Game Over. Otherwise, input of sufficient correct sequences will trigger a win condition thus, ending the mini-game on a successful scenario.*
+1. *Player respawns after completing successfully the mini-game, the boat regains the correct amount of HP and the location of boat’s revival is exactly the same as the death point.*
+1. *When the player is respawned, the game continues as it was, meaning existing obstacles stay on their original track except for the obstacle that triggered the last collision; that one is removed to avoid problems on return.*
 
 ### Post-Conditions
 **Expected Outcome:**
 
-*The mini-game meets all constraints described before for a good player experience.*
+*The mini-game works as intended by initializing on player’s death, the gameplay is smooth due to synchronization with NFRs; the response time of player’s actions (NFR003) is the expected and that the mini-game displays correctly as stated by NFR004. Success scenario gives the player to a second chance on the current run or on fail scenario finally ends the game displaying a Game Over message.*
 
 **Cleanup:**
 
-*Reset the main game’s state.*
-### Notes
-*Sticking to non-functional requirements is crucial to ensure overall performance of the mini-game along with the main game’s features. Since there is no random component involved, once the tests pass, the correct functionality of the mini-game is guaranteed.*
-
+*Return boat to main game and last collided obstacle is removed.*

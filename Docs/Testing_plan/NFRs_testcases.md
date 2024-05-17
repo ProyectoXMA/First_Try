@@ -11,7 +11,7 @@ Author(s):
 
 **Test Case ID:**
 
-*Non-Functional Test Case 001*
+*TC\_NF001*
 
 **Purpose:**
 
@@ -34,10 +34,7 @@ Author(s):
 **Step Description:**
 
 1. *Review the source code of the game to confirm that Java is used for development.*
-
-1. *Check Dependencies*
-   1. *Ensure that all libraries and frameworks, used in the project are compatible with Java.*
-
+1. *Check Dependencies to ensure that all libraries and frameworks, used in the project are compatible with Java.*
 1. *Verify Compilation using a Java compiler.*
 
 ### Post-Conditions
@@ -65,7 +62,7 @@ Author(s):
 
 **Test Case ID:**
 
-*Non-Functional Test Case 024*
+*TC\_NF024*
 
 **Purpose:**
 
@@ -87,11 +84,11 @@ Author(s):
 **Step Description:**
 
 1. *Test on minimum requirements.*
-   1. *Play the game on a computer that meets the minimum hardware requirements to validate our lower bound.*
+1. *Play the game on a computer that meets the minimum hardware requirements to validate our lower bound.*
 1. *Test on higher specifications.*
-   1. *Verify that the frame rate remains stable at 30fps or higher across different hardware configurations.*
+1. *Verify that the frame rate remains stable at 30fps or higher across different hardware configurations.*
 1. *Test resolution settings on each system.*
-   1. *Playing the game on different resolutions may modify the way the game runs so the fps could depend on the resolution based on what configuration the player imposes for the game.*
+1. *Playing the game on different resolutions may modify the way the game runs so the fps could depend on the resolution based on what configuration the player imposes for the game.*
 ### Post-Conditions
 **Expected Outcome:**
 
@@ -115,11 +112,13 @@ Author(s):
 
 
 
+
+
 ## Test Case Overview
 
 **Test Case ID:**
 
-*Non-Functional Test Case 005*
+*TC\_NF005*
 
 **Purpose:**
 
@@ -151,3 +150,4 @@ Author(s):
 
 ### Notes
 *Executable size can be affected by factors such as included assets, libraries, and code so further optimization may be needed if this requirement is not met.*
+
