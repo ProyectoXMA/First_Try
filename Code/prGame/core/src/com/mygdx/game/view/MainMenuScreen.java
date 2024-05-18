@@ -24,6 +24,9 @@ public class MainMenuScreen implements Screen {
     //texture defination for buttons
     Texture playLevelButton;
     Texture quitButton;
+    //default button dimensions
+    private final int buttonWidth = 200;
+    private final int buttonHeight = 80;
 
     public MainMenuScreen(final MyGdxGame game) {
         this.game = game;
@@ -35,11 +38,6 @@ public class MainMenuScreen implements Screen {
         //initialization of buttons
         playLevelButton = new Texture("button.png");
         quitButton = new Texture("button.png");
-
-        //Creacion de bottones
-//        Skin buttonSkin = new Skin();
-//        buttonSkin.add("button", new Texture("droplet.png"));
-//        TextButton button1 = new TextButton("Test button", buttonSkin);
     }
 
     /**
@@ -60,9 +58,13 @@ public class MainMenuScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
+        //draws the initial Main background dragon image
         game.batch.draw(MenuImage, 0, 0, Config.WIDTH, Config.HEIGHT);
-        game.batch.draw(playLevelButton, 100, 100, 50, 50);
-        game.batch.draw(quitButton, 100, 150, 50, 50);
+
+        //draws the buttons
+        game.batch.draw(playLevelButton, 100, 100, buttonWidth, buttonHeight);
+        game.batch.draw(quitButton, 100, 150, buttonWidth, buttonHeight);
+
         game.batch.end();
 
         if (Gdx.input.isTouched()) {
