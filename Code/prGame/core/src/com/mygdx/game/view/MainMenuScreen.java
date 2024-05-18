@@ -25,7 +25,7 @@ public class MainMenuScreen implements Screen {
     Texture playLevelButton;
     Texture quitButton;
     //default button dimensions
-    private final int BUTTONWIDTH = 200;
+    private final int BUTTONWIDTH = 195;
     private final int BUTTONHEIGHT = 80;
     private float BUTTONX = (Config.WIDTH - BUTTONWIDTH) / 2;
     private float BUTTONY = (Config.HEIGHT/2);
@@ -38,8 +38,8 @@ public class MainMenuScreen implements Screen {
         MenuImage = new Texture(Gdx.files.internal("dragon2.jpeg"));
 
         //initialization of buttons
-        playLevelButton = new Texture("button.png");
-        quitButton = new Texture("button.png");
+        playLevelButton = new Texture("playButton.png");
+        quitButton = new Texture("quitButton.png");
     }
 
     /**
@@ -65,7 +65,7 @@ public class MainMenuScreen implements Screen {
 
         //draws the buttons
         game.batch.draw(playLevelButton, BUTTONX, BUTTONY, BUTTONWIDTH, BUTTONHEIGHT);
-        game.batch.draw(quitButton, BUTTONX, BUTTONY+BUTTONHEIGHT+20, BUTTONWIDTH, BUTTONHEIGHT);
+        game.batch.draw(quitButton, BUTTONX, BUTTONY-BUTTONHEIGHT-20, BUTTONWIDTH, BUTTONHEIGHT);
 
         game.batch.end();
 
