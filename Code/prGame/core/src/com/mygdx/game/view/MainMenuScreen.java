@@ -38,8 +38,8 @@ public class MainMenuScreen implements Screen {
         MenuImage = new Texture(Gdx.files.internal("dragon2.jpeg"));
 
         //initialization of buttons
-        playLevelButton = new Texture("playButton.png");
-        quitButton = new Texture("quitButton.png");
+        playLevelButton = new Texture(Gdx.files.internal("playButton.png"));
+        quitButton = new Texture(Gdx.files.internal("quitButton.png"));
     }
 
     /**
