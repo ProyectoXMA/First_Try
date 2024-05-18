@@ -30,9 +30,9 @@ public class MainMenuScreen implements Screen {
 
 
         //Creacion de bottones
-        Skin buttonSkin = new Skin();
-        buttonSkin.add("button", new Texture("droplet.png"));
-        TextButton button1 = new TextButton("Test button", buttonSkin);
+//        Skin buttonSkin = new Skin();
+//        buttonSkin.add("button", new Texture("droplet.png"));
+//        TextButton button1 = new TextButton("Test button", buttonSkin);
     }
 
     /**
