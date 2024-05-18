@@ -79,7 +79,7 @@ public class Boat implements Movable {
     }
     //Verify if the boat is dead, no more health left
     public boolean dead(){
-        return this.currentHealth == 0;
+        return this.currentHealth <= 0;
     }
     //When the boat is hit by an obstacle, it decreases its health if it has hit it and if it is not invencible
     public void decreaseHealth(int damage){
@@ -102,6 +102,10 @@ public class Boat implements Movable {
     public void adjustAcceleration(int accelerationDelta) {
         this.currenAcceleration += accelerationDelta; //increase the current acceleration
         currenAcceleration = Math.min(currenAcceleration, baseAcceleration); //if the current acceleration is greater than the base acceleration, set the current acceleration to the base acceleration
+    }
+
+    public void setInvincible(boolean b) {
+        this.isInvencible = b;
     }
     
 }
