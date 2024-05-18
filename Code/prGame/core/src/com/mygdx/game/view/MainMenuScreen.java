@@ -59,6 +59,12 @@ public class MainMenuScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
+        //Button Coordinates
+        float playButtonX = BUTTONX;
+        float playButtonY = BUTTONY;
+        float quitButtonX = BUTTONX;
+        float quitButtonY = BUTTONY - BUTTONHEIGHT - 20;
+
         game.batch.begin();
         //draws the initial Main background dragon image
         game.batch.draw(MenuImage, 0, 0, Config.WIDTH, Config.HEIGHT);
@@ -69,11 +75,22 @@ public class MainMenuScreen implements Screen {
 
         game.batch.end();
 
-        if (Gdx.input.isTouched()) {
-            game.setScreen(new RaceScreen(game));
-            dispose();
-        }
+        //mouse coordinates
+        float mouseX = Gdx.input.getX();
+        float mouseY = Config.HEIGHT - Gdx.input.getY();
 
+        //logic to detect button clicks
+        if (Gdx.input.isTouched()) {
+            if (mouseX >= playButtonX && mouseX <= playButtonX + BUTTONWIDTH&&
+                    mouseY >= playButtonY && mouseY <= playButtonY + BUTTONHEIGHT) {
+                game.setScreen(new RaceScreen(game));
+                dispose();
+            }
+            if (mouseX >= quitButtonX && mouseX <= quitButtonX + BUTTONWIDTH&&
+                    mouseY >= quitButtonY && mouseY <= quitButtonY + BUTTONHEIGHT) {
+                Gdx.app.exit();
+            }
+        }
     }
 
     /**
