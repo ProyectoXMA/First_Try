@@ -1,6 +1,6 @@
 package com.mygdx.game.model.obstacles;
 
-import com.mygdx.game.model.movement.MoveObstacleVisitor;
+import com.mygdx.game.model.Boat;
 
 //This class is not dynamic because a log cannot move
 public class Log extends Obstacle {
@@ -11,5 +11,8 @@ public class Log extends Obstacle {
     }
     public void accept(ObstacleVisitor visitor) {
         visitor.visitLog(this);
+    }
+    public void hitLog(Boat boat){
+        boat.decreaseHealth(super.getDamage());
     }
 }

@@ -1,5 +1,6 @@
 package com.mygdx.game.model.obstacles;
 
+import com.mygdx.game.model.Boat;
 import com.mygdx.game.model.movement.Movable;
 import com.mygdx.game.model.movement.MovementStrategy;
 
@@ -36,5 +37,8 @@ public class Duck extends Obstacle implements Movable {
     }
     public void accept(ObstacleVisitor visitor) {
         visitor.visitDuck(this);
+    }
+    public void hitDuck(Boat boat){
+        boat.decreaseHealth(super.getDamage());
     }
 }

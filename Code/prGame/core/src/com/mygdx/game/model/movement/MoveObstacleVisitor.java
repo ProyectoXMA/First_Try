@@ -16,7 +16,6 @@ public class MoveObstacleVisitor implements ObstacleVisitor {
 
     @Override
     public void visitStone(Stone stone) {
-
     }
 
     @Override
