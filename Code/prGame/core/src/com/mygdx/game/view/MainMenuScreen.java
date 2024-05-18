@@ -21,6 +21,10 @@ public class MainMenuScreen implements Screen {
     OrthographicCamera camera;
     private final Texture MenuImage;
 
+    //texture defination for buttons
+    Texture playLevelButton;
+    Texture quitButton;
+
     public MainMenuScreen(final MyGdxGame game) {
         this.game = game;
         this.controller = new MenuController(game);
@@ -28,6 +32,9 @@ public class MainMenuScreen implements Screen {
         camera.setToOrtho(false, Config.WIDTH, Config.HEIGHT);
         MenuImage = new Texture(Gdx.files.internal("dragon2.jpeg"));
 
+        //initialization of buttons
+        playLevelButton = new Texture("button.png");
+        quitButton = new Texture("button.png");
 
         //Creacion de bottones
 //        Skin buttonSkin = new Skin();
@@ -54,6 +61,8 @@ public class MainMenuScreen implements Screen {
 
         game.batch.begin();
         game.batch.draw(MenuImage, 0, 0, Config.WIDTH, Config.HEIGHT);
+        game.batch.draw(playLevelButton, 100, 100, 50, 50);
+        game.batch.draw(quitButton, 100, 150, 50, 50);
         game.batch.end();
 
         if (Gdx.input.isTouched()) {
