@@ -25,8 +25,10 @@ public class MainMenuScreen implements Screen {
     Texture playLevelButton;
     Texture quitButton;
     //default button dimensions
-    private final int buttonWidth = 200;
-    private final int buttonHeight = 80;
+    private final int BUTTONWIDTH = 200;
+    private final int BUTTONHEIGHT = 80;
+    private float BUTTONX = (Config.WIDTH - BUTTONWIDTH) / 2;
+    private float BUTTONY = (Config.HEIGHT/2);
 
     public MainMenuScreen(final MyGdxGame game) {
         this.game = game;
@@ -62,8 +64,8 @@ public class MainMenuScreen implements Screen {
         game.batch.draw(MenuImage, 0, 0, Config.WIDTH, Config.HEIGHT);
 
         //draws the buttons
-        game.batch.draw(playLevelButton, 100, 100, buttonWidth, buttonHeight);
-        game.batch.draw(quitButton, 100, 150, buttonWidth, buttonHeight);
+        game.batch.draw(playLevelButton, BUTTONX, BUTTONY, BUTTONWIDTH, BUTTONHEIGHT);
+        game.batch.draw(quitButton, BUTTONX, BUTTONY+BUTTONHEIGHT+20, BUTTONWIDTH, BUTTONHEIGHT);
 
         game.batch.end();
 
