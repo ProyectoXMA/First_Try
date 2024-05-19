@@ -1,6 +1,6 @@
 package com.mygdx.game.model.obstacles;
 
-import com.mygdx.game.model.Boat;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.movement.Movable;
 import com.mygdx.game.model.movement.MovementStrategy;
 
@@ -24,8 +24,8 @@ public class Duck extends Obstacle implements Movable {
         return movementStrategy;
     }
     //Constructor for the obstacle Duck
-    public Duck(int damage, int speed){
-        super(damage);
+    public Duck(int damage, int speed, Rectangle hitBox){
+        super(damage, hitBox);
         this.speed = speed;
     }
     //Getters for the exclusive attributes of the obstacle Duck
@@ -37,8 +37,5 @@ public class Duck extends Obstacle implements Movable {
     }
     public void accept(ObstacleVisitor visitor) {
         visitor.visitDuck(this);
-    }
-    public void hitDuck(Boat boat){
-        boat.decreaseHealth(super.getDamage());
     }
 }
