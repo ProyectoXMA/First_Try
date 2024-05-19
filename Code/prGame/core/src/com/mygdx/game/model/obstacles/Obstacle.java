@@ -3,8 +3,9 @@ package com.mygdx.game.model.obstacles;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.Collidable;
 import com.mygdx.game.model.CollidableVisitor;
+import com.mygdx.game.model.GameObject;
 
-public abstract class Obstacle implements Collidable {
+public abstract class Obstacle implements Collidable,GameObject {
     private int damage;
     private Rectangle hitbox;
     private boolean wasHit = false;

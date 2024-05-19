@@ -12,4 +12,8 @@ public class Stone extends Obstacle {
     public void accept(ObstacleVisitor visitor) {
         visitor.visitStone(this);
     }
+    @Override
+    public void destroy() {
+        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+    }
 }

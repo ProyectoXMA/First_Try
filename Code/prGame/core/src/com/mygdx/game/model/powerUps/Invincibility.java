@@ -12,4 +12,9 @@ public class Invincibility extends PowerUp{
     public void applyPowerUp(Boat boat) {
         boat.setInvincible(true);
     }
+
+    @Override
+    public void destroy() {
+        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+    }
 }

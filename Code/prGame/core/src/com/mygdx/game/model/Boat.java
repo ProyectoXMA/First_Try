@@ -3,7 +3,7 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.movement.*;
 
-public class Boat implements Movable, Collidable{
+public class Boat implements Movable, Collidable, GameObject{
     //ALL THIS STUFF IS FOR THE MOVEMENT
     private MovementStrategy movementStrategy;
     private Rectangle hitBox;
@@ -117,5 +117,9 @@ public class Boat implements Movable, Collidable{
     @Override
     public MovementStrategy getMovementStrategy() {
         return this.movementStrategy;
+    }
+    @Override
+    public void destroy() {
+        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
     }
 }

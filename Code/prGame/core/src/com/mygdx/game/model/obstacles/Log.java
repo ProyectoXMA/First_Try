@@ -13,4 +13,8 @@ public class Log extends Obstacle {
     public void accept(ObstacleVisitor visitor) {
         visitor.visitLog(this);
     }
+    @Override
+    public void destroy() {
+        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+    }
 }

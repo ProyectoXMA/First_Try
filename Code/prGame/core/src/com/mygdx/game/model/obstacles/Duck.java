@@ -38,4 +38,9 @@ public class Duck extends Obstacle implements Movable {
     public void accept(ObstacleVisitor visitor) {
         visitor.visitDuck(this);
     }
+
+    @Override
+    public void destroy() {
+        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+    }
 }
