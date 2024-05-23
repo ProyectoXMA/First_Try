@@ -14,6 +14,7 @@ public class GameState {
     private Vector2 deathPoint;
     private int minigamePlaysLeft;
     private int failCounter;
+    private int baseHealth;
 
     public GameState(Boat myBoat, List<Boat> rivals, Vector2 deathPoint){
         this.myBoat = myBoat;
@@ -21,6 +22,7 @@ public class GameState {
         this.deathPoint = deathPoint;
         this.minigamePlaysLeft = 1;
         this.failCounter = 3;
+        this.baseHealth = 100;
     }
 
     public Boat getMyBoat() {
@@ -43,6 +45,9 @@ public class GameState {
         return deathPoint;
     }
 
+    public int getBaseHealth() {
+        return baseHealth;
+    }
 
     public void setFailCounter(int failCounter) {
         this.failCounter = failCounter;
@@ -51,6 +56,11 @@ public class GameState {
     public void setMinigamePlaysLeft(int minigamePlaysLeft) {
         this.minigamePlaysLeft = minigamePlaysLeft;
     }
+
+    public void setBaseHealth(int baseHealth) {
+        this.baseHealth = baseHealth;
+    }
+    
 }
 
 
