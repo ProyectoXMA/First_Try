@@ -1,11 +1,13 @@
 package com.mygdx.game.view;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -30,13 +32,12 @@ public class MinigameScreen implements Screen {
     private String typedWord;
     private long startTime;
     private long timeLimit;
-
+    private int r = new Random().nextInt(3);
     // Dimensions of the panel to display instructions and user input
-    private final int panelHeight = 150;
-    private final int panelWidth = 300;
+    private final int panelHeight = 240;
+    private final int panelWidth = 400;
     private Texture textoutput;
-
-
+    private BitmapFont font;
 
 // Constructor
     public MinigameScreen(final MyGdxGame game, GameState gameState) {
@@ -49,6 +50,7 @@ public class MinigameScreen implements Screen {
         camera.setToOrtho(false, 800, 480);
 
         textoutput = new Texture(Gdx.files.internal("textPanel.png"));
+        font = new BitmapFont();
     }
 
 
@@ -57,7 +59,7 @@ public class MinigameScreen implements Screen {
     /// @param stage displays all the actors involved in the screen (UI, buttons, labels, etc)
     @Override
     public void show() {
-        viewport = new ExtendViewport(1280, 720);
+        viewport = new ExtendViewport(800, 480);
         stage = new Stage(viewport);
     }
 
@@ -71,7 +73,11 @@ public class MinigameScreen implements Screen {
         stage.act();
         stage.draw();
 
-        game.batch.draw(textoutput, panelHeight, panelWidth);
+        game.batch.begin();
+        game.batch.draw(textoutput, 200, 200, panelWidth, panelHeight);
+        font.draw(game.batch,"TYPE THE WORD!!",320,370);
+        game.font.draw(game.batch,words.get(r),350,325);
+        game.batch.end();
 
 
     }
