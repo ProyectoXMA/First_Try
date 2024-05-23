@@ -1,20 +1,24 @@
-package com.mygdx.game.model.obstacles;
-
-import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.model.Boat;
-
+package com.mygdx.game.model;
 //This class is not dynamic because a log cannot move
 public class Log extends Obstacle {
     //Attributes for the log obstacle
+    private double damageOnHit;
+    private double speed;
+    private boolean wasHit;
     //Constructor for the log obstacle
-    public Log(int damage, Rectangle hitBox){
-        super(damage, hitBox);
+    public Log(double damage, double speed){
+        this.damageOnHit = damage;
+        this.speed = speed;
+        this.wasHit = false;
     }
-    public void accept(ObstacleVisitor visitor) {
-        visitor.visitLog(this);
+    //Methods for the log obstacle
+    public boolean getWasHit(){
+        return wasHit; //Returns of the log was hit or not
     }
-    @Override
-    public void destroy() {
-        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+    public double getDamageOnHit(){
+        return damageOnHit; //Returns the damage on hit of the log obstacle
+    }
+    public double getSpeed(){
+        return speed; //Returns the speed of the log obstacle
     }
 }

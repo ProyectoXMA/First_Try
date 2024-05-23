@@ -5,21 +5,22 @@ import com.mygdx.game.model.obstacles.Log;
 import com.mygdx.game.model.obstacles.ObstacleVisitor;
 import com.mygdx.game.model.obstacles.Stone;
 
-public class MoveObstacleVisitor implements ObstacleVisitor {
+public class MoveVisitor implements ObstacleVisitor {
     private float delta;
-    public MoveObstacleVisitor(float delta) {
+    public MoveVisitor(float delta) {
         this.delta = delta;
     }
     @Override
-    public void visitLog(Log log) {
+    public void visit(Log log) {
     }
 
     @Override
-    public void visitStone(Stone stone) {
+    public void visit(Stone stone) {
+
     }
 
     @Override
-    public void visitDuck(Duck duck) {
-        duck.getMovementStrategy().move(duck, delta);
+    public void visit(Duck duck) {
+        duck.getMovementStrategy().move(delta);
     }
 }

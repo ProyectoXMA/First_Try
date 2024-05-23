@@ -1,17 +1,14 @@
-package com.mygdx.game.model.obstacles;
+package com.mygdx.game.model;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.movement.Movable;
 import com.mygdx.game.model.movement.MovementStrategy;
 
 public class Duck extends Obstacle implements Movable {
     //MovementStrategy is not implemented here, just the pattern
     MovementStrategy movementStrategy;
-    //attributes of the obstacle Duck
-    private int speed;
     @Override
-    public void move(float delta) {
-        movementStrategy.move(this, delta);
+    public void move() {
+        movementStrategy.move();
     }
 
     @Override
@@ -23,24 +20,24 @@ public class Duck extends Obstacle implements Movable {
     public MovementStrategy getMovementStrategy() {
         return movementStrategy;
     }
+    //attributes of the obstacle Duck
+    private double damageOnHit;
+    private double speed;
+    private boolean wasHit;
     //Constructor for the obstacle Duck
-    public Duck(int damage, int speed, Rectangle hitBox){
-        super(damage, hitBox);
+    public Duck(double damage, double speed){
+        this.damageOnHit = damage;
         this.speed = speed;
+        this.wasHit = false;
     }
-    //Getters for the exclusive attributes of the obstacle Duck
-    public int getSpeed(){
-        return speed;
+    //Getters for the attributes of the obstacle Duck
+    public double getDamageOnHit(){
+        return damageOnHit; //returns the damage on hit
     }
-    public void setSpeed(int speed){
-        this.speed = speed;
+    public double getSpeed(){
+        return speed; //returns the speed
     }
-    public void accept(ObstacleVisitor visitor) {
-        visitor.visitDuck(this);
-    }
-
-    @Override
-    public void destroy() {
-        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+    public boolean getWasHit(){
+        return wasHit; //returns if the obstacle was hit or not
     }
 }
