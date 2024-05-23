@@ -1,21 +1,30 @@
-package com.mygdx.game.model;
+package com.mygdx.game.model.obstacles;
 
-public abstract class Obstacle {
-    //Attributes that all obstacles are gonna share
-    private double damageOnHit;
-    private boolean wasHit;
-    private double speed;
-    //Constructor for obstacles
-    public Obstacle(double damage, boolean wasHit){
-        this.damageOnHit = damage;
-        this.wasHit = wasHit;
+import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.model.Collidable;
+import com.mygdx.game.model.CollidableVisitor;
+import com.mygdx.game.model.GameObject;
+
+public abstract class Obstacle implements Collidable,GameObject {
+    private int damage;
+    private Rectangle hitbox;
+    private boolean wasHit = false;
+    public Obstacle(int damage, Rectangle hitbox){
+        this.damage = damage;
+        this.hitbox = hitbox;
     }
-    //Methods for obstacles
+    public Rectangle getHitbox(){
+        return hitbox;
+    }
     public boolean getWasHit(){
-        return wasHit; //return true if it was hit
+        return wasHit;
     }
-    public double getDamageOnHit(){
-        return damageOnHit; //return the damage on hit
+    public int getDamage(){
+        return damage;
+    }
+    public abstract void accept(ObstacleVisitor visitor);
+    public void accept(CollidableVisitor visitor){
+        visitor.visitObstacle(this);
     }
 }
 
