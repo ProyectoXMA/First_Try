@@ -23,7 +23,34 @@ public class GameState {
         this.failCounter = 3;
     }
 
-    
+    public Boat getMyBoat() {
+        return myBoat;
+    }
 
+    public int getFailCounter() {
+        return failCounter;
+    }
+
+    public int getMinigamePlaysLeft() {
+        return minigamePlaysLeft;
+    }
+
+    public List<Boat> getRivals() {
+        return rivals;
+    }
+
+    public Vector2 getDeathPoint() {
+        return deathPoint;
+    }
+
+
+    public void setFailCounter(int failCounter) {
+        this.failCounter = failCounter;
+    }
+
+    public void setMinigamePlaysLeft(int minigamePlaysLeft) {
+        this.minigamePlaysLeft = minigamePlaysLeft;
+    }
 }
+
 
