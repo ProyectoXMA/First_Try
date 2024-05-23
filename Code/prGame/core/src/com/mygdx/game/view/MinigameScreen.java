@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -31,7 +32,7 @@ public class MinigameScreen implements Screen {
     private java.util.List<String> words;
     private int successCounter = 0;
     private String currentWord;
-    private String typedWord;
+    private String typedWord = "";
     private long startTime;
     private long timeLimit;
     private int r = new Random().nextInt(3);
@@ -45,14 +46,15 @@ public class MinigameScreen implements Screen {
     public MinigameScreen(final MyGdxGame game, GameState gameState) {
         this.game = game;
         this.gameState = gameState;
-        this.words = Arrays.asList("Dragon", "Boat", "Racing"); // etc...
+        this.words = Arrays.asList("Dragon", "Boat", "Racing", "Myhtic", "Ancient", "Ritualistic", "China", "Competition", "River", "Tradition");
         this.timeLimit = 8000; // 8 seconds to type the word
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 
         textoutput = new Texture(Gdx.files.internal("textPanel.png"));
-        font = new BitmapFont(Gdx.files.internal("Daydream.ttf"));
+        /// @brief Gdx.files.internal("Daydream.ttf") cannot be loaded as an arguemnt for the BitmapFont yet
+        font = new BitmapFont();
     }
 
 
@@ -63,6 +65,25 @@ public class MinigameScreen implements Screen {
     public void show() {
         viewport = new ExtendViewport(800, 480);
         stage = new Stage(viewport);
+
+        // Method to read user input
+        //
+        // @param character stores the key pressed by the user
+        // @method checkWord() process the keystrokes stored in character after 'Enter' key is pressed
+        Gdx.input.setInputProcessor(new InputAdapter() {
+            @Override
+            public boolean keyTyped(char character) {
+                // Check word after 'Enter' is pressed
+                if (character == '\r' || character == '\n') {
+                    //checkWord(); //TODO
+                } else { // Any other key other than 'Enter' is pressed
+                    typedWord += character; // Register such key on the string
+                }
+
+                return true;
+            }
+        });
+
     }
 
     // for now just creates a blank screen
