@@ -8,7 +8,7 @@ public class Boat implements Movable {
     //MovementStrategy is made in the MovementStrategy class, this is the strategy pattern
     @Override
     public void move() {
-        movementStrategy.move();
+        movementStrategy.move(this, delta);
     }
 
     @Override
@@ -20,24 +20,19 @@ public class Boat implements Movable {
     public MovementStrategy getMovementStrategy() {
         return this.movementStrategy;
     }
-    //Constants for the power ups that can be given to the boat
-    private final double CONSTANT_HEALTH_INCREASE = 100;
-    private final double CONSTANT_SPEED_INCREASE = 2;
-    //atributes for the boat, they are the base stats of the boat
-    private double baseHealth;
-    private int baseResistance;
-    private int baseHandling;
-    private double baseSpeed;
-    private double baseAcceleration;
-
+    private final int baseHealth;
+    private final int baseResistance;
+    private final int baseHandling;
+    private final int baseSpeed;
+    private final int baseAcceleration;
     //current atributes for the boat, they can be changed by the power ups and collisions
-    private double currentHealth;
+    private int currentHealth;
     private int currentResistance;
-    private double currentSpeed;
-    private double currenAcceleration;
+    private int currentSpeed;
+    private int currenAcceleration;
     private boolean isInvencible;
     //Constructor for the boat
-    public Boat (double health,int resistance, int handling, double speed, double acceleration){
+    public Boat (int health,int resistance, int handling, int speed, int acceleration){
         this.baseHealth = health;
         this.baseResistance = resistance;
         this.handling = baseHandling;
@@ -50,16 +45,16 @@ public class Boat implements Movable {
         isInvencible = false; //not invencible at the beginning, just when it is hit by an invencible power up
     }
     //Getters for the atributes of the boat
-    public double getHealth(){
+    public int getHealth(){
         return currentHealth; //get the current health
     }
     public int getResistance(){
         return currentResistance; //get the current resistance
     }
-    public double getSpeed(){
+    public int getSpeed(){
         return currentSpeed; //get the current speed
     }
-    public double getAcceleration(){
+    public int getAcceleration(){
         return currenAcceleration; //get the current acceleration
     }
     //Check that the boat is invencible just to make sure 
@@ -67,25 +62,30 @@ public class Boat implements Movable {
     public boolean isInvencible(){
         return this.isInvencible;
     }
-    //Verify if the boat is dead, no more health left
-    public boolean dead(){
-        return this.currentHealth == 0;
+    public void setHealth(int health) {
+        this.currentHealth = health; //set the current health
     }
-    //When the boat is hit by an obstacle, it decreases its health if it has hit it and if it is not invencible
-    public double decreaseHealth(Obstacle ob){
-        if(ob.getWasHit() || !isInvencible()){
-            this.currentHealth -= ob.getDamageOnHit();
+    public void setResistance(int resistance) {
+        this.currentResistance = resistance; //set the current resistance
     }
+    public void setSpeed(int speed) {
+        this.currentSpeed = speed;
+    }//set the current speed
+    public void setAcceleration(int acceleration) {
+        this.currenAcceleration = acceleration; //set the current acceleration
+    }
+    
+    public void adjustResistance(int resistanceDelta) {
+        this.currentResistance += resistanceDelta; //increase the current resistance
+        currentResistance = Math.min(currentResistance, baseResistance); //if the current resistance is greater than the base resistance, set the current resistance to the base resistance
+    }
+    public void adjustSpeed(int speedDelta) {
+        this.currentSpeed += speedDelta; //increase the current speed
+        currentSpeed = Math.min(currentSpeed, baseSpeed); //if the current speed is greater than the base speed, set the current speed to the base speed
+    }
+    public void adjustAcceleration(int accelerationDelta) {
+        this.currenAcceleration += accelerationDelta; //increase the current acceleration
+        currenAcceleration = Math.min(currenAcceleration, baseAcceleration); //if the current acceleration is greater than the base acceleration, set the current acceleration to the base acceleration
     }   
-    //When the boat collides with a power up, its stats are increased depending on the type of power up it hits
-    public double applyPowerUp(PowerUpType powerUp){
-        if(powerUp == PowerUpType.HEALTH){
-            this.currentHealth += CONSTANT_HEALTH_INCREASE; //hitting a health power up increases the boat's health
-        }else if(powerUp == PowerUpType.SPEED){
-            this.currentSpeed += CONSTANT_SPEED_INCREASE; //hitting a speed power up increases the boat's speed
-        }else{
-            this.isInvencible = true; //hitting an invencible power up makes the boat invencible for some time
-        }
-    }
 }
 
