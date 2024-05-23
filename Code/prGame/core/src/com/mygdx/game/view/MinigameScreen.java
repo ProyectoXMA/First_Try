@@ -2,8 +2,10 @@ package com.mygdx.game.view;
 
 import java.util.Arrays;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -29,6 +31,13 @@ public class MinigameScreen implements Screen {
     private long startTime;
     private long timeLimit;
 
+    // Dimensions of the panel to display instructions and user input
+    private final int panelHeight = 150;
+    private final int panelWidth = 300;
+    private Texture textoutput;
+
+
+
 // Constructor
     public MinigameScreen(final MyGdxGame game, GameState gameState) {
         this.game = game;
@@ -38,6 +47,8 @@ public class MinigameScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
+
+        textoutput = new Texture(Gdx.files.internal("textPanel.png"));
     }
 
 
@@ -57,10 +68,12 @@ public class MinigameScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
-
-
         stage.act();
         stage.draw();
+
+        game.batch.draw(textoutput, panelHeight, panelWidth);
+
+
     }
 
     @Override

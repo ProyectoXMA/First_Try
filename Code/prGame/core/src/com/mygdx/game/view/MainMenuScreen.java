@@ -83,7 +83,7 @@ public class MainMenuScreen implements Screen {
         if (Gdx.input.isTouched()) {
             if (mouseX >= playButtonX && mouseX <= playButtonX + BUTTONWIDTH&&
                     mouseY >= playButtonY && mouseY <= playButtonY + BUTTONHEIGHT) {
-                        game.setScreen(new RaceScreen(game));  // MODIFICATION for minigame screen game.setScreen(new MinigameScreen(game, null));
+                        game.setScreen(new MinigameScreen(game, null));  // MODIFICATION for minigame screen game.setScreen(new MinigameScreen(game, null));
                 dispose();
             }
             if (mouseX >= quitButtonX && mouseX <= quitButtonX + BUTTONWIDTH&&
