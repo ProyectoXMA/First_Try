@@ -50,7 +50,7 @@ public class MinigameScreen implements Screen {
         camera.setToOrtho(false, 800, 480);
 
         textoutput = new Texture(Gdx.files.internal("textPanel.png"));
-        font = new BitmapFont();
+        font = new BitmapFont(Gdx.files.internal("Daydream.ttf"));
     }
 
 
