@@ -23,6 +23,7 @@ public class MainMenuScreen implements Screen {
 
     //texture defination for buttons
     Texture playLevelButton;
+    Texture chooseBoatButton;
     Texture quitButton;
     //default button dimensions
     private final int BUTTONWIDTH = 195;
@@ -38,8 +39,9 @@ public class MainMenuScreen implements Screen {
         MenuImage = new Texture(Gdx.files.internal("dragon2.jpeg"));
 
         //initialization of buttons
-        playLevelButton = new Texture(Gdx.files.internal("playButton.png"));
-        quitButton = new Texture(Gdx.files.internal("quitButton.png"));
+            playLevelButton = new Texture(Gdx.files.internal("playButton.png"));
+            chooseBoatButton = new Texture(Gdx.files.internal("droplet.png"));
+            quitButton = new Texture(Gdx.files.internal("quitButton.png"));
     }
 
     /**
@@ -58,12 +60,14 @@ public class MainMenuScreen implements Screen {
     public void render(float delta) {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-
         //Button Coordinates
         float playButtonX = BUTTONX;
         float playButtonY = BUTTONY;
+        float chooseBoatButtonX = BUTTONX;
+        float chooseBoatButtonY = playButtonY - BUTTONHEIGHT - 20;
         float quitButtonX = BUTTONX;
-        float quitButtonY = BUTTONY - BUTTONHEIGHT - 20;
+        float quitButtonY = chooseBoatButtonY - BUTTONHEIGHT - 20;
+
 
         game.batch.begin();
         //draws the initial Main background dragon image
@@ -71,7 +75,8 @@ public class MainMenuScreen implements Screen {
 
         //draws the buttons
         game.batch.draw(playLevelButton, BUTTONX, BUTTONY, BUTTONWIDTH, BUTTONHEIGHT);
-        game.batch.draw(quitButton, BUTTONX, BUTTONY-BUTTONHEIGHT-20, BUTTONWIDTH, BUTTONHEIGHT);
+        game.batch.draw(chooseBoatButton,BUTTONX, chooseBoatButtonY, BUTTONWIDTH, BUTTONHEIGHT);
+        game.batch.draw(quitButton, BUTTONX, quitButtonY, BUTTONWIDTH, BUTTONHEIGHT);
 
         game.batch.end();
 
@@ -81,16 +86,26 @@ public class MainMenuScreen implements Screen {
 
         //logic to detect button clicks
         if (Gdx.input.isTouched()) {
+            //Play
             if (mouseX >= playButtonX && mouseX <= playButtonX + BUTTONWIDTH&&
                     mouseY >= playButtonY && mouseY <= playButtonY + BUTTONHEIGHT) {
                         //game.setScreen(new RaceScreen(game));
                         game.setScreen(new MinigameScreen(game, null));
                 dispose();
             }
+            //ChooseBoat
+            if (mouseX >= chooseBoatButtonX && mouseX <= chooseBoatButtonX + BUTTONWIDTH&&
+                    mouseY >= chooseBoatButtonX && mouseY <= chooseBoatButtonY + BUTTONHEIGHT) {
+                //game.setScreen(new RaceScreen(game));
+                        game.setScreen(new RaceScreen(game));
+                dispose();
+            }
+            //Quit
             if (mouseX >= quitButtonX && mouseX <= quitButtonX + BUTTONWIDTH&&
                     mouseY >= quitButtonY && mouseY <= quitButtonY + BUTTONHEIGHT) {
                 Gdx.app.exit();
             }
+
         }
     }
 
