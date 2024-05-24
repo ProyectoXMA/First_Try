@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.util.Config;
 
 /**
 * This class is the entry point of the game, it contains the main method, which will be executed when launching
@@ -28,6 +29,8 @@ public class DesktopLauncher {
 
 		// Set the title of the application window
 		config.setTitle(GAME_TITLE);
+		config.setResizable(false);
+		config.setWindowedMode(Config.WIDTH, Config.HEIGHT);
 
 		// Create a new application instance and start the game loop
 		new Lwjgl3Application(new MyGdxGame(), config);

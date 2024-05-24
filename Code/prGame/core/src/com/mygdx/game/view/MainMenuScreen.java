@@ -21,7 +21,7 @@ public class MainMenuScreen implements Screen {
     OrthographicCamera camera;
     private final Texture MenuImage;
 
-    //texture defination for buttons
+    //texture definition for buttons
     Texture playLevelButton;
     Texture selectionButton;
     Texture tutorialButton;
@@ -29,23 +29,23 @@ public class MainMenuScreen implements Screen {
     Texture quitButton;
     //default button dimensions
     private int BUTTONWIDTH = Config.WIDTH/5;
-    private int BUTTONHEIGHT = Config.HEIGHT/10;
-    private float BUTTONX = (Config.WIDTH - BUTTONWIDTH) / 2;
-    private float BUTTONY = (Config.HEIGHT/2);
+    private int BUTTONHEIGHT = Config.HEIGHT/16;
+    private float BUTTONX = (float) (Config.WIDTH - BUTTONWIDTH) /2;
+    private float BUTTONY = ((float) Config.HEIGHT /2);
 
     public MainMenuScreen(final MyGdxGame game) {
         this.game = game;
         this.controller = new MenuController(game);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Config.WIDTH, Config.HEIGHT);
-        MenuImage = new Texture(Gdx.files.internal("dragon2.jpeg"));
+        MenuImage = new Texture(Gdx.files.internal("dragon.jpeg"));
 
         //initialization of buttons
-            playLevelButton = new Texture(Gdx.files.internal("playButton.png"));
-            selectionButton = new Texture(Gdx.files.internal("playButton.png"));
-            tutorialButton = new Texture(Gdx.files.internal("playButton.png"));
-            settingsButton = new Texture(Gdx.files.internal("playButton.png"));
-            quitButton = new Texture(Gdx.files.internal("quitButton.png"));
+        playLevelButton = new Texture(Gdx.files.internal("playButton.png"));
+        selectionButton = new Texture(Gdx.files.internal("playButton.png"));
+        tutorialButton = new Texture(Gdx.files.internal("playButton.png"));
+        settingsButton = new Texture(Gdx.files.internal("playButton.png"));
+        quitButton = new Texture(Gdx.files.internal("quitButton.png"));
     }
 
     /**
