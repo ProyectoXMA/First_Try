@@ -71,8 +71,6 @@ public class MinigameLogic {
                 if (character != '\b' && character != '\r' && character != '\n') { // Any key other than 'Enter' or 'Backspace'
                     typedWord = typedWord + character; // Add the character to typedWord
                     checkPartialWord();
-                } else if (character == '\b' && typedWord.length() > 0) { // Handle backspace
-                    typedWord = typedWord.substring(0, typedWord.length() - 1);
                 }
                 return true;
             }
