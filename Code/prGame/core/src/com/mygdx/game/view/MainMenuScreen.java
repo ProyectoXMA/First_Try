@@ -178,16 +178,11 @@ public class MainMenuScreen implements Screen {
      * @param mouseY Y position of the mouse
      */
     private void onButtonClicked(float mouseX, float mouseY) {
-        boolean insidePlay = mouseX >= playButtonX && mouseX <= playButtonX + BUTTONWIDTH &&
-                mouseY >= playButtonY && mouseY <= playButtonY + BUTTONHEIGHT;
-        boolean insideBoat = mouseX >= selectionButtonX && mouseX <= selectionButtonX + BUTTONWIDTH &&
-                mouseY >= selectionButtonY && mouseY <= selectionButtonY + BUTTONHEIGHT;
-        boolean insideTutorial = mouseX >= tutorialButtonX && mouseX <= tutorialButtonX + BUTTONWIDTH &&
-                mouseY >= tutorialButtonY && mouseY <= tutorialButtonY + BUTTONHEIGHT;
-        boolean insideSettings = mouseX >= settingsButtonX && mouseX <= settingsButtonX + BUTTONWIDTH &&
-                mouseY >= settingsButtonY && mouseY <= settingsButtonY + BUTTONHEIGHT;
-        boolean insideQuit = mouseX >= quitButtonX && mouseX <= quitButtonX + BUTTONWIDTH &&
-                mouseY >= quitButtonY && mouseY <= quitButtonY + BUTTONHEIGHT;
+        boolean insidePlay = isInsideButton(mouseX, mouseY, playButtonX, playButtonY);
+        boolean insideBoat = isInsideButton(mouseX, mouseY, selectionButtonX, selectionButtonY);
+        boolean insideTutorial = isInsideButton(mouseX, mouseY, tutorialButtonX, tutorialButtonY);
+        boolean insideSettings = isInsideButton(mouseX, mouseY, settingsButtonX, settingsButtonY);
+        boolean insideQuit = isInsideButton(mouseX, mouseY, quitButtonX, quitButtonY);
 
         //Play
         if (insidePlay) {
@@ -215,6 +210,7 @@ public class MainMenuScreen implements Screen {
 
         //Quit
         if (insideQuit) {
+            dispose();
             Gdx.app.exit();
         }
     }
