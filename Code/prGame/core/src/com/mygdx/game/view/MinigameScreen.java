@@ -117,7 +117,7 @@ public class MinigameScreen implements Screen {
         // Calls the first word to display
         String character = minigameLogic.getCurrentWord();
         glyphLayout.setText(font, character);
-        game.font.draw(game.batch, character, 325, 350);
+        game.font.draw(game.batch, character, 350, 350);
         // Displays on real time user input
         String reply = "Reply: " + minigameLogic.getTypedWord();
         glyphLayout.setText(font, reply);

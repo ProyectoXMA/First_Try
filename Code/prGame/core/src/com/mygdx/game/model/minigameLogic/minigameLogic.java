@@ -67,11 +67,12 @@ public class MinigameLogic {
         Gdx.input.setInputProcessor(new InputAdapter(){
             @Override
             public boolean keyTyped(char character) {
-                // Check word after 'Enter' is pressed (carriage return or newline button)
-                if(character == '\r' || character == '\n') {
-                    checkWord();
-                } else if (character != '\b') { // Any other key other than 'Enter' or 'Backspace' is pressed
-                    typedWord = typedWord + character; // Register such key on the string
+                // Handle input character
+                if (character != '\b' && character != '\r' && character != '\n') { // Any key other than 'Enter' or 'Backspace'
+                    typedWord = typedWord + character; // Add the character to typedWord
+                    checkPartialWord();
+                } else if (character == '\b' && typedWord.length() > 0) { // Handle backspace
+                    typedWord = typedWord.substring(0, typedWord.length() - 1);
                 }
                 return true;
             }
@@ -97,18 +98,20 @@ public class MinigameLogic {
      /**
       * Method to verify typed words read from Player input
       */
-    public void checkWord(){
-        // Check that typed word is the one showed in the panel
-        if (typedWord.equals(currentWord)) {
-            successCounter++;
+      public void checkPartialWord(){
+        // Check that typedWord matches the beginning of currentWord
+        if (currentWord.startsWith(typedWord)) {
+            startTime = System.currentTimeMillis();
+            checkGameState();
+            if (typedWord.equals(currentWord)) { //If the whole word is matched
+                successCounter++;
+            }
         } else {
             failCounter++;
+            checkGameState();
+            generateNewWord();
+            startTime = System.currentTimeMillis();
         }
-        // After each word check verify if success or fail conditions are met
-        checkGameState();
-        // Then if needed, show next word
-        generateNewWord();
-        startTime = System.currentTimeMillis();
     }
 
     /**
