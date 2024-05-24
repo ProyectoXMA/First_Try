@@ -30,7 +30,7 @@ public class Lane {
     }
 
     /**
-     * This method should be called by the race class, that should handle a pool of obstacles to share among all lanes.
+     * This method should be called by the leg class, that should handle a pool of obstacles to share among all lanes.
      * @param obstacle the obstacle to add to the lane
      */
     public void addObstacle(Obstacle obstacle) {
@@ -38,7 +38,7 @@ public class Lane {
     }
 
     /**
-     * This method should be called by the race class, that should handle a pool of power-ups to share among all lanes.
+     * This method should be called by the leg class, that should handle a pool of power-ups to share among all lanes.
      * @param powerUp the power-up to add to the lane
      */
     public void addPowerUp(PowerUp powerUp) {
@@ -46,7 +46,7 @@ public class Lane {
     }
 
     /**
-     * This method should be called by the race class, that should handle a pool of boats to share among all lanes.
+     * This method should be called by the leg class, that should handle a pool of obstacles to share among all lanes.
      * @param obstacle the obstacle to be removed form the obstacle list
      * @return the obstacle that was removed to be handled by the race class
      */
