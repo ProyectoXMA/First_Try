@@ -28,7 +28,7 @@ public class Boat implements Movable, Collidable, GameObject{
     private int currenAcceleration;
     private boolean isInvencible;
     //Constructor for the boat
-    public Boat (int health,int resistance, int handling, int speed, int acceleration, Rectangle hitBox){
+    public Boat (int health, int resistance, int handling, int speed, int acceleration, Rectangle hitBox){
         this.baseHealth = health;
         this.baseResistance = resistance;
         this.baseHandling = handling;
