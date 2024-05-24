@@ -6,6 +6,7 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.GameState;
 import com.mygdx.game.MyGdxGame;
+
 
 
 public class MinigameScreen implements Screen {
@@ -39,24 +41,27 @@ public class MinigameScreen implements Screen {
     // Dimensions of assets
     private final int panelHeight = 180;
     private final int panelWidth = 300;
-    private final int timerHeight = 100;
-    private final int timerWidth = 100;
+    private final int timerHeight = 20;
+    private final int timerWidth = 20;
     // Assets on screen
+    private Texture backgroundImage;
     private Texture textOutput;
     private Texture playerInput;
     private Texture timerIcon;
     private BitmapFont font;
+    Music epicMusic;
 
 // Constructor
     public MinigameScreen(final MyGdxGame game, GameState gameState) {
         this.game = game;
         this.gameState = gameState;
-        this.words = Arrays.asList("Dragon", "Boat", "Racing", "Myhtic", "Ancient", "Ritualistic", "China", "Competition", "River", "Tradition");
-        this.timeLimit = 8000; // 8 seconds to type the word
-
+        this.words = Arrays.asList("Dragon", "Boat", "Racing", "Duck", "Ancient", "Ritualistic", "China", "Competition", "River", "Tradition");
+        this.timeLimit = 10000; // 10 seconds to type the word
+        epicMusic = new 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-
+        
+        backgroundImage = new Texture(Gdx.files.internal("possible_background.png"));
         textOutput = new Texture(Gdx.files.internal("textPanel2.png"));
         playerInput = new Texture(Gdx.files.internal("textPanel2.png"));
         timerIcon = new Texture(Gdx.files.internal("timerIcon.png"));
@@ -109,6 +114,7 @@ public class MinigameScreen implements Screen {
         // @var currentWord will take the vale of any word from the predefined words list
         // @var typedWord is reseted on every function call
         private void generateNewWord() {
+            r = new Random().nextInt(10);
             currentWord = words.get(r);
             typedWord = "";
         }
@@ -116,16 +122,11 @@ public class MinigameScreen implements Screen {
         // Method to verify typed words read from Player input
         //
         private void checkWord() {
-            // Time to type the word has runned out
-            if (remainingTime <= 0){
-                failCounter++;
+            // Verify that typed word is the one showed in the panel
+            if (typedWord.equals(currentWord)) {
+                successCounter++;
             } else {
-                // Verify that typed word is the one showed in the panel
-                if (typedWord.equals(currentWord)) {
-                    successCounter++;
-                } else {
-                    failCounter++;
-                }
+                failCounter++;
             }
             // After each word check verify if success or fail conditions are met
             checkGameState();
@@ -136,14 +137,15 @@ public class MinigameScreen implements Screen {
 
         private void checkGameState() {
             if (successCounter == 1) {
-                gameState.setBaseHealth(100); // Restore Boat's HP
-                gameState.setMinigamePlaysLeft(0); // Signal main game that it cannot return to the minigame (unless a PowerUp updates value)
-                game.setScreen(new RaceScreen(game)); // Return to the main race
+                // gameState.setBaseHealth(100); // Restore Boat's HP
+                // gameState.setMinigamePlaysLeft(0); // Signal main game that it cannot return to the minigame (unless a PowerUp updates value)
+                game.setScreen(new MainMenuScreen(game)); // Return to the main race
                 // TODO
-                gameState.getDeathPoint(); // Respawn at death point
-                gameState.getMyBoat();     // Return to with previous selected Boat
-                gameState.getRivals();     // Return Rivals to the main race
+                // gameState.getDeathPoint(); // Respawn at death point
+                // gameState.getMyBoat();     // Return to with previous selected Boat
+                // gameState.getRivals();     // Return Rivals to the main race
             } else if (failCounter >= 3) {
+                dispose();
                 // game.setScreen(new GameOverScreen(game)); TODO
             }
         }
@@ -155,26 +157,34 @@ public class MinigameScreen implements Screen {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-
         stage.act();
         stage.draw();
-
         // Calculates the remaining time to display real time coundown
         remainingTime = (timeLimit - (System.currentTimeMillis() - startTime)) / 1000f;
+        if(remainingTime <= 0){
+            failCounter++;
+            checkGameState();
+            generateNewWord();
+            startTime = System.currentTimeMillis();
+        }
         // TODO fix visuals on screen XD
         game.batch.begin();
+        // Background sceneary
+        //
+        // @var viewport.getScreenHeight(), viewport.getScreenWidth() adjusts the image to fit the current screen dimensions
+        game.batch.draw(backgroundImage,-100, -100, 1000, 800);
         // Shows on screen the panel with the word to type
-        game.batch.draw(textOutput, 200, 200, panelWidth, panelHeight);
-        font.draw(game.batch,"TYPE THE WORD!!",320,370);
+        game.batch.draw(textOutput, 250, 250, panelWidth, panelHeight);
+        game.font.draw(game.batch,"TYPE THE WORD!!",325,400);
         // Calls the firt word to display
-        font.draw(game.batch, currentWord, 350, 325);
+        game.font.draw(game.batch, currentWord, 325, 350);
         // Displays on real time user input
-        game.batch.draw(playerInput, 250, 300, panelWidth, panelHeight);
-        font.draw(game.batch, "Reply: " + typedWord, 230, 235);
+        game.batch.draw(playerInput, 250, 50, panelWidth, 80);
+        game.font.draw(game.batch, "Reply: " + typedWord, 275,100);
         // Displays timer countdown
-        game.batch.draw(timerIcon, 7200, 400, timerWidth, timerHeight);
-        font.draw(game.batch, String.format("[%.2f]", remainingTime), 750, 470);
-
+        game.batch.draw(timerIcon, 725, 454, timerWidth, timerHeight);
+        game.font.draw(game.batch, String.format("[%.2f]", remainingTime), 750, 470);
+        game.font.draw(game.batch,"Remaining attempts: " + (3-failCounter),300,50);
         game.batch.end();
 
 
