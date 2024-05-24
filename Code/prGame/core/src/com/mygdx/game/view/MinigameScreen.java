@@ -51,7 +51,7 @@ public class MinigameScreen implements Screen {
         this.game = game;
         this.gameState = gameState;
         this.minigameLogic = new MinigameLogic(gameState);
-        this.minigameController = new MinigameController(game, minigameLogic);
+        this.minigameController = new MinigameController(game, minigameLogic,this);
 
         epicMusic = Gdx.audio.newMusic(Gdx.files.internal("epicMusic.mp3"));
         epicMusic.setLooping(true);
@@ -160,8 +160,7 @@ public class MinigameScreen implements Screen {
 
     @Override
     public void dispose() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dispose'");
+        epicMusic.stop();
     }
     
 }
