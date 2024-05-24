@@ -8,23 +8,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class minigameLogic {
+public class MinigameLogic {
     private GameState gameState;
-    private int successCounter;
-    private int failCounter;
+    private List<String> words;
     private String currentWord;
     private String typedWord;
+    private int successCounter;
+    private int failCounter;
+    private int r;
     private double startTime;
     private double timeLimit;
     private double remainingTime;
-    private int r;
-    private List<String> words;
 
-    public minigameLogic(GameState gameState) {
+    public MinigameLogic(GameState gameState) {
         this.gameState = gameState;
+        this.words = Arrays.asList("Dragon", "Boat", "Racing", "Duck", "Ancient", "Ritualistic", "China", "Competition", "River", "Tradition");
         successCounter = 0;
         failCounter = 0;
-        this.words = Arrays.asList("Dragon", "Boat", "Racing", "Duck", "Ancient", "Ritualistic", "China", "Competition", "River", "Tradition");
         typedWord = "";
         timeLimit = 10000;
     }
@@ -57,10 +57,12 @@ public class minigameLogic {
         return currentWord;
     }
 
-    // Method to read Player input
-    //
-    // @param character stores the key pressed by the user
-    // @method checkWord() process the keystrokes stored in character after 'Enter' key is pressed
+    /**
+     * Method to set up the input processor for reading player input.
+     * When the 'Enter' key is pressed, it processes the typed word.
+     * 
+     * @param character the key pressed by the user
+     */
     public void generateAdapter(){
         Gdx.input.setInputProcessor(new InputAdapter(){
             @Override
@@ -68,30 +70,35 @@ public class minigameLogic {
                 // Check word after 'Enter' is pressed (carriage return or newline button)
                 if(character == '\r' || character == '\n') {
                     checkWord();
-                } else if (character != '\b') { // Any other key other than 'Enter' is pressed
+                } else if (character != '\b') { // Any other key other than 'Enter' or 'Backspace' is pressed
                     typedWord = typedWord + character; // Register such key on the string
                 }
                 return true;
             }
         });
-        // @method to show the next word to type
-        // @var startTime is restarted on every the word call
+        // Calls method to show the next word to type
         generateNewWord();
+        // Resets the start time for the new word
         startTime = System.currentTimeMillis();
     }
-    // Method to display the next word to the Player
-    //
-    // @var currentWord will take the vale of any word from the predefined words list
-    // @var typedWord is reseted on every function call
+
+    /**
+     * Method to display the next word to the Player
+     * 
+     * currentWord will take the vale of any word from the predefined words list
+     * typedWord is reseted on every function call
+     */
     public void generateNewWord(){
         r = new Random().nextInt(10);
         currentWord = words.get(r);
         typedWord = "";
     }
-    // Method to verify typed words read from Player input
-    //
+
+     /**
+      * Method to verify typed words read from Player input
+      */
     public void checkWord(){
-        // Verify that typed word is the one showed in the panel
+        // Check that typed word is the one showed in the panel
         if (typedWord.equals(currentWord)) {
             successCounter++;
         } else {
@@ -104,19 +111,25 @@ public class minigameLogic {
         startTime = System.currentTimeMillis();
     }
 
+    /**
+      * Method to check and return the result of the minigame
+      */
     public int checkGameState(){
+        int state = 0;
         if(successCounter == 1){
             //gameState.setMinigamePlaysLeft(0);
             //gameState.getMyBoat().adjustHealth(gameState.getBaseHealth());
-            return successCounter;
+            state = successCounter;
         }else if(failCounter == 3){
-            return failCounter;
+            state = failCounter;
         }
-        return 0;
+        return state;
     }
 
+    /**
+      * Method to calculate the remaining time to display real time coundown
+      */
     public void run(){
-        // Calculates the remaining time to display real time coundown
         remainingTime = (timeLimit - (System.currentTimeMillis() - startTime)) / 1000f;
         if(remainingTime <= 0){
             failCounter++;
@@ -125,4 +138,5 @@ public class minigameLogic {
             startTime = System.currentTimeMillis();
         }
     }
+
 }
