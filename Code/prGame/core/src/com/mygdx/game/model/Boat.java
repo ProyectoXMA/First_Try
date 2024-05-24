@@ -3,6 +3,12 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.movement.*;
 
+/**
+ * The Boat class represents a boat in the game.
+ * It implements the Movable, Collidable, and GameObject interfaces.
+ * It is responsible for storing the boat's attributes.
+ * It delegates the movement (as all Movable objects) to a MovementStrategy.
+ */
 public class Boat implements Movable, Collidable, GameObject{
     //ALL THIS STUFF IS FOR THE MOVEMENT
     private MovementStrategy movementStrategy;
@@ -98,12 +104,18 @@ public class Boat implements Movable, Collidable, GameObject{
         return hitBox;
     }
 
+    /**
+     * Accepts a visitor of type CollidableVisitor to handle the collisions
+     */
     @Override
     public void accept(CollidableVisitor visitor) {
         visitor.visitBoat(this);
     }
 
-    //MovementStrategy is made in the MovementStrategy class, this is the strategy pattern
+    /**
+     * Delegate the movement to the MovementStrategy
+     * @param delta the time passed since the last frame
+     */
     @Override
     public void move(float delta) {
         movementStrategy.move(this, delta);

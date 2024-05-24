@@ -8,7 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-
+/**
+ * This class represents a lane in the game.
+ * It contains all the objects that are present in the lane (obstacles, power-ups, boats).
+ * It also stores a reference to the assigned boat, and a List of all boats present in the lane, used to subtract health to invaders boats.
+ */
 public class Lane {
     private final int laneId;
     private Set<Obstacle> obstacles;
@@ -25,20 +29,46 @@ public class Lane {
         boats.add(boat);
     }
 
+    /**
+     * This method should be called by the race class, that should handle a pool of obstacles to share among all lanes.
+     * @param obstacle the obstacle to add to the lane
+     */
     public void addObstacle(Obstacle obstacle) {
         obstacles.add(obstacle);
     }
+
+    /**
+     * This method should be called by the race class, that should handle a pool of power-ups to share among all lanes.
+     * @param powerUp the power-up to add to the lane
+     */
     public void addPowerUp(PowerUp powerUp) {
         powerUps.add(powerUp);
     }
+
+    /**
+     * This method should be called by the race class, that should handle a pool of boats to share among all lanes.
+     * @param obstacle the obstacle to be removed form the obstacle list
+     * @return the obstacle that was removed to be handled by the race class
+     */
     public Obstacle removeObstacle(Obstacle obstacle) {
         obstacles.remove(obstacle);
         return obstacle;
     }
+
+    /**
+     * This method should be called by the race class, that should handle a pool of power-ups to share among all lanes.
+     * @param powerUp the power-up to be removed form the power-up list
+     * @return the power-up that was removed to be handled by the race class
+     */
     public PowerUp removePowerUp(PowerUp powerUp) {
         powerUps.remove(powerUp);
         return powerUp;
     }
+
+    /**
+     * This method iterates over all boats to check for collisions.
+     * The handler is responsible for checking if a collision has occurred and handling it.
+     */
     public void applyCollisions() {
         CollisionHandler handler = new CollisionHandler();
         for (Boat boat : boats) {
@@ -46,6 +76,11 @@ public class Lane {
             searchCollisions(handler);
         }
     }
+
+    /**
+     * This method iterates over all obstacles and power-ups to be visited by the handler.
+     * @param handler the visitor responsible for handling the collisions for its boat. Should be accepted by all Collidable objects.
+     */
     private void searchCollisions(CollisionHandler handler) {
         for (Obstacle obstacle : obstacles) {
             handler.visitObstacle(obstacle);

@@ -5,6 +5,11 @@ import com.mygdx.game.model.obstacles.Log;
 import com.mygdx.game.model.obstacles.ObstacleVisitor;
 import com.mygdx.game.model.obstacles.Stone;
 
+/**
+ * This class is a visitor that moves the obstacle it visits.
+ * It implements the Visitor pattern, it visits all Obstacle objects (Log, Stone, Duck).
+ * As it delegates the movement itself to the Movement Strategy, maybe it can be refactored.
+ */
 public class MoveObstacleVisitor implements ObstacleVisitor {
     private float delta;
     public MoveObstacleVisitor(float delta) {
