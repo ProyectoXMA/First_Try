@@ -90,7 +90,7 @@ public class MinigameScreen implements Screen {
         int res = minigameLogic.checkGameState();
         if(res == 1){
             epicMusic.stop();
-            game.setScreen(new MainMenuScreen(game));
+            game.setScreen(new RaceScreen(game));
         }else if(res == 3){
             epicMusic.stop();
             game.setScreen(new LoseScreen(game));
