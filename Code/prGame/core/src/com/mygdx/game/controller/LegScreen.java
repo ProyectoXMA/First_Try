@@ -61,6 +61,8 @@ public class LegScreen implements Screen {
             bucket.x -= 200 * Gdx.graphics.getDeltaTime();
         if (Gdx.input.isKeyPressed(Keys.RIGHT))
             bucket.x += 200 * Gdx.graphics.getDeltaTime();
+        if(Gdx.input.isKeyJustPressed(Keys.ESCAPE))
+            Gdx.app.exit();
 
         // Make sure the bucket stays within the screen bounds
         if (bucket.x < 0)
@@ -88,7 +90,7 @@ public class LegScreen implements Screen {
             }
         }
     }
-
+    @Override
     public void render(float delta) {
         update(delta);
         view.render(bucket, raindrops, dropsGathered);
