@@ -23,11 +23,13 @@ public class MainMenuScreen implements Screen {
 
     //texture defination for buttons
     Texture playLevelButton;
-    Texture chooseBoatButton;
+    Texture selectionButton;
+    Texture tutorialButton;
+    Texture settingsButton;
     Texture quitButton;
     //default button dimensions
-    private final int BUTTONWIDTH = 195;
-    private final int BUTTONHEIGHT = 80;
+    private int BUTTONWIDTH = Config.WIDTH/5;
+    private int BUTTONHEIGHT = Config.HEIGHT/10;
     private float BUTTONX = (Config.WIDTH - BUTTONWIDTH) / 2;
     private float BUTTONY = (Config.HEIGHT/2);
 
@@ -40,7 +42,9 @@ public class MainMenuScreen implements Screen {
 
         //initialization of buttons
             playLevelButton = new Texture(Gdx.files.internal("playButton.png"));
-            chooseBoatButton = new Texture(Gdx.files.internal("droplet.png"));
+            selectionButton = new Texture(Gdx.files.internal("playButton.png"));
+            tutorialButton = new Texture(Gdx.files.internal("playButton.png"));
+            settingsButton = new Texture(Gdx.files.internal("playButton.png"));
             quitButton = new Texture(Gdx.files.internal("quitButton.png"));
     }
 
@@ -60,22 +64,40 @@ public class MainMenuScreen implements Screen {
     public void render(float delta) {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-        //Button Coordinates
+
+        //MARGINS FOR BUTTONS
+        float MARGIN = (float) BUTTONHEIGHT/2;
+
+        //Coordinates for the play button
         float playButtonX = BUTTONX;
         float playButtonY = BUTTONY;
-        float chooseBoatButtonX = BUTTONX;
-        float chooseBoatButtonY = playButtonY - BUTTONHEIGHT - 20;
-        float quitButtonX = BUTTONX;
-        float quitButtonY = chooseBoatButtonY - BUTTONHEIGHT - 20;
 
+        //Coordinates for the selection menu button
+        float selectionButtonX = BUTTONX;
+        float selectionButtonY = playButtonY - BUTTONHEIGHT - MARGIN;
+
+        //Coordinates for the tutorial button
+        float tutorialButtonX = BUTTONX;
+        float tutorialButtonY = selectionButtonY - BUTTONHEIGHT - MARGIN;
+
+        //Coordinates for the settings button
+        float settingsButtonX = BUTTONX;
+        float settingsButtonY = tutorialButtonY - BUTTONHEIGHT - MARGIN;
+
+        //Coordinates for the quit button
+        float quitButtonX = BUTTONX;
+        float quitButtonY = settingsButtonY - BUTTONHEIGHT - MARGIN;
 
         game.batch.begin();
+
         //draws the initial Main background dragon image
         game.batch.draw(MenuImage, 0, 0, Config.WIDTH, Config.HEIGHT);
 
         //draws the buttons
         game.batch.draw(playLevelButton, BUTTONX, BUTTONY, BUTTONWIDTH, BUTTONHEIGHT);
-        game.batch.draw(chooseBoatButton,BUTTONX, chooseBoatButtonY, BUTTONWIDTH, BUTTONHEIGHT);
+        game.batch.draw(selectionButton, BUTTONX, selectionButtonY, BUTTONWIDTH, BUTTONHEIGHT);
+        game.batch.draw(tutorialButton, BUTTONX, tutorialButtonY, BUTTONWIDTH, BUTTONHEIGHT);
+        game.batch.draw(settingsButton, BUTTONX, settingsButtonY, BUTTONWIDTH, BUTTONHEIGHT);
         game.batch.draw(quitButton, BUTTONX, quitButtonY, BUTTONWIDTH, BUTTONHEIGHT);
 
         game.batch.end();
@@ -84,28 +106,38 @@ public class MainMenuScreen implements Screen {
         float mouseX = Gdx.input.getX();
         float mouseY = Config.HEIGHT - Gdx.input.getY();
 
-        //logic to detect button clicks
+        //logic to detect if buttons are clicked
         if (Gdx.input.isTouched()) {
+
             //Play
-            if (mouseX >= playButtonX && mouseX <= playButtonX + BUTTONWIDTH&&
+            if (mouseX >= playButtonX && mouseX <= playButtonX + BUTTONWIDTH &&
                     mouseY >= playButtonY && mouseY <= playButtonY + BUTTONHEIGHT) {
-                        //game.setScreen(new RaceScreen(game));
                         game.setScreen(new MinigameScreen(game, null));
                 dispose();
             }
-            //ChooseBoat
-            if (mouseX >= chooseBoatButtonX && mouseX <= chooseBoatButtonX + BUTTONWIDTH&&
-                    mouseY >= chooseBoatButtonX && mouseY <= chooseBoatButtonY + BUTTONHEIGHT) {
-                //game.setScreen(new RaceScreen(game));
+            //Choose Boat
+            if (mouseX >= selectionButtonX && mouseX <= selectionButtonX + BUTTONWIDTH &&
+                    mouseY >= selectionButtonX && mouseY <= selectionButtonY + BUTTONHEIGHT) {
                         game.setScreen(new RaceScreen(game));
                 dispose();
             }
+            //Tutorial
+            if (mouseX >= tutorialButtonX && mouseX <= tutorialButtonX + BUTTONWIDTH &&
+                    mouseY >= tutorialButtonX && mouseY <= tutorialButtonY + BUTTONHEIGHT) {
+                game.setScreen(new RaceScreen(game));
+                dispose();
+            }
+            //Settings
+            if (mouseX >= settingsButtonX && mouseX <= settingsButtonX + BUTTONWIDTH &&
+                    mouseY >= settingsButtonX && mouseY <= settingsButtonY + BUTTONHEIGHT) {
+                game.setScreen(new RaceScreen(game));
+                dispose();
+            }
             //Quit
-            if (mouseX >= quitButtonX && mouseX <= quitButtonX + BUTTONWIDTH&&
+            if (mouseX >= quitButtonX && mouseX <= quitButtonX + BUTTONWIDTH &&
                     mouseY >= quitButtonY && mouseY <= quitButtonY + BUTTONHEIGHT) {
                 Gdx.app.exit();
             }
-
         }
     }
 
@@ -116,7 +148,8 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-
+        Config.HEIGHT = height;
+        Config.WIDTH = width;
     }
 
     /**

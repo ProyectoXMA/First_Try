@@ -13,7 +13,7 @@ public class DesktopLauncher {
 	//The frames per second at which the game will run.
 	public static final int FRAMES_PER_SECOND = 30; //NFR002
 	//Title of the game.
-	public static final String GAME_TITLE = "Dragon_Boat_Race";
+	public static final String GAME_TITLE = "Dragon Boat Racing";
 
 	/**
 	* The main method which is the entry point of the Java application.
