@@ -7,9 +7,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -42,6 +44,7 @@ public class MinigameScreen implements Screen {
     private Texture timerIcon;
     private BitmapFont font;
     Music epicMusic;
+    GlyphLayout glyphLayout;
 
 // Constructor
     public MinigameScreen(final MyGdxGame game, GameState gameState) {
@@ -58,7 +61,10 @@ public class MinigameScreen implements Screen {
         playerInput = new Texture(Gdx.files.internal("textPanel2.png"));
         timerIcon = new Texture(Gdx.files.internal("timerIcon.png"));
         /// @brief Gdx.files.internal("Daydream.ttf") cannot be loaded as an arguemnt for the BitmapFont yet
+        glyphLayout = new GlyphLayout();
         font = new BitmapFont();
+        font.setColor(Color.BLACK);
+        font.getData().setScale(10);
     }
 
 
@@ -93,19 +99,27 @@ public class MinigameScreen implements Screen {
         game.batch.draw(backgroundImage,-100, -100, 1000, 800);
         // Shows on screen the panel with the word to type
         game.batch.draw(textOutput, 250, 250, panelWidth, panelHeight);
-        game.font.draw(game.batch,"TYPE THE WORD!!",325,400);
+        String text = "TYPE THE WORD!!";
+        glyphLayout.setText(font, text);                                                  
+        game.font.draw(game.batch,text,325,400);
         // Calls the firt word to display
-        game.font.draw(game.batch, minigameLogic.getCurrentWord(), 325, 350);
+        String character = minigameLogic.getCurrentWord();
+        glyphLayout.setText(font, character);
+        game.font.draw(game.batch, character, 325, 350);
         // Displays on real time user input
+        String reply = "Reply: " + minigameLogic.getTypedWord();
+        glyphLayout.setText(font, reply);
         game.batch.draw(playerInput, 250, 50, panelWidth, 80);
-        game.font.draw(game.batch, "Reply: " + minigameLogic.getTypedWord(), 275,100);
+        game.font.draw(game.batch,reply, 275,100);
         // Displays timer countdown
+        String timer = String.format("[%.2f]", minigameLogic.getRemainingTime());
+        glyphLayout.setText(font, timer);           
         game.batch.draw(timerIcon, 725, 454, timerWidth, timerHeight);
-        game.font.draw(game.batch, String.format("[%.2f]", minigameLogic.getRemainingTime()), 750, 470);
-        game.font.draw(game.batch,"Remaining attempts: " + (3-minigameLogic.getFailCounter()),300,50);
+        game.font.draw(game.batch,timer, 750, 470);
+        String timeLeft = "Remaining attempts: " + (3-minigameLogic.getFailCounter());
+        glyphLayout.setText(font, timeLeft);
+        game.font.draw(game.batch,timeLeft,300,50);
         game.batch.end();
-
-
     }
 
     @Override

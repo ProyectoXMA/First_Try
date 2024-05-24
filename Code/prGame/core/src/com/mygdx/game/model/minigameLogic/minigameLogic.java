@@ -106,6 +106,8 @@ public class minigameLogic {
 
     public int checkGameState(){
         if(successCounter == 1){
+            //gameState.setMinigamePlaysLeft(0);
+            //gameState.getMyBoat().adjustHealth(gameState.getBaseHealth());
             return successCounter;
         }else if(failCounter == 3){
             return failCounter;
