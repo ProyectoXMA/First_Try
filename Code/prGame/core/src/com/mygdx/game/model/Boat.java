@@ -27,8 +27,17 @@ public class Boat implements Movable, Collidable, GameObject{
     private int currentSpeed;
     private int currenAcceleration;
     private boolean isInvencible;
-    //Constructor for the boat
-    public Boat (int health, int resistance, int handling, int speed, int acceleration, Rectangle hitBox){
+
+    /**
+     * Private constructor of class Boat, the only way to create a boat is using the factory method createBoat
+     * @param health
+     * @param resistance
+     * @param handling horizontal movement speed
+     * @param speed vertical movement speed
+     * @param acceleration
+     * @param hitBox
+     */
+    private Boat (int health, int resistance, int handling, int speed, int acceleration, Rectangle hitBox){
         this.baseHealth = health;
         this.baseResistance = resistance;
         this.baseHandling = handling;
@@ -40,6 +49,24 @@ public class Boat implements Movable, Collidable, GameObject{
         currentResistance = baseResistance;
         currentSpeed = baseSpeed;
         isInvencible = false; //not invencible at the beginning, just when it is hit by an invencible power up
+    }
+
+    /**
+     * Factory method to create a boat of a given type. The Boat contructor is private, so with his method we restrict the creation of boats to provided types.
+     * @param type the type of boat to create on which the stats depend
+     * @return a new boat of the given type
+     */
+    public static Boat createBoat(BoatType type) {
+        switch (type) {
+            case FAST:
+                return new Boat(100, 10, 100, 200, 10, new Rectangle());
+            case STRONG:
+                return new Boat(200, 5, 50, 140, 5, new Rectangle());
+            case CLASSIC:
+                return new Boat(150, 7, 70, 150, 7, new Rectangle());
+            default:
+                throw new IllegalArgumentException("Tipo de barco no válido");
+        }
     }
     //Getters for the atributes of the boat
     public int getHealth(){

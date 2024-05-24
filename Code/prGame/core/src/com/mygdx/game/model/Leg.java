@@ -29,7 +29,7 @@ public class Leg {
         this.unusedLogs = new HashSet<>();
         this.unusedStones = new HashSet<>();
         for (int i = 0; i < NUMBER_OF_LANES; i++) {
-            lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), BoatFactory.createBoat(BoatType.getRandomType())));
+            lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), Boat.createBoat(BoatType.getRandomType())));
         }
     }
 
