@@ -124,54 +124,51 @@ public class MainMenuScreen implements Screen {
     }
 
     /**
+     * This method is used to check whether the user is hovering over a button.
+     * @param mouseX X position of the mouse
+     * @param mouseY Y position of the mouse
+     * @param x X position of the button
+     * @param y Y position of the button
+     * @return True if the mouse is inside the button, false otherwise.
+     */
+    private boolean isInsideButton(float mouseX, float mouseY, float x, float y) {
+        return mouseX >= x && mouseX <= x + BUTTONWIDTH &&
+                mouseY >= y && mouseY <= y + BUTTONHEIGHT;
+    }
+
+    /**
+     * This method is used to draw a button on the screen, taking into account if its hovered or not.
+     * @param mouseX X position of the mouse
+     * @param mouseY Y position of the mouse
+     * @param x X position of the button
+     * @param y Y position of the button
+     * @param defaultTexture Default texture of the button
+     * @param hoveredTexture Hovered texture of the button
+     */
+    private void drawButton(float mouseX, float mouseY, float x, float y, float buttonX, float buttonY,Texture defaultTexture, Texture hoveredTexture) {
+        boolean isInside = isInsideButton(mouseX, mouseY, x, y);
+        Texture buttonTexture = isInside? hoveredTexture : defaultTexture;
+        game.batch.draw(buttonTexture, buttonX, buttonY, BUTTONWIDTH, BUTTONHEIGHT);
+    }
+
+    /**
      * This method is called constantly to draw the 5 main buttons on the screen,
      * it will detect if the mouse is hovered on top and make the buttons change colour.
      * @param mouseX X position of the mouse
      * @param mouseY Y position of the mouse
      */
     private void drawButtons(float mouseX, float mouseY) {
-        boolean insidePlay = mouseX >= playButtonX && mouseX <= playButtonX + BUTTONWIDTH &&
-                mouseY >= playButtonY && mouseY <= playButtonY + BUTTONHEIGHT;
-        boolean insideBoat = mouseX >= selectionButtonX && mouseX <= selectionButtonX + BUTTONWIDTH &&
-                mouseY >= selectionButtonY && mouseY <= selectionButtonY + BUTTONHEIGHT;
-        boolean insideTutorial = mouseX >= tutorialButtonX && mouseX <= tutorialButtonX + BUTTONWIDTH &&
-                mouseY >= tutorialButtonY && mouseY <= tutorialButtonY + BUTTONHEIGHT;
-        boolean insideSettings = mouseX >= settingsButtonX && mouseX <= settingsButtonX + BUTTONWIDTH &&
-                mouseY >= settingsButtonY && mouseY <= settingsButtonY + BUTTONHEIGHT;
-        boolean insideQuit = mouseX >= quitButtonX && mouseX <= quitButtonX + BUTTONWIDTH &&
-                mouseY >= quitButtonY && mouseY <= quitButtonY + BUTTONHEIGHT;
-
         //Logic to see if buttons are hovered
         //Play
-        if (insidePlay) {
-            game.batch.draw(playLevelButtonSel, BUTTONX, BUTTONY, BUTTONWIDTH, BUTTONHEIGHT);
-        } else {
-            game.batch.draw(playLevelButton, BUTTONX, BUTTONY, BUTTONWIDTH, BUTTONHEIGHT);
-        }
+        drawButton(mouseX, mouseY, playButtonX, playButtonY, playButtonX, playButtonY, playLevelButton, playLevelButtonSel);
         //Choose Boat
-        if (insideBoat) {
-            game.batch.draw(selectionButtonSel, BUTTONX, selectionButtonY, BUTTONWIDTH, BUTTONHEIGHT);
-        } else {
-            game.batch.draw(selectionButton, BUTTONX, selectionButtonY, BUTTONWIDTH, BUTTONHEIGHT);
-        }
+        drawButton(mouseX, mouseY, selectionButtonX, selectionButtonY, selectionButtonX, selectionButtonY, selectionButton, selectionButtonSel);
         //Tutorial
-        if (insideTutorial) {
-            game.batch.draw(tutorialButtonSel, BUTTONX, tutorialButtonY, BUTTONWIDTH, BUTTONHEIGHT);
-        } else {
-            game.batch.draw(tutorialButton, BUTTONX, tutorialButtonY, BUTTONWIDTH, BUTTONHEIGHT);
-        }
+        drawButton(mouseX, mouseY, tutorialButtonX, tutorialButtonY, tutorialButtonX, tutorialButtonY, tutorialButton, tutorialButtonSel);
         //Settings
-        if (insideSettings) {
-            game.batch.draw(settingsButtonSel, BUTTONX, settingsButtonY, BUTTONWIDTH, BUTTONHEIGHT);
-        } else {
-            game.batch.draw(settingsButton, BUTTONX, settingsButtonY, BUTTONWIDTH, BUTTONHEIGHT);
-        }
+        drawButton(mouseX, mouseY, settingsButtonX, settingsButtonY, settingsButtonX, settingsButtonY, settingsButton, settingsButtonSel);
         //Quit
-        if (insideQuit) {
-            game.batch.draw(quitButtonSel, BUTTONX, quitButtonY, BUTTONWIDTH, BUTTONHEIGHT);
-        } else {
-            game.batch.draw(quitButton, BUTTONX, quitButtonY, BUTTONWIDTH, BUTTONHEIGHT);
-        }
+        drawButton(mouseX, mouseY, quitButtonX, quitButtonY, quitButtonX, quitButtonY, quitButton, quitButtonSel);
     }
 
     /**
