@@ -64,8 +64,13 @@ public class MinigameScreen implements Screen {
         playerInput = new Texture(Gdx.files.internal("textPanel2.png"));
         timerIcon = new Texture(Gdx.files.internal("timerIcon.png"));
         /**
-         * @brief Gdx.files.internal("Daydream.ttf") cannot be loaded as an arguemnt for the BitmapFont yet
-         * @var glyphLayout will format the text font used in the minigame (???)
+         * Text formatting for the minigame
+         * 
+         * Daydream.ttf is the candidate font (still deciding)
+         * 
+         * BitmapFont is used to draw text on the screen and 
+         * GlyphLayout is used to compute the size of the text.
+         * font creates a new BitmapFont for drawing text.
          */  
         glyphLayout = new GlyphLayout();
         font = new BitmapFont();
@@ -79,12 +84,10 @@ public class MinigameScreen implements Screen {
     @Override
     public void show() {
         /**
-         * @var viewport is used to determine screen dimensions and has various methods to implement a responsive behavior
+         * viewport is used to determine screen dimensions and has various methods to implement a responsive behavior
+         * stage displays all the actors involved in the screen (UI, buttons, labels, etc)
          */
         viewport = new ExtendViewport(800, 480);
-        /**
-         * @var stage displays all the actors involved in the screen (UI, buttons, labels, etc)
-         */
         stage = new Stage(viewport);
         minigameLogic.generateAdapter();
         epicMusic.play();
