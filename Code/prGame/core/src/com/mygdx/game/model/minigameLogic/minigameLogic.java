@@ -68,15 +68,9 @@ public class minigameLogic {
                 // Check word after 'Enter' is pressed (carriage return or newline button)
                 if(character == '\r' || character == '\n') {
                     checkWord();
-                } else { // Any other key other than 'Enter' is pressed
+                } else if (character != '\b') { // Any other key other than 'Enter' is pressed
                     typedWord = typedWord + character; // Register such key on the string
                 }
-
-                // If the 'Backspace' button is pressed nothing has to be done
-                if(character == '\b'){
-
-                }
-
                 return true;
             }
         });
