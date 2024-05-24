@@ -93,7 +93,7 @@ public class MinigameScreen implements Screen {
             game.setScreen(new MainMenuScreen(game));
         }else if(res == 3){
             epicMusic.stop();
-            dispose();
+            game.setScreen(new LoseScreen(game));
         }
         game.batch.begin();
         // Background sceneary
