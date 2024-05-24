@@ -50,7 +50,7 @@ public class MinigameScreen implements Screen {
     public MinigameScreen(final MyGdxGame game, GameState gameState) {
         this.game = game;
         this.gameState = gameState;
-        epicMusic = Gdx.audio.newMusic(Gdx.files.internal("epicMusic.mp3"));
+        epicMusic = Gdx.audio.newMusic(Gdx.files.internal("countdownMusic.mp3"));
         epicMusic.setLooping(true);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
@@ -77,6 +77,7 @@ public class MinigameScreen implements Screen {
         // stage displays all the actors involved in the screen (UI, buttons, labels, etc)
         stage = new Stage(viewport);
         minigameLogic.generateAdapter();
+        epicMusic.play();
     }
     @Override
     public void render(float delta) {
@@ -88,8 +89,10 @@ public class MinigameScreen implements Screen {
         minigameLogic.run();
         int res = minigameLogic.checkGameState();
         if(res == 1){
+            epicMusic.stop();
             game.setScreen(new MainMenuScreen(game));
         }else if(res == 3){
+            epicMusic.stop();
             dispose();
         }
         game.batch.begin();
