@@ -1,9 +1,6 @@
 package com.mygdx.game.view;
 
-import java.util.Arrays;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,16 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.GameState;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.util.Config;
-
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.mygdx.game.util.Config;
-
 
 public class ChooseBoatScreen implements Screen {
     private final MyGdxGame game;
@@ -39,20 +29,26 @@ public class ChooseBoatScreen implements Screen {
     //Texture for boats
     Texture[] boatTexture = new Texture[4];
     private int actualBoat;
-    private boolean buttonPressed;
+    private boolean clickNotPressed;
 
     // Dimension for Button
-    private final int arrowHeight = 50;
-    private final int arrowWidth = 50;
+    private final int arrowHeight = 70;
+    private final int arrowWidth = 70;
     private final int leftButtonX = 0;
-    private final int leftButtonY = (Config.HEIGHT/2);
-    private final int rightButtonX = (Config.HEIGHT - arrowWidth);
-    private final int rightButtonY = (Config.HEIGHT/2);
+    private final int leftButtonY = (Config.HEIGHT / 2);
+    private final int rightButtonX = (Config.WIDTH - arrowWidth);
+    private final int rightButtonY = (Config.HEIGHT / 2);
 
     private final int chooseButtonHeight = 50;
     private final int chooseButtonWidth = 200;
-    private final int chooseButtonX = (Config.WIDTH/2);
-    private final int chooseButtonY = 400;
+    private final int chooseButtonX = (Config.WIDTH / 2) - (chooseButtonWidth / 2);
+    private final int chooseButtonY = 0;
+
+    private final int boatMenuHeight = 400;
+    private final int boatMenuWidth = 450;
+    private final int boatMenuX = (Config.WIDTH / 2) - (boatMenuWidth / 2);
+    private final int boatMenuY = (Config.WIDTH / 2) - (boatMenuHeight / 2)-50;
+
 
 
     // Constructor
@@ -60,31 +56,27 @@ public class ChooseBoatScreen implements Screen {
         this.game = game;
         this.controller = new MenuController(game);
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, Config.WIDTH, Config.HEIGHT);
 
-        //Initialize Buttons
+        // Initialize Buttons
         leftButton = new Texture(Gdx.files.internal("playButton.png"));
         rightButton = new Texture(Gdx.files.internal("quitButton.png"));
-        chooseButton = new Texture(Gdx.files.internal("bucket.png"));
-        //Inicialize BoatTextureDisplay
-        actualBoat=0;
-        buttonPressed=false;
-        for (int i=0; i<4; i++){
-            boatTexture[i]= new Texture(Gdx.files.internal("boatMenu"+i+".png"));
+        chooseButton = new Texture(Gdx.files.internal("textPanel2.png"));
+
+        // Initialize BoatTextureDisplay
+        actualBoat = 0;
+        clickNotPressed = true;
+        for (int i = 0; i < 4; i++) {
+            boatTexture[i] = new Texture(Gdx.files.internal("boatMenu" + i + ".png"));
         }
     }
 
-
-// Methods
-
-    /// @param stage displays all the actors involved in the screen (UI, buttons, labels, etc.)
     @Override
     public void show() {
         viewport = new ExtendViewport(1280, 720);
         stage = new Stage(viewport);
     }
 
-    // for now just creates a blank screen
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
@@ -94,57 +86,51 @@ public class ChooseBoatScreen implements Screen {
         stage.draw();
 
         game.batch.begin();
-        game.batch.draw(leftButton,leftButtonX,leftButtonY, arrowWidth, arrowHeight);
-        game.batch.draw(rightButton,rightButtonX,rightButtonY, arrowWidth, arrowHeight);
-        game.batch.draw(chooseButton,chooseButtonX,chooseButtonY,chooseButtonWidth,chooseButtonHeight);
-        game.batch.draw(boatTexture[actualBoat],200,140, 200, 200);
-
-
+        game.batch.draw(leftButton, leftButtonX, leftButtonY, arrowWidth, arrowHeight);
+        game.batch.draw(rightButton, rightButtonX, rightButtonY, arrowWidth, arrowHeight);
+        game.batch.draw(chooseButton, chooseButtonX, chooseButtonY, chooseButtonWidth, chooseButtonHeight);
+        game.batch.draw(boatTexture[actualBoat], boatMenuX, boatMenuY, boatMenuWidth, boatMenuHeight);
         game.batch.end();
 
         //Mouse coordinates
         float mouseX = Gdx.input.getX();
         float mouseY = Config.HEIGHT - Gdx.input.getY();
 
-        //Logic to detect button clicks
+        // Logic to detect button clicks
         if (Gdx.input.isTouched()) {
-            //LeftButtonPressed
-            if (mouseX >= leftButtonX && mouseX <= leftButtonX + arrowWidth&&
-                    mouseY >= leftButtonY && mouseY <= leftButtonY + arrowHeight) {
-                actualBoat--;
-                if(actualBoat<0){
-                    actualBoat=boatTexture.length-1;
-                }
-                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-                    buttonPressed = true;
-                } else if (buttonPressed) {
-                    // Solo avanzar al siguiente barco cuando se suelta el botón
-                    buttonPressed = false;
-                    actualBoat++;
-                    if (actualBoat >= boat.length) {
-                        buttonPressed = 0; // Volver al primer barco si se pasa del último
+            if (clickNotPressed) {
+                clickNotPressed = false;
+
+                // LeftButtonPressed
+                if (mouseX >= leftButtonX && mouseX <= leftButtonX + arrowWidth &&
+                        mouseY >= leftButtonY && mouseY <= leftButtonY + arrowHeight) {
+                    actualBoat--;
+                    if (actualBoat < 0) {
+                        actualBoat = boatTexture.length - 1;
                     }
+                    dispose();
                 }
-                dispose();
-            }
-            //RightButtonPressed
-            if (mouseX >= rightButtonX && mouseX <= rightButtonX + arrowWidth&&
-                    mouseY >= rightButtonY && mouseY <= rightButtonY + arrowHeight) {
-                actualBoat++;
-                if(actualBoat>3){
-                    actualBoat=0;
+
+                // RightButtonPressed
+                if (mouseX >= rightButtonX && mouseX <= rightButtonX + arrowWidth &&
+                        mouseY >= rightButtonY && mouseY <= rightButtonY + arrowHeight) {
+                    actualBoat++;
+                    if (actualBoat >= boatTexture.length) {
+                        actualBoat = 0;
+                    }
+                    dispose();
                 }
-                dispose();
-                //game.setScreen(new ChooseBoatScreen(game));
-                dispose();
+
+                // ChooseButtonPressed
+                if (mouseX >= chooseButtonX && mouseX <= chooseButtonX + chooseButtonWidth &&
+                        mouseY >= chooseButtonY && mouseY <= chooseButtonY + chooseButtonHeight) {
+                    // Assigned new boat to the player and go back to main menu.
+                    game.setScreen(new MainMenuScreen(game));
+                    dispose();
+                }
             }
-            //ChooseButtonPressed
-            if (mouseX >= chooseButtonX && mouseX <= chooseButtonX + arrowWidth&&
-                    mouseY >= chooseButtonY && mouseY <= chooseButtonY + arrowHeight) {
-                //Assigned new boat to the player and go back to main menu.
-                game.setScreen(new MainMenuScreen(game));
-                dispose();
-            }
+        } else {
+            clickNotPressed = true;
         }
     }
 
@@ -155,28 +141,19 @@ public class ChooseBoatScreen implements Screen {
 
     @Override
     public void hide() {
-        //stage.dispose();
     }
-
 
     @Override
     public void pause() {
         // TODO Auto-generated method stub
-        //throw new UnsupportedOperationException("Unimplemented method 'pause'");
     }
-
 
     @Override
     public void resume() {
         // TODO Auto-generated method stub
-        //throw new UnsupportedOperationException("Unimplemented method 'resume'");
     }
-
 
     @Override
     public void dispose() {
-        // TODO Auto-generated method stub
-        //throw new UnsupportedOperationException("Unimplemented method 'dispose'");
-    }
-
+        }
 }
