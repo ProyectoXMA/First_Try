@@ -39,6 +39,7 @@ public class LoseScreen implements Screen {
         viewport = new ExtendViewport(800, 480);
         stage = new Stage(viewport);
         losingMusic.play();
+        losingMusic.setVolume((float)0.1);
     }
 
     @Override

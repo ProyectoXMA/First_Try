@@ -2,6 +2,8 @@ package com.mygdx.game.model.minigameLogic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.mygdx.game.GameState;
 
 import java.util.Arrays;
@@ -19,7 +21,9 @@ public class MinigameLogic {
     private double startTime;
     private double timeLimit;
     private double remainingTime;
-
+    private Sound incorrectSound;
+    private Sound savedSound;
+    private Sound typeSound;
     public MinigameLogic(GameState gameState) {
         this.gameState = gameState;
         this.words = Arrays.asList("Dragon", "Boat", "Racing", "Duck", "Ancient", "Ritualistic", "China", "Competition", "River", "Tradition");
@@ -27,6 +31,9 @@ public class MinigameLogic {
         failCounter = 0;
         typedWord = "";
         timeLimit = 10000;
+        incorrectSound = Gdx.audio.newSound(Gdx.files.internal("incorrectSound.mp3"));
+        savedSound = Gdx.audio.newSound(Gdx.files.internal("respawnSound.mp3"));
+        typeSound = Gdx.audio.newSound(Gdx.files.internal("typeSound.mp3"));
     }
 
     public double getRemainingTime() {
@@ -68,7 +75,7 @@ public class MinigameLogic {
             @Override
             public boolean keyTyped(char character) {
                 // Handle input character
-                if (character != '\b' && character != '\r' && character != '\n') { // Any key other than 'Enter' or 'Backspace'
+                if (character != '\b' && character != '\r' && character != '\n') {// Any key other than 'Enter' or 'Backspace'
                     typedWord = typedWord + character; // Add the character to typedWord
                     checkPartialWord();
                 }
@@ -97,7 +104,8 @@ public class MinigameLogic {
       * Method to verify typed words read from Player input
       */
       public void checkPartialWord(){
-        // Check that typedWord matches the beginning of currentWord
+          typeSound.play();
+          // Check that typedWord matches the beginning of currentWord
         if (currentWord.startsWith(typedWord)) {
             startTime = System.currentTimeMillis();
             checkGameState();
@@ -105,6 +113,7 @@ public class MinigameLogic {
                 successCounter++;
             }
         } else {
+            incorrectSound.play();
             failCounter++;
             checkGameState();
             generateNewWord();
@@ -121,6 +130,7 @@ public class MinigameLogic {
             //gameState.setMinigamePlaysLeft(0);
             //gameState.getMyBoat().adjustHealth(gameState.getBaseHealth());
             state = successCounter;
+            savedSound.play();
         }else if(failCounter == 3){
             state = failCounter;
         }
