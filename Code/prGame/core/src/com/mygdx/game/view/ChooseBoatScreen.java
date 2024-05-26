@@ -9,28 +9,25 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.controller.MenuController;
+import com.mygdx.game.controller.ChooseBoatController;
+import com.mygdx.game.model.ChooseBoatModel;
 import com.mygdx.game.util.Config;
 
 public class ChooseBoatScreen implements Screen {
     private final MyGdxGame game;
-    private final MenuController controller;
+    private final ChooseBoatController controller;
+    private final ChooseBoatModel model;
     OrthographicCamera camera;
 
-    //Attributes for the screen
+    // Attributes for the screen
     private Stage stage;
     private Viewport viewport;
 
-    //Texture for Button
+    // Texture for Button
     Texture leftButton;
     Texture rightButton;
     Texture chooseButton;
     Texture chooseButtonSel;
-
-    //Texture for boats
-    Texture[] boatTexture = new Texture[4];
-    private int actualBoat;
-    private boolean clickNotPressed;
 
     // Dimension for Button
     private final int arrowHeight = 70;
@@ -48,14 +45,13 @@ public class ChooseBoatScreen implements Screen {
     private final int boatMenuHeight = 370;
     private final int boatMenuWidth = 400;
     private final int boatMenuX = (Config.WIDTH / 2) - (boatMenuWidth / 2);
-    private final int boatMenuY = (Config.HEIGHT -boatMenuHeight -10);
-
-
+    private final int boatMenuY = (Config.HEIGHT - boatMenuHeight - 10);
 
     // Constructor
     public ChooseBoatScreen(final MyGdxGame game) {
         this.game = game;
-        this.controller = new MenuController(game);
+        this.model = new ChooseBoatModel();
+        this.controller = new ChooseBoatController(game);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Config.WIDTH, Config.HEIGHT);
 
@@ -64,13 +60,6 @@ public class ChooseBoatScreen implements Screen {
         rightButton = new Texture(Gdx.files.internal("arrowRight.png"));
         chooseButton = new Texture(Gdx.files.internal("chooseButton.png"));
         chooseButtonSel = new Texture(Gdx.files.internal("chooseButtonSel.png"));
-
-        // Initialize BoatTextureDisplay
-        actualBoat = 0;
-        clickNotPressed = true;
-        for (int i = 0; i < 4; i++) {
-            boatTexture[i] = new Texture(Gdx.files.internal("boatMenu" + i + ".png"));
-        }
     }
 
     @Override
@@ -84,28 +73,11 @@ public class ChooseBoatScreen implements Screen {
                 mouseY >= y && mouseY <= y + height;
     }
 
-    /**
-     * This method is used to draw a button on the screen, taking into account if its hovered or not.
-     * @param mouseX X position of the mouse
-     * @param mouseY Y position of the mouse
-     * @param x X position of the button
-     * @param y Y position of the button
-     * @param defaultTexture Default texture of the button
-     * @param hoveredTexture Hovered texture of the button
-     */
     private void drawButton(float mouseX, float mouseY, float x, float y, float width, float height, Texture defaultTexture, Texture hoveredTexture) {
         boolean isInside = isInsideButton(mouseX, mouseY, x, y, width, height);
         Texture buttonTexture = isInside ? hoveredTexture : defaultTexture;
         game.batch.draw(buttonTexture, x, y, width, height);
     }
-
-
-
-
-
-
-
-
 
     @Override
     public void render(float delta) {
@@ -115,55 +87,19 @@ public class ChooseBoatScreen implements Screen {
         stage.act();
         stage.draw();
 
-        //Mouse coordinates
+        // Mouse coordinates
         float mouseX = Gdx.input.getX();
         float mouseY = Config.HEIGHT - Gdx.input.getY();
 
         game.batch.begin();
         game.batch.draw(leftButton, leftButtonX, leftButtonY, arrowWidth, arrowHeight);
         game.batch.draw(rightButton, rightButtonX, rightButtonY, arrowWidth, arrowHeight);
-        drawButton(mouseX, mouseY, chooseButtonX, chooseButtonY, chooseButtonWidth, chooseButtonHeight, chooseButton,chooseButtonSel);
-        game.batch.draw(boatTexture[actualBoat], boatMenuX, boatMenuY, boatMenuWidth, boatMenuHeight);
+        drawButton(mouseX, mouseY, chooseButtonX, chooseButtonY, chooseButtonWidth, chooseButtonHeight, chooseButton, chooseButtonSel);
+        game.batch.draw(model.getCurrentBoatTexture(), boatMenuX, boatMenuY, boatMenuWidth, boatMenuHeight);
         game.batch.end();
 
-
-
-        // Logic to detect button clicks
-        if (Gdx.input.isTouched()) {
-            if (clickNotPressed) {
-                clickNotPressed = false;
-
-                // LeftButtonPressed
-                if (mouseX >= leftButtonX && mouseX <= leftButtonX + arrowWidth &&
-                        mouseY >= leftButtonY && mouseY <= leftButtonY + arrowHeight) {
-                    actualBoat--;
-                    if (actualBoat < 0) {
-                        actualBoat = boatTexture.length - 1;
-                    }
-                    dispose();
-                }
-
-                // RightButtonPressed
-                if (mouseX >= rightButtonX && mouseX <= rightButtonX + arrowWidth &&
-                        mouseY >= rightButtonY && mouseY <= rightButtonY + arrowHeight) {
-                    actualBoat++;
-                    if (actualBoat >= boatTexture.length) {
-                        actualBoat = 0;
-                    }
-                    dispose();
-                }
-
-                // ChooseButtonPressed
-                if (mouseX >= chooseButtonX && mouseX <= chooseButtonX + chooseButtonWidth &&
-                        mouseY >= chooseButtonY && mouseY <= chooseButtonY + chooseButtonHeight) {
-                    // Assigned new boat to the player and go back to main menu.
-                    game.setScreen(new MainMenuScreen(game));
-                    dispose();
-                }
-            }
-        } else {
-            clickNotPressed = true;
-        }
+        // Handle input
+        controller.handleInput(mouseX, mouseY, leftButtonX, leftButtonY, arrowWidth, arrowHeight, rightButtonX, rightButtonY, chooseButtonX, chooseButtonY, chooseButtonWidth, chooseButtonHeight, model);
     }
 
     @Override
@@ -177,15 +113,18 @@ public class ChooseBoatScreen implements Screen {
 
     @Override
     public void pause() {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void resume() {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void dispose() {
-        }
+        leftButton.dispose();
+        rightButton.dispose();
+        chooseButton.dispose();
+        chooseButtonSel.dispose();
+        model.dispose();
+    }
 }

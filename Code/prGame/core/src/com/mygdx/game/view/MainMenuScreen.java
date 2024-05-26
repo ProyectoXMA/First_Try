@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controller.MenuController;
+import com.mygdx.game.model.ChooseBoatModel;
 import com.mygdx.game.util.Config;
 
 /**
