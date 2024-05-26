@@ -43,7 +43,7 @@ public class ChooseBoatScreen implements Screen {
     private final int chooseButtonHeight = 80;
     private final int chooseButtonWidth = 230;
     private final int chooseButtonX = (Config.WIDTH / 2) - (chooseButtonWidth / 2);
-    private final int chooseButtonY = 0;
+    private final int chooseButtonY = 5;
 
     private final int boatMenuHeight = 370;
     private final int boatMenuWidth = 400;
@@ -63,7 +63,7 @@ public class ChooseBoatScreen implements Screen {
         leftButton = new Texture(Gdx.files.internal("arrowLeft.png"));
         rightButton = new Texture(Gdx.files.internal("arrowRight.png"));
         chooseButton = new Texture(Gdx.files.internal("chooseButton.png"));
-        chooseButton = new Texture(Gdx.files.internal("chooseButtonSel.png"));
+        chooseButtonSel = new Texture(Gdx.files.internal("chooseButtonSel.png"));
 
         // Initialize BoatTextureDisplay
         actualBoat = 0;
@@ -79,6 +79,34 @@ public class ChooseBoatScreen implements Screen {
         stage = new Stage(viewport);
     }
 
+    private boolean isInsideButton(float mouseX, float mouseY, float x, float y, float width, float height) {
+        return mouseX >= x && mouseX <= x + width &&
+                mouseY >= y && mouseY <= y + height;
+    }
+
+    /**
+     * This method is used to draw a button on the screen, taking into account if its hovered or not.
+     * @param mouseX X position of the mouse
+     * @param mouseY Y position of the mouse
+     * @param x X position of the button
+     * @param y Y position of the button
+     * @param defaultTexture Default texture of the button
+     * @param hoveredTexture Hovered texture of the button
+     */
+    private void drawButton(float mouseX, float mouseY, float x, float y, float width, float height, Texture defaultTexture, Texture hoveredTexture) {
+        boolean isInside = isInsideButton(mouseX, mouseY, x, y, width, height);
+        Texture buttonTexture = isInside ? hoveredTexture : defaultTexture;
+        game.batch.draw(buttonTexture, x, y, width, height);
+    }
+
+
+
+
+
+
+
+
+
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
@@ -87,17 +115,18 @@ public class ChooseBoatScreen implements Screen {
         stage.act();
         stage.draw();
 
-        game.batch.begin();
-        game.batch.draw(leftButton, leftButtonX, leftButtonY, arrowWidth, arrowHeight);
-        game.batch.draw(rightButton, rightButtonX, rightButtonY, arrowWidth, arrowHeight);
-        game.batch.draw(chooseButtonWidth, chooseButtonHeight,chooseButtonX, chooseButtonY, chooseButton, chooseButtonSel);
-        //game.batch.draw(chooseButton, chooseButtonX, chooseButtonY, chooseButtonWidth, chooseButtonHeight);
-        game.batch.draw(boatTexture[actualBoat], boatMenuX, boatMenuY, boatMenuWidth, boatMenuHeight);
-        game.batch.end();
-
         //Mouse coordinates
         float mouseX = Gdx.input.getX();
         float mouseY = Config.HEIGHT - Gdx.input.getY();
+
+        game.batch.begin();
+        game.batch.draw(leftButton, leftButtonX, leftButtonY, arrowWidth, arrowHeight);
+        game.batch.draw(rightButton, rightButtonX, rightButtonY, arrowWidth, arrowHeight);
+        drawButton(mouseX, mouseY, chooseButtonX, chooseButtonY, chooseButtonWidth, chooseButtonHeight, chooseButton,chooseButtonSel);
+        game.batch.draw(boatTexture[actualBoat], boatMenuX, boatMenuY, boatMenuWidth, boatMenuHeight);
+        game.batch.end();
+
+
 
         // Logic to detect button clicks
         if (Gdx.input.isTouched()) {
