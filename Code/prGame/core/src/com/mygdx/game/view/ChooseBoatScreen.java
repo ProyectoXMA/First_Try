@@ -34,20 +34,20 @@ public class ChooseBoatScreen implements Screen {
     // Dimension for Button
     private final int arrowHeight = 70;
     private final int arrowWidth = 70;
-    private final int leftButtonX = 0;
+    private final int leftButtonX = 20;
     private final int leftButtonY = (Config.HEIGHT / 2);
-    private final int rightButtonX = (Config.WIDTH - arrowWidth);
+    private final int rightButtonX = (Config.WIDTH - arrowWidth - 20);
     private final int rightButtonY = (Config.HEIGHT / 2);
 
-    private final int chooseButtonHeight = 50;
-    private final int chooseButtonWidth = 200;
+    private final int chooseButtonHeight = 80;
+    private final int chooseButtonWidth = 230;
     private final int chooseButtonX = (Config.WIDTH / 2) - (chooseButtonWidth / 2);
     private final int chooseButtonY = 0;
 
-    private final int boatMenuHeight = 400;
-    private final int boatMenuWidth = 450;
+    private final int boatMenuHeight = 370;
+    private final int boatMenuWidth = 400;
     private final int boatMenuX = (Config.WIDTH / 2) - (boatMenuWidth / 2);
-    private final int boatMenuY = (Config.WIDTH / 2) - (boatMenuHeight / 2)-50;
+    private final int boatMenuY = (Config.HEIGHT -boatMenuHeight -10);
 
 
 
@@ -59,9 +59,9 @@ public class ChooseBoatScreen implements Screen {
         camera.setToOrtho(false, Config.WIDTH, Config.HEIGHT);
 
         // Initialize Buttons
-        leftButton = new Texture(Gdx.files.internal("playButton.png"));
-        rightButton = new Texture(Gdx.files.internal("quitButton.png"));
-        chooseButton = new Texture(Gdx.files.internal("textPanel2.png"));
+        leftButton = new Texture(Gdx.files.internal("arrowLeft.png"));
+        rightButton = new Texture(Gdx.files.internal("arrowRight.png"));
+        chooseButton = new Texture(Gdx.files.internal("ChooseButton.png"));
 
         // Initialize BoatTextureDisplay
         actualBoat = 0;
