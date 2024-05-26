@@ -1,6 +1,7 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.obstacles.*;
 
 import java.util.ArrayList;
@@ -29,8 +30,12 @@ public class Leg {
         this.unusedLogs = new HashSet<>();
         this.unusedStones = new HashSet<>();
         for (int i = 0; i < NUMBER_OF_LANES; i++) {
-            lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), Boat.createBoat(BoatType.getRandomType())));
+            lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), Boat.createBoat(BoatType.getRandomType(), new Rectangle()))); //TODO: Specify position of rectangle and dimensions
         }
     }
+    /**
+     * TODO: Update boats, obstacles, power-ups and handle collisions.
+     */
+
 
 }

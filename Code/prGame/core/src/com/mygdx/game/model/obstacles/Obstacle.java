@@ -9,9 +9,8 @@ import com.mygdx.game.model.GameObject;
  * It implements the Collidable and GameObject interfaces.
  * An obstacle has a damage value, a hitbox, and a state of whether it was hit.
  */
-public abstract class Obstacle implements Collidable,GameObject {
+public abstract class Obstacle extends GameObject implements Collidable {
     private int damage;
-    private Rectangle hitbox;
     private boolean wasHit = false;
 
     /**
@@ -20,11 +19,8 @@ public abstract class Obstacle implements Collidable,GameObject {
      * @param hitbox the hitbox of the obstacle
      */
     public Obstacle(int damage, Rectangle hitbox){
+        super(hitbox);
         this.damage = damage;
-        this.hitbox = hitbox;
-    }
-    public Rectangle getHitbox(){
-        return hitbox;
     }
     public boolean getWasHit(){
         return wasHit;
