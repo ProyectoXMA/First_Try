@@ -54,7 +54,7 @@ public class LoseScreen implements Screen {
             game.setScreen(new MainMenuScreen(game));
         }
         game.batch.begin();
-        game.batch.draw(backgroundImage,0,0,800,480);
+        game.batch.draw(backgroundImage,0,50,800,480);
         game.font.draw(game.batch, "Press ENTER to go to MAIN MENU", 300,30);
         game.batch.end();
     }
