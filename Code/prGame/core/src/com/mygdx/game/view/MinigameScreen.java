@@ -53,7 +53,7 @@ public class MinigameScreen implements Screen {
         this.minigameLogic = new MinigameLogic(gameState);
         this.minigameController = new MinigameController(game, minigameLogic,this);
 
-        epicMusic = Gdx.audio.newMusic(Gdx.files.internal("epicMusic.mp3"));
+        epicMusic = Gdx.audio.newMusic(Gdx.files.internal("countdownMusic.mp3"));
         epicMusic.setLooping(true);
         epicMusic.setVolume((float)0.1);
         

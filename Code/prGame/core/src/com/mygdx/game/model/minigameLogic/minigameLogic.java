@@ -107,7 +107,7 @@ public class MinigameLogic {
           typeSound.play();
           // Check that typedWord matches the beginning of currentWord
         if (currentWord.startsWith(typedWord)) {
-            startTime = System.currentTimeMillis();
+            //startTime = System.currentTimeMillis();
             checkGameState();
             if (typedWord.equals(currentWord)) { //If the whole word is matched
                 successCounter++;
@@ -132,6 +132,9 @@ public class MinigameLogic {
             state = successCounter;
             savedSound.play();
         }else if(failCounter == 3){
+            typeSound.dispose();
+            incorrectSound.dispose();
+            savedSound.dispose();
             state = failCounter;
         }
         return state;
