@@ -143,6 +143,7 @@ public class MinigameLogic {
     public void run(){
         remainingTime = (timeLimit - (System.currentTimeMillis() - startTime)) / 1000f;
         if(remainingTime <= 0){
+            incorrectSound.play();
             failCounter++;
             checkGameState();
             generateNewWord();
