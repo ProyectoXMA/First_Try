@@ -25,6 +25,7 @@ public class ChooseBoatScreen implements Screen {
     Texture leftButton;
     Texture rightButton;
     Texture chooseButton;
+    Texture chooseButtonSel;
 
     //Texture for boats
     Texture[] boatTexture = new Texture[4];
@@ -61,7 +62,8 @@ public class ChooseBoatScreen implements Screen {
         // Initialize Buttons
         leftButton = new Texture(Gdx.files.internal("arrowLeft.png"));
         rightButton = new Texture(Gdx.files.internal("arrowRight.png"));
-        chooseButton = new Texture(Gdx.files.internal("ChooseButton.png"));
+        chooseButton = new Texture(Gdx.files.internal("chooseButton.png"));
+        chooseButton = new Texture(Gdx.files.internal("chooseButtonSel.png"));
 
         // Initialize BoatTextureDisplay
         actualBoat = 0;
@@ -88,7 +90,8 @@ public class ChooseBoatScreen implements Screen {
         game.batch.begin();
         game.batch.draw(leftButton, leftButtonX, leftButtonY, arrowWidth, arrowHeight);
         game.batch.draw(rightButton, rightButtonX, rightButtonY, arrowWidth, arrowHeight);
-        game.batch.draw(chooseButton, chooseButtonX, chooseButtonY, chooseButtonWidth, chooseButtonHeight);
+        game.batch.draw(chooseButtonWidth, chooseButtonHeight,chooseButtonX, chooseButtonY, chooseButton, chooseButtonSel);
+        //game.batch.draw(chooseButton, chooseButtonX, chooseButtonY, chooseButtonWidth, chooseButtonHeight);
         game.batch.draw(boatTexture[actualBoat], boatMenuX, boatMenuY, boatMenuWidth, boatMenuHeight);
         game.batch.end();
 
