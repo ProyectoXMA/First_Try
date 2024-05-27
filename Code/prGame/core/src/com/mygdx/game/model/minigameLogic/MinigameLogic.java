@@ -112,24 +112,32 @@ public class MinigameLogic {
       * Method to verify typed words read from Player input
       */
       public void checkPartialWord(){
-          typeSound.play();
-          // Check that typedWord matches the beginning of currentWord while currentWord is not complete
-        if (currentWord.startsWith(typedWord) && currentCharIndex < currentWord.length()) { 
-            if(currentCharIndex < currentWord.length() - 1){ // -1 to avoid StringIndexOutOfBoundsException when word is complete
-                currentCharIndex++; // move index to the next character of the word on every successful typed char
+        typeSound.play();
+
+        // First we declare what we expect to be typed in each interation
+        String expectedSubstring = getCurrentWord();
+
+        // Then we check if the length of typedWord matches the length of expectedSubstring
+        if (typedWord.length() == expectedSubstring.length()){
+            // If correct lenghts match, now we check if the chars in typedWord are the same of the expectedSubstring
+            if (typedWord.equals(getCurrentWord()) && currentCharIndex < currentWord.length()) { 
+                // Finally we verify we are within the bounds of currentWord (excluding the last character).
+                if(currentCharIndex < currentWord.length() - 1){ // -1 to avoid StringIndexOutOfBoundsException when word is complete
+                    currentCharIndex++; // Move index to the next character of the word on every successful typed char
+                    typedWord = "";     // Resets the user input field so on each iteration the complete char sequence has to be retyped
+                }   
+                checkGameState();
+                if (typedWord.equals(currentWord) && currentCharIndex == currentWord.length() - 1) { //If the whole word is matched and charIndex now "points" to the whole word
+                    successCounter++;
+                }
+            } else {
+                incorrectSound.play();
+                currentCharIndex = 0; // On incorrect typing, reset word index to the firt character
+                failCounter++;
+                checkGameState();
+                generateNewWord();
+                startTime = System.currentTimeMillis();
             }
-            //startTime = System.currentTimeMillis();
-            checkGameState();
-            if (typedWord.equals(currentWord) && currentCharIndex == currentWord.length() - 1) { //If the whole word is matched and charIndex now points to the whole word
-                successCounter++;
-            }
-        } else {
-            incorrectSound.play();
-            currentCharIndex = 0; // On incorrect typing, reset word index to the firt character
-            failCounter++;
-            checkGameState();
-            generateNewWord();
-            startTime = System.currentTimeMillis();
         }
     }
 
