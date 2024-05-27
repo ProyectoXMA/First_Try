@@ -7,9 +7,11 @@ import com.mygdx.game.view.MinigameScreen;
 import com.mygdx.game.view.RaceScreen;
 
 public class MinigameController {
+    
     private final MyGdxGame game;
     private final MinigameLogic minigameLogic;
     private final MinigameScreen MinigameScreen;
+
     public MinigameController(MyGdxGame game, MinigameLogic minigameLogic,MinigameScreen minigameScreen) {
         this.game = game;
         this.minigameLogic = minigameLogic;

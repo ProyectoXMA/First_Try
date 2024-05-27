@@ -112,9 +112,9 @@ public class MinigameScreen implements Screen {
         game.batch.draw(backgroundImage,-100, -100, 1000, 800);
         // Shows on screen the panel with the word to type
         game.batch.draw(textOutput, 250, 250, panelWidth, panelHeight);
-        String text = "TYPE THE WORD!!";
+        String text = "TYPE THE SEQUENCE!!";
         glyphLayout.setText(font, text);                                                  
-        game.font.draw(game.batch,text,325,400);
+        game.font.draw(game.batch,text,315,400);
         // Calls the first word to display
         String character = minigameLogic.getCurrentWord();
         glyphLayout.setText(font, character);
