@@ -1,13 +1,13 @@
 package com.mygdx.game.model.minigameLogic;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.mygdx.game.GameState;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 
 public class MinigameLogic {
 
@@ -122,7 +122,9 @@ public class MinigameLogic {
             // If correct lenghts match, now we check if the chars in typedWord are the same of the expectedSubstring
             if (typedWord.equals(getCurrentWord()) && currentCharIndex < currentWord.length()) { 
                 // Finally we verify we are within the bounds of currentWord (excluding the last character).
-                if(currentCharIndex < currentWord.length() - 1){ // -1 to avoid StringIndexOutOfBoundsException when word is complete
+                if(currentCharIndex < currentWord.length() - 1){
+                    startTime = System.currentTimeMillis();
+                    // -1 to avoid StringIndexOutOfBoundsException when word is complete
                     currentCharIndex++; // Move index to the next character of the word on every successful typed char
                     typedWord = "";     // Resets the user input field so on each iteration the complete char sequence has to be retyped
                 }   
