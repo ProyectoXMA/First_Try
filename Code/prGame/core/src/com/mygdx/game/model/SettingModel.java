@@ -10,9 +10,8 @@ public class SettingModel implements Disposable {
 
     public SettingModel(boolean isMute) {
         this.isMute=isMute;
-        mute = new Texture("boatMenu0.png");
-        unMute = new Texture("boatMenu1.png");
-
+        mute = new Texture("mute.png");
+        unMute = new Texture("unMute.png");
     }
 
     @Override
