@@ -91,7 +91,7 @@ public class MainMenuScreen implements Screen {
             if (mouseX >= playButtonX && mouseX <= playButtonX + BUTTONWIDTH&&
                     mouseY >= playButtonY && mouseY <= playButtonY + BUTTONHEIGHT) {
                         //game.setScreen(new RaceScreen(game));
-                        game.setScreen(new MinigameScreen(game, null));
+                        game.setScreen(new SettingScreen(game,"a", "d",false));
                 dispose();
             }
             //ChooseBoat
