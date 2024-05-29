@@ -85,7 +85,12 @@ public class MinigameLogic {
             @Override
             public boolean keyTyped(char character) {
                 // Handle input character
-                if (character != '\b' && character != '\r' && character != '\n') {// Any key other than 'Enter' or 'Backspace'
+                if(character == '\b' && typedWord.length() > 0){
+                    typedWord = typedWord.substring(0, typedWord.length() - 1); // Remove the last character from typedWord
+                }else if(character == '\b' && typedWord.length() == 0){
+                    //we dont do anything just continue playing
+                }
+                else if (character != '\r' && character != '\n') {// Any key other than 'Enter'
                     typedWord = typedWord + character; // Add the character to typedWord
                     checkPartialWord();
                 }

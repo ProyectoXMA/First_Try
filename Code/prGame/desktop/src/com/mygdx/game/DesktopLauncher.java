@@ -2,7 +2,6 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.mygdx.game.MyGdxGame;
 
 /**
 * This class is the entry point of the game, it contains the main method, which will be executed when launching
@@ -16,7 +15,7 @@ public class DesktopLauncher {
 	public static final String GAME_TITLE = "Dragon_Boat_Race";
 
 	/**
-	* The main method which is the entry point of the Java application.
+	* The main method which is the entrfy point of the Java application.
 	* @param arg The command line arguments passed to the application.
 	*/
 	public static void main (String[] arg) {
