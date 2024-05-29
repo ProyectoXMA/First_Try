@@ -16,9 +16,10 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.model.Leg;
 import com.mygdx.game.view.LegView;
 
-public class LegScreen implements Screen, InputProcessor {
+public class LegScreen implements Screen {
     final MyGdxGame game;
     LegView view;
+    InputManager inputManager;
 
     Sound dropSound;
     Music rainMusic;
@@ -31,6 +32,7 @@ public class LegScreen implements Screen, InputProcessor {
         Gdx.app.log("Input","LegScreen created");
         this.game = game;
         this.view = new LegView(game, new Leg(1));
+        this.inputManager = new InputManager();
 
         // Load the drop sound effect and the rain background "music"
         dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
@@ -58,8 +60,12 @@ public class LegScreen implements Screen, InputProcessor {
         raindrops.add(raindrop);
         lastDropTime = TimeUtils.nanoTime();
     }
-
-    public void update(float delta) {
+    @Override
+    public void render(float delta) {
+        update(delta);
+        view.render(bucket, raindrops, dropsGathered);
+    }
+    private void update(float delta) {
         if (Gdx.input.isKeyPressed(Keys.LEFT))
             bucket.x -= 200 * Gdx.graphics.getDeltaTime();
         if (Gdx.input.isKeyPressed(Keys.RIGHT))
@@ -93,11 +99,6 @@ public class LegScreen implements Screen, InputProcessor {
             }
         }
     }
-    @Override
-    public void render(float delta) {
-        update(delta);
-        view.render(bucket, raindrops, dropsGathered);
-    }
 
     @Override
     public void resize(int width, int height) {
@@ -118,79 +119,16 @@ public class LegScreen implements Screen, InputProcessor {
     public void hide() {
 
     }
-
+    @Override
     public void show() {
         // Start the playback of the background music when the screen is shown
-        Gdx.input.setInputProcessor(this);
+        Gdx.input.setInputProcessor(this.inputManager);
         rainMusic.play();
     }
-
+    @Override
     public void dispose() {
         view.dispose();
         dropSound.dispose();
         rainMusic.dispose();
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        Gdx.app.log("Input","Key pressed");
-        if (keycode == Keys.LEFT) {
-            // Handle left key press
-            // Update model and view accordingly
-            Gdx.app.log("Input","Left key pressed");
-        } else if (keycode == Keys.RIGHT) {
-            // Handle right key press
-            Gdx.app.log("Input","Right key pressed");
-        }
-        // handle other keys
-        return true;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        if (keycode == Keys.LEFT) {
-            // Handle left key release
-            Gdx.app.log("Input","Left key released");
-        } else if (keycode == Keys.RIGHT) {
-            // Handle right key release
-            Gdx.app.log("Input","Right key released");
-        }
-        // handle other keys
-        return true;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
     }
 }
