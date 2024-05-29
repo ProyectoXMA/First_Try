@@ -43,9 +43,9 @@ public class MainMenuScreen implements Screen {
     Texture quitButtonSel;
     //default button dimensions
     private int BUTTONWIDTH = Config.WIDTH/5;
-    private int BUTTONHEIGHT = Config.HEIGHT/13;
+    private int BUTTONHEIGHT = Config.HEIGHT/10;
     private int BUTTONX = (Config.WIDTH - BUTTONWIDTH) /2;
-    private int BUTTONY =  (Config.HEIGHT) /2;
+    private int BUTTONY =  ((Config.HEIGHT)/2) + BUTTONHEIGHT;
 
     //MARGINS FOR BUTTONS
     private float MARGIN = (float) BUTTONHEIGHT/4;
@@ -81,7 +81,7 @@ public class MainMenuScreen implements Screen {
         //Creating viewport
         viewport = new FitViewport(Config.WIDTH, Config.HEIGHT, camera);
 
-        MenuImage = new Texture(Gdx.files.internal("dragon.jpeg"));
+        MenuImage = new Texture(Gdx.files.internal("menu_background.jpeg"));
 
         //initialisation of buttons
         playLevelButton = new Texture(Gdx.files.internal("buttons/PLAY.png"));
