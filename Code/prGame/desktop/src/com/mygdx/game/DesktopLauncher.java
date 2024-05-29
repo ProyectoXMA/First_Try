@@ -1,8 +1,9 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.mygdx.game.MyGdxGame;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Graphics;
 import com.mygdx.game.util.Config;
 
 /**
@@ -30,9 +31,39 @@ public class DesktopLauncher {
 		// Set the title of the application window
 		config.setTitle(GAME_TITLE);
 		config.setResizable(false);
-		config.setWindowedMode(Config.WIDTH, Config.HEIGHT);
+
+		//Set the game to execute automatically at 1920x1080 of resolution
+
+		config.setFullscreenMode(chooseDisplayMode(Config.WIDTH, Config.HEIGHT));
 
 		// Create a new application instance and start the game loop
 		new Lwjgl3Application(new MyGdxGame(), config);
+	}
+
+	/**
+	 * this functions sets the fullscreen resolution of the game
+	 * @param width resolution width
+	 * @param height resolution height
+	 * @return
+	 */
+	public static Graphics.DisplayMode chooseDisplayMode(int width, int height) {
+		// List all available display modes
+		Lwjgl3Graphics.DisplayMode[] displayModes = Lwjgl3ApplicationConfiguration.getDisplayModes();
+		Lwjgl3Graphics.DisplayMode selectedMode = null;
+
+		// If not found, try to find 1920x1080 at any refresh rate
+        for (Lwjgl3Graphics.DisplayMode displayMode : displayModes) {
+            if (displayMode.width == width && displayMode.height == height) {
+                selectedMode = displayMode;
+                break;
+            }
+        }
+
+        if (selectedMode != null) {
+			return selectedMode;
+		} else {
+			System.err.println("No suitable display mode found for 1920x1080");
+			return null;
+		}
 	}
 }
