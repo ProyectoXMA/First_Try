@@ -44,6 +44,15 @@ public class Lane {
     public float getWidth() {
         return WIDTH;
     }
+    public Set<Boat> getBoats() {
+        return boats;
+    }
+    public Set<Obstacle> getObstacles() {
+        return obstacles;
+    }
+    public Set<PowerUp> getPowerUps() {
+        return powerUps;
+    }
 
     /**
      * This method adds a GameObject to the lane. It is called by the Leg class.

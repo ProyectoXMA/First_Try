@@ -34,6 +34,9 @@ public class Leg {
             lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), Boat.createBoat(BoatType.getRandomType(), new Rectangle()))); //TODO: Specify position of rectangle and dimensions
         }
     }
+    public List<Lane> getLanes() {
+        return lanes;
+    }
 
     /**
      * This method updates the state of the Leg as the model

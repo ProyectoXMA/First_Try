@@ -15,7 +15,7 @@ public class Boat extends GameObject implements Movable{
 
     private MovementStrategy movementStrategy;
 
-
+    private final BoatType type;
     //Attributes for the boat, they are the base stats of the boat
     private final int baseHealth;
     private final int baseResistance;
@@ -38,8 +38,9 @@ public class Boat extends GameObject implements Movable{
      * @param speed vertical movement speed
      * @param acceleration acceleration of the boat
      */
-    private Boat (int health, int resistance, int handling, int speed, int acceleration, Rectangle hitBox){
+    private Boat (BoatType type, int health, int resistance, int handling, int speed, int acceleration, Rectangle hitBox){
         super(hitBox);
+        this.type = type;
         this.baseHealth = health;
         this.baseResistance = resistance;
         this.baseHandling = handling;
@@ -62,11 +63,11 @@ public class Boat extends GameObject implements Movable{
     public static Boat createBoat(BoatType type, float x, float y) {
         switch (type) {
             case FAST:
-                return new Boat(100, 10, 100, 200, 10, new Rectangle(x, y, WIDTH, HEIGHT));
+                return new Boat(type,100, 10, 100, 200, 10, new Rectangle(x, y, WIDTH, HEIGHT));
             case STRONG:
-                return new Boat(200, 5, 50, 140, 5, new Rectangle(x, y, WIDTH, HEIGHT));
+                return new Boat(type,200, 5, 50, 140, 5, new Rectangle(x, y, WIDTH, HEIGHT));
             case CLASSIC:
-                return new Boat(150, 7, 70, 150, 7, new Rectangle(x, y, WIDTH, HEIGHT));
+                return new Boat(type,150, 7, 70, 150, 7, new Rectangle(x, y, WIDTH, HEIGHT));
             default:
                 throw new IllegalArgumentException("Not a valid boat type");
         }
@@ -80,17 +81,20 @@ public class Boat extends GameObject implements Movable{
     public static Boat createBoat(BoatType type, Rectangle hitBox) {
         switch (type) {
             case FAST:
-                return new Boat(100, 10, 100, 200, 10, hitBox);
+                return new Boat(type, 100, 10, 100, 200, 10, hitBox);
             case STRONG:
-                return new Boat(200, 5, 50, 140, 5, hitBox);
+                return new Boat(type,200, 5, 50, 140, 5, hitBox);
             case CLASSIC:
-                return new Boat(150, 7, 70, 150, 7, hitBox);
+                return new Boat(type, 150, 7, 70, 150, 7, hitBox);
             default:
                 throw new IllegalArgumentException("Not a valid boat type");
         }
     }
 
     //Getters for the atributes of the boat
+    public BoatType getType(){
+        return type; //get the type of the boat
+    }
     public int getHealth(){
         return currentHealth; //get the current health
     }

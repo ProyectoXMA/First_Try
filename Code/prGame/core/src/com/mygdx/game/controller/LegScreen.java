@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.model.Leg;
 import com.mygdx.game.view.LegView;
 
 public class LegScreen implements Screen {
@@ -27,7 +28,7 @@ public class LegScreen implements Screen {
 
     public LegScreen(final MyGdxGame game){
         this.game = game;
-        this.view = new LegView(game);
+        this.view = new LegView(game, new Leg(1));
 
         // Load the drop sound effect and the rain background "music"
         dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
