@@ -104,7 +104,7 @@ public class MainMenuScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
-        //mouse coordinates
+        //mouse coordinatesgi
         float mouseX = Gdx.input.getX();
         float mouseY = Config.HEIGHT - Gdx.input.getY();
 
@@ -189,19 +189,19 @@ public class MainMenuScreen implements Screen {
 
         //Play
         if (insidePlay) {
-            game.setScreen(new RaceScreen(game));
+            game.setScreen(new LegScreen(game));
             dispose();
         }
 
         //Choose Boat
         if (insideBoat) {
-            game.setScreen(new RaceScreen(game));
+            game.setScreen(new LegScreen(game));
             dispose();
         }
 
         //Tutorial
         if (insideTutorial) {
-            game.setScreen(new RaceScreen(game));
+            game.setScreen(new LegScreen(game));
             dispose();
         }
 
