@@ -46,17 +46,17 @@ public class SettingScreen implements Screen {
     Texture saveButtonSel;
 
     // Dimension for Button
-    private final int changeButtonHeight = 70;
-    private final int changeButtonWidth = 100;
+    private final int buttonHeight = Config.HEIGHT/13;
+    private final int buttonWidth = Config.WIDTH/5;
 
-    private final int changeLeftX = (Config.WIDTH) - (Config.WIDTH/3) -changeButtonWidth;
-    private final int changeLeftY = (Config.HEIGHT/2) + changeButtonHeight + 20;
-    private final int changeRightX = (Config.WIDTH) - (Config.WIDTH/3) - changeButtonWidth;
+    private final int changeLeftX = (Config.WIDTH) - (Config.WIDTH/3) - buttonWidth;
+    private final int changeLeftY = (Config.HEIGHT/2) + buttonHeight + 20;
+    private final int changeRightX = (Config.WIDTH) - (Config.WIDTH/3) - buttonWidth;
     private final int changeRightY = (Config.HEIGHT/2);
-    private final int muteButtonX = (Config.WIDTH) - (Config.WIDTH/3) -changeButtonWidth;
-    private final int muteButtonY = (Config.HEIGHT/2) - changeButtonHeight - 20;
-    private final int saveButtonX = (Config.WIDTH) - (Config.WIDTH/3) -changeButtonWidth;
-    private final int saveButtonY = (Config.HEIGHT/2) - changeButtonHeight*2 - 80;
+    private final int muteButtonX = (Config.WIDTH) - (Config.WIDTH/3) - buttonWidth;
+    private final int muteButtonY = (Config.HEIGHT/2) - buttonHeight - 20;
+    private final int saveButtonX = (Config.WIDTH) - (Config.WIDTH/3) - buttonWidth;
+    private final int saveButtonY = (Config.HEIGHT/2) - buttonHeight *2 - 80;
 
     //Constructor
     /**
@@ -86,20 +86,20 @@ public class SettingScreen implements Screen {
         font = new BitmapFont();
 
         // Initialize Buttons
-        changeLeftButton = new Texture(Gdx.files.internal("changeButton.png"));
-        changeLeftButtonSel = new Texture(Gdx.files.internal("changeButtonSel.png"));
-        changeRightButton = new Texture(Gdx.files.internal("changeButton.png"));
-        changeRightButtonSel = new Texture(Gdx.files.internal("changeButtonSel.png"));
-        muteButton = new Texture(Gdx.files.internal("muteButton.png"));
-        muteButtonSel = new Texture(Gdx.files.internal("muteButtonSel.png"));
+        changeLeftButton = new Texture(Gdx.files.internal("buttons/changeButton.png"));
+        changeLeftButtonSel = new Texture(Gdx.files.internal("buttons/changeButtonSel.png"));
+        changeRightButton = new Texture(Gdx.files.internal("buttons/changeButton.png"));
+        changeRightButtonSel = new Texture(Gdx.files.internal("buttons/changeButtonSel.png"));
+        muteButton = new Texture(Gdx.files.internal("buttons/muteButton.png"));
+        muteButtonSel = new Texture(Gdx.files.internal("buttons/muteButtonSel.png"));
 
-        saveButton = new Texture(Gdx.files.internal("saveButton.png"));
-        saveButtonSel = new Texture(Gdx.files.internal("saveButtonSel.png"));
+        saveButton = new Texture(Gdx.files.internal("buttons/saveButton.png"));
+        saveButtonSel = new Texture(Gdx.files.internal("buttons/saveButtonSel.png"));
     }
 
     @Override
     public void show() {
-        viewport = new ExtendViewport(1280, 720);
+        viewport = new ExtendViewport(Config.WIDTH, Config.HEIGHT);
         stage = new Stage(viewport);
     }
 
@@ -128,10 +128,10 @@ public class SettingScreen implements Screen {
 
         //Draw buttons
         game.batch.begin();
-        drawButton(mouseX, mouseY, changeLeftX, changeLeftY, changeButtonWidth, changeButtonHeight, changeLeftButton, changeLeftButtonSel);
-        drawButton(mouseX, mouseY, changeRightX, changeRightY, changeButtonWidth, changeButtonHeight, changeRightButton, changeRightButtonSel);
-        drawButton(mouseX, mouseY, muteButtonX, muteButtonY, changeButtonWidth, changeButtonHeight, muteButton, muteButtonSel);
-        drawButton(mouseX, mouseY, saveButtonX, saveButtonY, changeButtonWidth, changeButtonWidth, saveButton, saveButtonSel);
+        drawButton(mouseX, mouseY, changeLeftX, changeLeftY, buttonWidth, buttonHeight, changeLeftButton, changeLeftButtonSel);
+        drawButton(mouseX, mouseY, changeRightX, changeRightY, buttonWidth, buttonHeight, changeRightButton, changeRightButtonSel);
+        drawButton(mouseX, mouseY, muteButtonX, muteButtonY, buttonWidth, buttonHeight, muteButton, muteButtonSel);
+        drawButton(mouseX, mouseY, saveButtonX, saveButtonY, buttonWidth, buttonHeight, saveButton, saveButtonSel);
 
         game.batch.draw(model.getCurrentVolumeTexture(), muteButtonX-100, muteButtonY, 90, 90);
         //Draw fonts
@@ -139,25 +139,25 @@ public class SettingScreen implements Screen {
             font.getData().setScale(500);
 
 
-            game.font.draw(game.batch,("Left Key:  ") + "[ " + model.getLeftKey()+ " ]",(Config.WIDTH) - (Config.WIDTH/3) -changeButtonWidth -150, (Config.HEIGHT/2) + changeButtonHeight + 20 + changeButtonHeight/2);
-            game.font.draw(game.batch,("Right Key:  "+ "[ " +model.getRightKey()+" ]"),(Config.WIDTH) - (Config.WIDTH/3) -changeButtonWidth -150, (Config.HEIGHT/2) + changeButtonHeight/2);
-            game.font.draw(game.batch,"Volume:  ",(Config.WIDTH) - (Config.WIDTH/3) -changeButtonWidth -150, (Config.HEIGHT/2) - changeButtonHeight - 20 + changeButtonHeight/2);
+            game.font.draw(game.batch,("Left Key:  ") + "[ " + model.getLeftKey()+ " ]",(Config.WIDTH) - (Config.WIDTH/3) - buttonWidth -150, (Config.HEIGHT/2) + buttonHeight + 20 + buttonHeight /2);
+            game.font.draw(game.batch,("Right Key:  "+ "[ " +model.getRightKey()+" ]"),(Config.WIDTH) - (Config.WIDTH/3) - buttonWidth -150, (Config.HEIGHT/2) + buttonHeight /2);
+            game.font.draw(game.batch,"Volume:  ",(Config.WIDTH) - (Config.WIDTH/3) - buttonWidth -150, (Config.HEIGHT/2) - buttonHeight - 20 + buttonHeight /2);
 
             game.font.draw(game.batch,"Press Esc to return to Main Menu ",(Config.WIDTH/2)-90, 20);
 
             //When you want to change the key settings a message is display otherwise not.
             if (model.isTextLeftChange()){
-                game.font.draw(game.batch,"Press the new Key to assigned to Right movement. Remember to save changes.",(Config.WIDTH) - (Config.WIDTH/3) + 20, (Config.HEIGHT/2) +  changeButtonHeight + 20 + changeButtonHeight/2);
+                game.font.draw(game.batch,"Press the new Key to assigned to Right movement. Remember to save changes.",(Config.WIDTH) - (Config.WIDTH/3) + 20, (Config.HEIGHT/2) + buttonHeight + 20 + buttonHeight /2);
             }
             if (model.isTextRightChange()){
-                game.font.draw(game.batch,"Press the new Key to assigned to Right movement. Remember to save changes.",(Config.WIDTH) - (Config.WIDTH/3) + 20, (Config.HEIGHT/2) + changeButtonHeight/2);
+                game.font.draw(game.batch,"Press the new Key to assigned to Right movement. Remember to save changes.",(Config.WIDTH) - (Config.WIDTH/3) + 20, (Config.HEIGHT/2) + buttonHeight /2);
             }
 
 
         game.batch.end();
 
         // Handle input
-        controller.handleInput(mouseX, mouseY, changeLeftX, changeLeftY, changeRightX, changeRightY, muteButtonX, muteButtonY,changeButtonWidth, changeButtonHeight, model);
+        controller.handleInput(mouseX, mouseY, changeLeftX, changeLeftY, changeRightX, changeRightY, muteButtonX, muteButtonY, buttonWidth, buttonHeight, model);
     }
 
     @Override
