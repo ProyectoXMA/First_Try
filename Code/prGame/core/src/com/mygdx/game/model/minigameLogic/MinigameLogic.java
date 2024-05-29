@@ -71,7 +71,9 @@ public class MinigameLogic {
     public String getCurrentWord() {
         return currentWord.substring(0, currentCharIndex + 1); // + 1 to show the first character since currentCharIndex is initalized at 0
     }
-
+    public String getShowedString(){
+        return currentWord.substring(currentCharIndex,currentCharIndex + 1);
+    }
     /**
      * Method to set up the input processor for reading player input.
      * When the 'Enter' key is pressed, it processes the typed word.
