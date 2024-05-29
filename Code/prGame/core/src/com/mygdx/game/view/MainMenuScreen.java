@@ -84,16 +84,16 @@ public class MainMenuScreen implements Screen {
         MenuImage = new Texture(Gdx.files.internal("dragon.jpeg"));
 
         //initialisation of buttons
-        playLevelButton = new Texture(Gdx.files.internal("PLAY.png"));
-        playLevelButtonSel = new Texture(Gdx.files.internal("PLAY_SEL.png"));
-        selectionButton = new Texture(Gdx.files.internal("BOATS.png"));
-        selectionButtonSel = new Texture(Gdx.files.internal("BOATS_SEL.png"));
-        tutorialButton = new Texture(Gdx.files.internal("TUTORIAL.png"));
-        tutorialButtonSel = new Texture(Gdx.files.internal("TUTORIAL_SEL.png"));
-        settingsButton = new Texture(Gdx.files.internal("SETTINGS.png"));
-        settingsButtonSel = new Texture(Gdx.files.internal("SETTINGS_SEL.png"));
-        quitButton = new Texture(Gdx.files.internal("QUIT.png"));
-        quitButtonSel = new Texture(Gdx.files.internal("QUIT_SEL.png"));
+        playLevelButton = new Texture(Gdx.files.internal("buttons/PLAY.png"));
+        playLevelButtonSel = new Texture(Gdx.files.internal("buttons/PLAY_SEL.png"));
+        selectionButton = new Texture(Gdx.files.internal("buttons/BOATS.png"));
+        selectionButtonSel = new Texture(Gdx.files.internal("buttons/BOATS_SEL.png"));
+        tutorialButton = new Texture(Gdx.files.internal("buttons/TUTORIAL.png"));
+        tutorialButtonSel = new Texture(Gdx.files.internal("buttons/TUTORIAL_SEL.png"));
+        settingsButton = new Texture(Gdx.files.internal("buttons/SETTINGS.png"));
+        settingsButtonSel = new Texture(Gdx.files.internal("buttons/SETTINGS_SEL.png"));
+        quitButton = new Texture(Gdx.files.internal("buttons/QUIT.png"));
+        quitButtonSel = new Texture(Gdx.files.internal("buttons/QUIT_SEL.png"));
     }
 
 
