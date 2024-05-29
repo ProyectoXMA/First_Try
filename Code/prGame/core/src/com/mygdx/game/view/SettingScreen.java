@@ -61,7 +61,7 @@ public class SettingScreen implements Screen {
      * @param rightKey gives the actual assignment of the key dedicated to move to right.
      * @param isMute is an attribute that tell us if the game is mute or not while accessing to settings.
      */
-    public SettingScreen(final MyGdxGame game, String leftKey, String rightKey,boolean isMute) {
+    public SettingScreen(final MyGdxGame game, String leftKey, String rightKey, boolean isMute) {
         this.game = game;
 
         this.model = new SettingModel(isMute);

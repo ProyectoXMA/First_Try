@@ -227,7 +227,7 @@ public class MainMenuScreen implements Screen {
 
         //Settings
         if (insideSettings) {
-            settingsMenu();
+            game.setScreen(new SettingScreen(game, "<--", "-->", false));
             dispose();
         }
 
