@@ -137,7 +137,11 @@ public class LegView {
         //TODO
     }
     public void dispose() {
-        duckImage.dispose();
         boatImage.dispose();
+        duckImage.dispose();
+        logImage.dispose();
+        stoneImage.dispose();
+        backgroundImage.dispose();
+        laneLimitImage.dispose();
     }
 }

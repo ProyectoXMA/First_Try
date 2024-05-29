@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -15,7 +16,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.model.Leg;
 import com.mygdx.game.view.LegView;
 
-public class LegScreen implements Screen {
+public class LegScreen implements Screen, InputProcessor {
     final MyGdxGame game;
     LegView view;
 
@@ -27,6 +28,7 @@ public class LegScreen implements Screen {
     int dropsGathered;
 
     public LegScreen(final MyGdxGame game){
+        Gdx.app.log("Input","LegScreen created");
         this.game = game;
         this.view = new LegView(game, new Leg(1));
 
@@ -119,6 +121,7 @@ public class LegScreen implements Screen {
 
     public void show() {
         // Start the playback of the background music when the screen is shown
+        Gdx.input.setInputProcessor(this);
         rainMusic.play();
     }
 
@@ -126,5 +129,68 @@ public class LegScreen implements Screen {
         view.dispose();
         dropSound.dispose();
         rainMusic.dispose();
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        Gdx.app.log("Input","Key pressed");
+        if (keycode == Keys.LEFT) {
+            // Handle left key press
+            // Update model and view accordingly
+            Gdx.app.log("Input","Left key pressed");
+        } else if (keycode == Keys.RIGHT) {
+            // Handle right key press
+            Gdx.app.log("Input","Right key pressed");
+        }
+        // handle other keys
+        return true;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        if (keycode == Keys.LEFT) {
+            // Handle left key release
+            Gdx.app.log("Input","Left key released");
+        } else if (keycode == Keys.RIGHT) {
+            // Handle right key release
+            Gdx.app.log("Input","Right key released");
+        }
+        // handle other keys
+        return true;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+        return false;
     }
 }

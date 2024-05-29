@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.view.MainMenuScreen;
@@ -28,7 +30,8 @@ public class MyGdxGame extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		font = new BitmapFont(); // Default Arial font
-
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		Gdx.app.log("Input","Initiating log messages");
 		this.setScreen(new MainMenuScreen(this));
 	}
 
