@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.controller.LegScreen;
 import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.model.ChooseBoatModel;
 import com.mygdx.game.util.Config;
@@ -91,14 +92,14 @@ public class MainMenuScreen implements Screen {
             if (mouseX >= playButtonX && mouseX <= playButtonX + BUTTONWIDTH&&
                     mouseY >= playButtonY && mouseY <= playButtonY + BUTTONHEIGHT) {
                         //game.setScreen(new RaceScreen(game));
-                        game.setScreen(new MinigameScreen(game, null));
+                        game.setScreen(new LegScreen(game));
                 dispose();
             }
             //ChooseBoat
             if (mouseX >= chooseBoatButtonX && mouseX <= chooseBoatButtonX + BUTTONWIDTH&&
                     mouseY >= chooseBoatButtonX && mouseY <= chooseBoatButtonY + BUTTONHEIGHT) {
                 //game.setScreen(new RaceScreen(game));
-                        game.setScreen(new RaceScreen(game));
+                        game.setScreen(new LegScreen(game));
                 dispose();
             }
             //Quit
