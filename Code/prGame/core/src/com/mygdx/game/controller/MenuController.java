@@ -3,7 +3,7 @@ package com.mygdx.game.controller;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.util.Config;
-import com.mygdx.game.view.RaceScreen;
+
 
 public class MenuController {
     //This variable is used to store the game object.
@@ -74,15 +74,15 @@ public class MenuController {
 
         //Play
         if (insidePlay) {
-            game.setScreen(new RaceScreen(game));
+            game.setScreen(new LegController(game));
         }
         //Choose Boat
         if (insideBoat) {
-            game.setScreen(new RaceScreen(game));
+            game.setScreen(new LegController(game));
         }
         //Tutorial
         if (insideTutorial) {
-            game.setScreen(new RaceScreen(game));
+            game.setScreen(new LegController(game));
         }
         //Settings
         if (insideSettings) {
