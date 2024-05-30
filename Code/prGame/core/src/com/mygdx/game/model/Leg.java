@@ -23,8 +23,8 @@ public class Leg {
 
     private int level;
     private List<Lane> lanes;
-    private Set<Duck> unusedDucks;
-    private Set<Log> unusedLogs;
+    private Set<Duck> unusedDucks; //Unused purpose is storing objects that have been deleted, in order to reuse them, making the logic more efficient.
+    private Set<Log> unusedLogs; // However the creation and deletion of obstacles shouldn´t be a performance issue regarding the amount of items.
     private Set<Stone> unusedStones;
 
     public Leg(int level, Player player){

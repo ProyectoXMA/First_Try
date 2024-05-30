@@ -20,13 +20,14 @@ public class CollisionHandler implements CollidableVisitor{
     public void visitObstacle(Obstacle obstacle) {
         if (boat.getHitbox().overlaps(obstacle.getHitbox())) {
             boat.adjustHealth(-obstacle.getDamage());
-            obstacle.destroy();
+            //Devuelve un true para que la lane sepa que se lo tiene que cargar
+            obstacle.destroy();//Pone la flag de wasHit a true
         }
     }
 
     @Override
     public void visitBoat(Boat boat) {
-        if(this.boat.getHitbox().overlaps(boat.getHitbox())) {
+        if(this.boat.getHitbox().overlaps(boat.getHitbox())) { //By the client´s order when a boat collides with another both must be destroyed
             this.boat.destroy();
             boat.destroy();
         }

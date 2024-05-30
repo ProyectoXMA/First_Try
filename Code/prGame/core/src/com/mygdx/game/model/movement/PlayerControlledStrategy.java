@@ -10,6 +10,7 @@ import com.mygdx.game.util.UserAction;
 public class PlayerControlledStrategy implements MovementStrategy, InputSubscribed {
     private UserAction nextAction;
     @Override
+
     public void move(Movable movable, float delta) {
         if (nextAction == null) {
             return;
@@ -29,5 +30,7 @@ public class PlayerControlledStrategy implements MovementStrategy, InputSubscrib
     @Override
     public void listen(boolean press, UserAction keycode) {
         nextAction = press? keycode : null;
-    }
+
+
+}
 }
