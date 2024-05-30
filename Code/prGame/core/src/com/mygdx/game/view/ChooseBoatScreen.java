@@ -33,19 +33,19 @@ public class ChooseBoatScreen implements Screen {
     private final int arrowHeight = 70;
     private final int arrowWidth = 70;
     private final int leftButtonX = 20;
-    private final int leftButtonY = (Config.HEIGHT / 2);
-    private final int rightButtonX = (Config.WIDTH - arrowWidth - 20);
-    private final int rightButtonY = (Config.HEIGHT / 2);
+    private final int leftButtonY = (Config.getHeight() / 2);
+    private final int rightButtonX = (Config.getWidth() - arrowWidth - 20);
+    private final int rightButtonY = (Config.getHeight() / 2);
 
     private final int chooseButtonHeight = 80;
     private final int chooseButtonWidth = 230;
-    private final int chooseButtonX = (Config.WIDTH / 2) - (chooseButtonWidth / 2);
+    private final int chooseButtonX = (Config.getWidth() / 2) - (chooseButtonWidth / 2);
     private final int chooseButtonY = 5;
 
     private final int boatMenuHeight = 370;
     private final int boatMenuWidth = 400;
-    private final int boatMenuX = (Config.WIDTH / 2) - (boatMenuWidth / 2);
-    private final int boatMenuY = (Config.HEIGHT - boatMenuHeight - 10);
+    private final int boatMenuX = (Config.getWidth() / 2) - (boatMenuWidth / 2);
+    private final int boatMenuY = (Config.getHeight() - boatMenuHeight - 10);
 
     // Constructor
     public ChooseBoatScreen(final MyGdxGame game) {
@@ -53,7 +53,7 @@ public class ChooseBoatScreen implements Screen {
         this.model = new ChooseBoatModel();
         this.controller = new ChooseBoatController(game);
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Config.WIDTH, Config.HEIGHT);
+        camera.setToOrtho(false, Config.getWidth(), Config.getHeight());
 
         // Initialize Buttons
         leftButton = new Texture(Gdx.files.internal("arrowLeft.png"));
@@ -89,7 +89,7 @@ public class ChooseBoatScreen implements Screen {
 
         // Mouse coordinates
         float mouseX = Gdx.input.getX();
-        float mouseY = Config.HEIGHT - Gdx.input.getY();
+        float mouseY = Config.getHeight() - Gdx.input.getY();
 
         game.batch.begin();
         game.batch.draw(leftButton, leftButtonX, leftButtonY, arrowWidth, arrowHeight);

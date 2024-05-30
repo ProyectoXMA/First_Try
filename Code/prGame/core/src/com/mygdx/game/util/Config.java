@@ -11,13 +11,22 @@ public class Config {
     /**
      * The WIDTH constant is set to the current width of the application window at the time of class loading.
      */
-    public static int WIDTH = 1920;
+    private static int WIDTH = 1920;
+
     /**
      * The HEIGHT constant is set to the current height of the application window at the time of class loading.
      */
-    public static int HEIGHT = 1080;
+    private static int HEIGHT = 1080;
 
     public Config(int width, int height) {
 
+    }
+
+    public static int getWidth() {
+        return WIDTH;
+    }
+
+    public static int getHeight() {
+        return HEIGHT;
     }
 }

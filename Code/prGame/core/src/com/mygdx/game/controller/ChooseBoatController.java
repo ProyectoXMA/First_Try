@@ -3,7 +3,7 @@ package com.mygdx.game.controller;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.model.ChooseBoatModel;
-import com.mygdx.game.view.MainMenuScreen;
+import com.mygdx.game.view.MainMenuView;
 
 public class ChooseBoatController {
     private final MyGdxGame game;
@@ -35,7 +35,7 @@ public class ChooseBoatController {
                 // ChooseButtonPressed
                 if (mouseX >= chooseButtonX && mouseX <= chooseButtonX + chooseButtonWidth &&
                         mouseY >= chooseButtonY && mouseY <= chooseButtonY + chooseButtonHeight) {
-                    game.setScreen(new MainMenuScreen(game));
+                    game.setScreen(new MainMenuView(game));
                 }
             }
         } else {

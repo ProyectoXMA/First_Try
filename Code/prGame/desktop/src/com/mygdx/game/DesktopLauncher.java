@@ -34,9 +34,9 @@ public class DesktopLauncher {
 
 		//Set the game to execute automatically at 1920x1080 of resolution
 
-		//config.setFullscreenMode(chooseDisplayMode(Config.WIDTH, Config.HEIGHT));
-		config.setWindowedMode(Config.WIDTH, Config.HEIGHT
-		);
+		config.setFullscreenMode(chooseDisplayMode(Config.getWidth(), Config.getHeight()));
+		//config.setWindowedMode(Config.getWidth(), Config.getHeight());
+
 		// Create a new application instance and start the game loop
 		new Lwjgl3Application(new MyGdxGame(), config);
 	}
