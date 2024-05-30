@@ -87,7 +87,7 @@ public class MenuController {
         //Settings
         if (insideSettings) {
             //settingsMenu();
-            game.dispose();
+            //game.dispose();
         }
         //Quit
         if (insideQuit) {

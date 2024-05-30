@@ -18,6 +18,7 @@ import com.mygdx.game.view.LegView;
 public class LegController implements Screen {
     final MyGdxGame game;
     LegView view;
+    Leg leg;
     InputManager inputManager;
 
     Sound dropSound;
@@ -30,8 +31,11 @@ public class LegController implements Screen {
     public LegController(final MyGdxGame game){
         Gdx.app.log("Input","LegScreen created");
         this.game = game;
-        this.view = new LegView(game, new Leg(1, game.getPlayer()));
+        this.leg = new Leg(1, game.getPlayer());
+        this.view = new LegView(game, leg);
         this.inputManager = new InputManager();
+        //TODO: This is a bit of a trick, we should not hardcode this and find abetter way to subscribe any playerControlled object to the inputManager
+        this.inputManager.addSubscriber((InputSubscribed) game.getPlayer().getBoat().getMovementStrategy());
 
         // Load the drop sound effect and the rain background "music"
         dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));

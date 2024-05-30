@@ -2,6 +2,8 @@ package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.controller.InputSubscribed;
+import com.mygdx.game.model.movement.MovementStrategy;
 import com.mygdx.game.model.movement.PlayerControlledStrategy;
 import com.mygdx.game.model.obstacles.*;
 import com.mygdx.game.model.powerUps.PowerUp;
@@ -35,7 +37,9 @@ public class Leg {
         //TODO: A bit harcoded this...
         float centerOfLane = (float) ((PLAYER_LANE + 0.5) * Lane.WIDTH);
         Boat playerBoat = Boat.createBoat(player.getBoatType(), centerOfLane-Boat.WIDTH, 0);
-        playerBoat.setMovementStrategy(new PlayerControlledStrategy());
+        MovementStrategy playerControlledStrategy = new PlayerControlledStrategy();
+        playerBoat.setMovementStrategy(playerControlledStrategy);
+        player.setBoat(playerBoat);
 
         for (int i = 0; i < NUMBER_OF_LANES; i++) {
             centerOfLane = (float) ((i + 0.5) * Lane.WIDTH);
