@@ -11,7 +11,7 @@ import com.mygdx.game.model.GameObject;
  */
 public abstract class Obstacle extends GameObject implements Collidable {
     private int damage;
-    private boolean wasHit = false;
+
 
     /**
      * Constructs an Obstacle with the specified damage and hitbox.
@@ -22,9 +22,7 @@ public abstract class Obstacle extends GameObject implements Collidable {
         super(hitbox);
         this.damage = damage;
     }
-    public boolean getWasHit(){
-        return wasHit;
-    }
+
     public int getDamage(){
         return damage;
     }

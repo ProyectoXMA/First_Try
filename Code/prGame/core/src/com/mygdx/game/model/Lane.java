@@ -24,6 +24,7 @@ public class Lane {
     private Set<Boat> boats; //All boats present in this lane (including the boat assigned)
     private Set<GameObject> partiallyOutBounds; //Objects that are partially out of bounds of the lane but continue to be part of it
 
+
     public Lane(int laneId, Set<Obstacle> obstacles, Set<PowerUp> powerUps, Boat boat) {
         this.laneId = laneId;
         this.lanePosition = laneId * WIDTH;
@@ -114,7 +115,7 @@ public class Lane {
     public void applyCollisions() {
         CollisionHandler handler = new CollisionHandler();
         for (Boat boat : boats) {
-            handler.setBoat(boat);
+            handler.setBoat(boat); //Assigns to handler a specific boat
             searchCollisions(handler);
         }
     }
@@ -123,9 +124,11 @@ public class Lane {
      * This method iterates over all obstacles and power-ups to be visited by the handler.
      * @param handler the visitor responsible for handling the collisions for its boat. Should be accepted by all Collidable objects.
      */
-    private void searchCollisions(CollisionHandler handler) {
+    private void searchCollisions(CollisionHandler handler) { //Lane must be aware of an object´s destruction to eliminate it from the corresponding set
         for (Obstacle obstacle : obstacles) {
-            handler.visitObstacle(obstacle);
+            //if (handler.visitObstacle(obstacle); obstacles.remove(obstacle) //El visit del handler debe devolver el booleano
+            //Ya no haría falta llamar a esta línea xq ya se llama arriba
+            handler.visitObstacle(obstacle); //Esto debería ser (de manera análoga a lo de abajo), un obstacle.accept( "CollisionHandler" handler) y por tanto es accept el que devuelve el booleano que es el mismo que el que devuelve el handler
         }
         for (PowerUp powerUp : powerUps) {
             handler.visitPowerUp(powerUp);
@@ -138,7 +141,7 @@ public class Lane {
     public void moveObstacles(float delta) {
         MoveObstacleVisitor moveVisitor = new MoveObstacleVisitor(delta);
         for (Obstacle obstacle : obstacles) {
-            obstacle.accept(moveVisitor);
+            obstacle.accept(moveVisitor); //
         }
     }
     public void moveBoats(float delta) {

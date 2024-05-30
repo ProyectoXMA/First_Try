@@ -63,11 +63,8 @@ public class LegController implements Screen {
         raindrops.add(raindrop);
         lastDropTime = TimeUtils.nanoTime();
     }
-    @Override
-    public void render(float delta) {
-        update(delta);
-        view.render(bucket, raindrops, dropsGathered);
-    }
+
+
     private void update(float delta) {
         if (Gdx.input.isKeyPressed(Keys.LEFT))
             bucket.x -= 200 * Gdx.graphics.getDeltaTime();
@@ -102,6 +99,13 @@ public class LegController implements Screen {
             }
         }
     }
+
+    @Override
+    public void render(float delta) {//This render is updating the model, by means of update, and the view.
+        update(delta);
+        view.render(bucket, raindrops, dropsGathered);
+    }
+
 
     @Override
     public void resize(int width, int height) {
