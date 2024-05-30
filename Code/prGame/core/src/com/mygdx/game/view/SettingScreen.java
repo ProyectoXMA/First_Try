@@ -44,16 +44,16 @@ public class SettingScreen implements Screen {
     Texture saveButtonSel;
 
     // Dimension for Button
-    private final int buttonHeight = Config.HEIGHT/13;
-    private final int buttonWidth = Config.WIDTH/5;
-    private final int changeLeftX = (Config.WIDTH) - (Config.WIDTH/3) - buttonWidth;
-    private final int changeLeftY = (Config.HEIGHT/2) + buttonHeight + 20;
-    private final int changeRightX = (Config.WIDTH) - (Config.WIDTH/3) - buttonWidth;
-    private final int changeRightY = (Config.HEIGHT/2);
-    private final int muteButtonX = (Config.WIDTH) - (Config.WIDTH/3) - buttonWidth;
-    private final int muteButtonY = (Config.HEIGHT/2) - buttonHeight - 20;
-    private final int saveButtonX = (Config.WIDTH) - (Config.WIDTH/3) - buttonWidth;
-    private final int saveButtonY = (Config.HEIGHT/2) - buttonHeight *2 - 80;
+    private final int buttonHeight = Config.getHeight()/13;
+    private final int buttonWidth = Config.getWidth()/5;
+    private final int changeLeftX = (Config.getWidth()) - (Config.getWidth()/3) - buttonWidth;
+    private final int changeLeftY = (Config.getHeight()/2) + buttonHeight + 20;
+    private final int changeRightX = (Config.getWidth()) - (Config.getWidth()/3) - buttonWidth;
+    private final int changeRightY = (Config.getHeight()/2);
+    private final int muteButtonX = (Config.getWidth()) - (Config.getWidth()/3) - buttonWidth;
+    private final int muteButtonY = (Config.getHeight()/2) - buttonHeight - 20;
+    private final int saveButtonX = (Config.getWidth()) - (Config.getWidth()/3) - buttonWidth;
+    private final int saveButtonY = (Config.getHeight()/2) - buttonHeight *2 - 80;
 
     //Constructor
     /**
@@ -69,7 +69,7 @@ public class SettingScreen implements Screen {
         this.model = new SettingModel(isMute);
         this.controller = new SettingController(game);
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Config.WIDTH, Config.HEIGHT);
+        camera.setToOrtho(false, Config.getWidth(), Config.getHeight());
 
         //Key assignation
         this.isMute=isMute;
@@ -93,7 +93,7 @@ public class SettingScreen implements Screen {
 
     @Override
     public void show() {
-        viewport = new ExtendViewport(Config.WIDTH, Config.HEIGHT);
+        viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
     }
 
@@ -118,7 +118,7 @@ public class SettingScreen implements Screen {
 
         // Mouse coordinates
         float mouseX = Gdx.input.getX();
-        float mouseY = Config.HEIGHT - Gdx.input.getY();
+        float mouseY = Config.getHeight() - Gdx.input.getY();
 
         //Draw buttons
         game.batch.begin();
@@ -134,28 +134,34 @@ public class SettingScreen implements Screen {
         font.getData().setScale(500);
 
 
-        game.font.draw(game.batch,("Left Key:  ") + "[ " + model.getLeftKey()+ " ]",(Config.WIDTH) - (Config.WIDTH/3) - buttonWidth -150,
-                (Config.HEIGHT/2) + buttonHeight + 20 + buttonHeight /2);
-        game.font.draw(game.batch,("Right Key:  "+ "[ " +model.getRightKey()+" ]"),(Config.WIDTH) - (Config.WIDTH/3) - buttonWidth -150,
-                (Config.HEIGHT/2) + buttonHeight /2);
-        game.font.draw(game.batch,"Volume:  ",(Config.WIDTH) - (Config.WIDTH/3) - buttonWidth -150,
-                (Config.HEIGHT/2) - buttonHeight - 20 + buttonHeight /2);
+        game.font.draw(game.batch,("Left Key:  ") + "[ " + model.getLeftKey()+ " ]",
+                (Config.getWidth()) - ((float) Config.getWidth() /3) - buttonWidth -150,
+                ((float) Config.getHeight() /2) + buttonHeight + 20 + (float) buttonHeight /2);
+        game.font.draw(game.batch,("Right Key:  "+ "[ " +model.getRightKey()+" ]"),
+                (Config.getWidth()) - ((float) Config.getWidth() /3) - buttonWidth -150,
+                ((float) Config.getHeight() /2) + (float) buttonHeight /2);
+        game.font.draw(game.batch,"Volume:  ",(Config.getWidth()) - ((float) Config.getWidth() /3) - buttonWidth -150,
+                ((float) Config.getHeight() /2) - buttonHeight - 20 + (float) buttonHeight /2);
 
-        game.font.draw(game.batch,"Press Esc to return to Main Menu ",(Config.WIDTH/2)-90, 20);
+        game.font.draw(game.batch,"Press Esc to return to Main Menu ",((float) Config.getWidth() /2)-90, 20);
 
         //When you want to change the key settings a message is display otherwise not.
         if (model.isTextLeftChange()){
-            game.font.draw(game.batch,"Press the new Key to assigned to Right movement. Remember to save changes.",(Config.WIDTH) - (Config.WIDTH/3) + 20, (Config.HEIGHT/2) + buttonHeight + 20 + buttonHeight /2);
+            game.font.draw(game.batch,"Press the new Key to assigned to Right movement. Remember to save changes.",
+                    (Config.getWidth()) - ((float) Config.getWidth() /3) + 20,
+                    ((float) Config.getHeight() /2) + buttonHeight + 20 + (float) buttonHeight /2);
         }
         if (model.isTextRightChange()){
-            game.font.draw(game.batch,"Press the new Key to assigned to Right movement. Remember to save changes.",(Config.WIDTH) - (Config.WIDTH/3) + 20, (Config.HEIGHT/2) + buttonHeight /2);
+            game.font.draw(game.batch,"Press the new Key to assigned to Right movement. Remember to save changes.",
+                    (Config.getWidth()) - ((float) Config.getWidth() /3) + 20,
+                    ((float) Config.getHeight() /2) + (float) buttonHeight /2);
         }
-
 
         game.batch.end();
 
         // Handle input
-        controller.handleInput(mouseX, mouseY, changeLeftX, changeLeftY, changeRightX, changeRightY, muteButtonX, muteButtonY, buttonWidth, buttonHeight, model);
+        controller.handleInput(mouseX, mouseY, changeLeftX, changeLeftY, changeRightX,
+                changeRightY, muteButtonX, muteButtonY, buttonWidth, buttonHeight, model);
     }
 
     @Override

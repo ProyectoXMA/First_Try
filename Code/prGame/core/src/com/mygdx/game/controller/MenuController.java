@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.util.Config;
 import com.mygdx.game.view.RaceScreen;
+import com.mygdx.game.view.SettingScreen;
 
 public class MenuController {
     //This variable is used to store the game object.
@@ -86,8 +87,7 @@ public class MenuController {
         }
         //Settings
         if (insideSettings) {
-            //settingsMenu();
-            game.dispose();
+            game.setScreen(new SettingScreen(game, "<--", "-->", false));
         }
         //Quit
         if (insideQuit) {

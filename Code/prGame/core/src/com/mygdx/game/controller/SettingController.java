@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.model.SettingModel;
-import com.mygdx.game.view.MainMenuScreen;
+import com.mygdx.game.view.MainMenuView;
 
 public class SettingController {
     private final MyGdxGame game;
@@ -22,7 +22,7 @@ public class SettingController {
 
         // Return to main Menu if "Esc" Key is pressed
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            game.setScreen(new MainMenuScreen(game));
+            game.setScreen(new MainMenuView(game));
         }
 
         // Handle awaiting key change
@@ -37,7 +37,7 @@ public class SettingController {
                     }
                     awaitingKeyChange = false;
                     keyChangeTarget = "";
-                    //When the new assigment of the key is done stop showing message for change it.
+                    //When the new assignment of the key is done stop showing message for change it.
                     model.setTextLeftChange(false);
                     model.setTextRightChange(false);
 

@@ -1,7 +1,5 @@
 package com.mygdx.game.util;
 
-import com.badlogic.gdx.Gdx;
-
 /**
  * The Config class holds the game configuration constants.
  * It uses the LibGDX Gdx.graphics to get the width and height of the application window.
@@ -16,7 +14,7 @@ public class Config {
     /**
      * The HEIGHT constant is set to the current height of the application window at the time of class loading.
      */
-    private static int HEIGHT = 1080;
+    private static int height = 1080;
 
     public Config(int width, int height) {
 
@@ -27,6 +25,6 @@ public class Config {
     }
 
     public static int getHeight() {
-        return HEIGHT;
+        return height;
     }
 }
