@@ -17,6 +17,7 @@ public class KeyBindings {
         keyBindings.put(UserAction.MOVE_UP, Input.Keys.UP);
         keyBindings.put(UserAction.MOVE_DOWN, Input.Keys.DOWN);
         keyBindings.put(UserAction.ESCAPE, Input.Keys.ESCAPE);
+        keyBindings.put(UserAction.ENTER, Input.Keys.ENTER);
         // Set default bindings for other actions
     }
     public void setKeyBinding(UserAction action, int key) {

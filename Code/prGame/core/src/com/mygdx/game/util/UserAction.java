@@ -5,5 +5,6 @@ public enum UserAction {
     MOVE_RIGHT,
     MOVE_UP,
     MOVE_DOWN,
-    ESCAPE
+    ESCAPE,
+    ENTER
 }
