@@ -51,7 +51,7 @@ public class LoseScreen implements Screen {
         stage.draw();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             losingMusic.stop();
-            game.setScreen(new MainMenuScreen(game));
+            game.setScreen(new MainMenuView(game));
         }
         game.batch.begin();
         game.batch.draw(backgroundImage,0,50,800,480);

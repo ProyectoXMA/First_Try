@@ -34,7 +34,8 @@ public class DesktopLauncher {
 
 		//Set the game to execute automatically at 1920x1080 of resolution
 
-		config.setFullscreenMode(chooseDisplayMode(Config.WIDTH, Config.HEIGHT));
+		config.setFullscreenMode(chooseDisplayMode(Config.getWidth(), Config.getHeight()));
+		//config.setWindowedMode(Config.getWidth(), Config.getHeight());
 
 		// Create a new application instance and start the game loop
 		new Lwjgl3Application(new MyGdxGame(), config);
@@ -47,11 +48,11 @@ public class DesktopLauncher {
 	 * @return
 	 */
 	public static Graphics.DisplayMode chooseDisplayMode(int width, int height) {
-		// List all available display modes
+		//WList all available display modes
 		Lwjgl3Graphics.DisplayMode[] displayModes = Lwjgl3ApplicationConfiguration.getDisplayModes();
 		Lwjgl3Graphics.DisplayMode selectedMode = null;
 
-		// If not found, try to find 1920x1080 at any refresh rate
+		//try to find 1920x1080 at any refresh rate
         for (Lwjgl3Graphics.DisplayMode displayMode : displayModes) {
             if (displayMode.width == width && displayMode.height == height) {
                 selectedMode = displayMode;
