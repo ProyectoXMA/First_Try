@@ -1,18 +1,11 @@
 package com.mygdx.game.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.controller.LegScreen;
+import com.mygdx.game.controller.LegController;
 import com.mygdx.game.controller.MenuController;
-import com.mygdx.game.model.ChooseBoatModel;
 import com.mygdx.game.util.Config;
 
 /**
@@ -189,19 +182,19 @@ public class MainMenuScreen implements Screen {
 
         //Play
         if (insidePlay) {
-            game.setScreen(new LegScreen(game));
+            game.setScreen(new LegController(game));
             dispose();
         }
 
         //Choose Boat
         if (insideBoat) {
-            game.setScreen(new LegScreen(game));
+            game.setScreen(new LegController(game));
             dispose();
         }
 
         //Tutorial
         if (insideTutorial) {
-            game.setScreen(new LegScreen(game));
+            game.setScreen(new LegController(game));
             dispose();
         }
 

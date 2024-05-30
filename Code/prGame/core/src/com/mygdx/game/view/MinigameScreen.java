@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.GameState;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.controller.LegScreen;
+import com.mygdx.game.controller.LegController;
 
 
 public class MinigameScreen implements Screen {
@@ -139,7 +139,7 @@ public class MinigameScreen implements Screen {
             if (successCounter == 1) {
                 gameState.setBaseHealth(100); // Restore Boat's HP
                 gameState.setMinigamePlaysLeft(0); // Signal main game that it cannot return to the minigame (unless a PowerUp updates value)
-                game.setScreen(new LegScreen(game)); // Return to the main race
+                game.setScreen(new LegController(game)); // Return to the main race
                 // TODO
                 gameState.getDeathPoint(); // Respawn at death point
                 gameState.getMyBoat();     // Return to with previous selected Boat

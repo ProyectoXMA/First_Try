@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -16,7 +15,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.model.Leg;
 import com.mygdx.game.view.LegView;
 
-public class LegScreen implements Screen {
+public class LegController implements Screen {
     final MyGdxGame game;
     LegView view;
     InputManager inputManager;
@@ -28,10 +27,10 @@ public class LegScreen implements Screen {
     long lastDropTime;
     int dropsGathered;
 
-    public LegScreen(final MyGdxGame game){
+    public LegController(final MyGdxGame game){
         Gdx.app.log("Input","LegScreen created");
         this.game = game;
-        this.view = new LegView(game, new Leg(1));
+        this.view = new LegView(game, new Leg(1, game.getPlayer()));
         this.inputManager = new InputManager();
 
         // Load the drop sound effect and the rain background "music"

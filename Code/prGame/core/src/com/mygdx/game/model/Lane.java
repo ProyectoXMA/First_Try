@@ -15,7 +15,7 @@ import java.util.HashSet;
  * It also stores a reference to the assigned boat, and a List of all boats present in the lane, used to subtract health to invaders boats.
  */
 public class Lane {
-    private static final int WIDTH = 800;
+    public static final int WIDTH = 800;
     private final int laneId;
     private final float lanePosition; //Horizontal position of the lane from the left side of the screen to the left side of the lane
     private final Boat boat; //Boat asigned to this lane

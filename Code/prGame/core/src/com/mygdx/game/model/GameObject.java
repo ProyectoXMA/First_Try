@@ -30,12 +30,6 @@ public abstract class GameObject implements Collidable{
     public void setY(float y) {
         this.y = y;
     }
-    public void adjustX(float dx) {
-        x += dx;
-    }
-    public void adjustY(float dy) {
-        y += dy;
-    }
     public GameObject(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;

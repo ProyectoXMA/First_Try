@@ -10,8 +10,8 @@ import com.mygdx.game.model.movement.*;
  * It delegates the movement (as all Movable objects) to a MovementStrategy.
  */
 public class Boat extends GameObject implements Movable{
-    private static final int WIDTH = 50;
-    private static final int HEIGHT = 50;
+    public static final int WIDTH = 50;
+    public static final int HEIGHT = 50;
 
     private MovementStrategy movementStrategy;
 
@@ -158,6 +158,15 @@ public class Boat extends GameObject implements Movable{
     @Override
     public void accept(CollidableVisitor visitor) {
         visitor.visitBoat(this);
+    }
+
+    @Override
+    public void adjustX(float x) {
+        super.setX(super.getX() + x);
+    }
+    @Override
+    public void adjustY(float y) {
+        super.setY(super.getY() + y);
     }
 
     /**

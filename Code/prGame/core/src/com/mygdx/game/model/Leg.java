@@ -2,6 +2,7 @@ package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.model.movement.PlayerControlledStrategy;
 import com.mygdx.game.model.obstacles.*;
 import com.mygdx.game.model.powerUps.PowerUp;
 
@@ -24,14 +25,24 @@ public class Leg {
     private Set<Log> unusedLogs;
     private Set<Stone> unusedStones;
 
-    public Leg(int level){
+    public Leg(int level, Player player){
         this.level = level;
         this.lanes = new ArrayList<>(NUMBER_OF_LANES);
         this.unusedDucks = new HashSet<>();
         this.unusedLogs = new HashSet<>();
         this.unusedStones = new HashSet<>();
+
+        //TODO: A bit harcoded this...
+        float centerOfLane = (float) ((PLAYER_LANE + 0.5) * Lane.WIDTH);
+        Boat playerBoat = Boat.createBoat(player.getBoatType(), centerOfLane-Boat.WIDTH, 0);
+        playerBoat.setMovementStrategy(new PlayerControlledStrategy());
+
         for (int i = 0; i < NUMBER_OF_LANES; i++) {
-            lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), Boat.createBoat(BoatType.getRandomType(), new Rectangle()))); //TODO: Specify position of rectangle and dimensions
+            centerOfLane = (float) ((i + 0.5) * Lane.WIDTH);
+            if(i == PLAYER_LANE)
+                lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), playerBoat));
+            else
+                lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), Boat.createBoat(BoatType.getRandomType(), centerOfLane-Boat.WIDTH, 0)));
         }
     }
     public List<Lane> getLanes() {

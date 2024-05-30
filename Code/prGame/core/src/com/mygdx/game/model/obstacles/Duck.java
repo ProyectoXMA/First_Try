@@ -9,6 +9,15 @@ public class Duck extends Obstacle implements Movable {
     MovementStrategy movementStrategy;
     //attributes of the obstacle Duck
     private int speed;
+
+    @Override
+    public void adjustX(float x) {
+        super.setX(super.getX() + x);
+    }
+    @Override
+    public void adjustY(float y) {
+        super.setY(super.getY() + y);
+    }
     @Override
     public void move(float delta) {
         movementStrategy.move(this, delta);
@@ -29,9 +38,11 @@ public class Duck extends Obstacle implements Movable {
         this.speed = speed;
     }
     //Getters for the exclusive attributes of the obstacle Duck
+    @Override
     public int getSpeed(){
         return speed;
     }
+    @Override
     public void setSpeed(int speed){
         this.speed = speed;
     }
