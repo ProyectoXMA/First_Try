@@ -58,7 +58,7 @@ public class GameState {
     }
 
     public void setBaseHealth(int baseHealth) {
-        this.baseHealth = baseHealth;
+        this.myBoat.adjustHealth(baseHealth);
     }
     
 }

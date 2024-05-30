@@ -3,6 +3,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controller.LegController;
 import com.mygdx.game.controller.MenuController;
@@ -17,6 +20,7 @@ public class MainMenuScreen implements Screen {
     private final MyGdxGame game;
     private final MenuController controller;
     OrthographicCamera camera;
+    Viewport viewport;
     private final Texture MenuImage;
 
     //texture definition for buttons
@@ -33,8 +37,8 @@ public class MainMenuScreen implements Screen {
     //default button dimensions
     private int BUTTONWIDTH = Config.WIDTH/5;
     private int BUTTONHEIGHT = Config.HEIGHT/13;
-    private float BUTTONX = (float) (Config.WIDTH - BUTTONWIDTH) /2;
-    private float BUTTONY = ((float) Config.HEIGHT /2);
+    private int BUTTONX = (Config.WIDTH - BUTTONWIDTH) /2;
+    private int BUTTONY =  (Config.HEIGHT) /2;
 
     //MARGINS FOR BUTTONS
     private float MARGIN = (float) BUTTONHEIGHT/4;
@@ -62,21 +66,27 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(final MyGdxGame game) {
         this.game = game;
         this.controller = new MenuController(game);
+
+        //Create the camera
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Config.WIDTH, Config.HEIGHT);
+
+        //Creating viewport
+        viewport = new FitViewport(Config.WIDTH, Config.HEIGHT, camera);
+
         MenuImage = new Texture(Gdx.files.internal("dragon.jpeg"));
 
         //initialisation of buttons
-        playLevelButton = new Texture(Gdx.files.internal("PLAY.png"));
-        playLevelButtonSel = new Texture(Gdx.files.internal("PLAY_SEL.png"));
-        selectionButton = new Texture(Gdx.files.internal("BOATS.png"));
-        selectionButtonSel = new Texture(Gdx.files.internal("BOATS_SEL.png"));
-        tutorialButton = new Texture(Gdx.files.internal("TUTORIAL.png"));
-        tutorialButtonSel = new Texture(Gdx.files.internal("TUTORIAL_SEL.png"));
-        settingsButton = new Texture(Gdx.files.internal("SETTINGS.png"));
-        settingsButtonSel = new Texture(Gdx.files.internal("SETTINGS_SEL.png"));
-        quitButton = new Texture(Gdx.files.internal("QUIT.png"));
-        quitButtonSel = new Texture(Gdx.files.internal("QUIT_SEL.png"));
+        playLevelButton = new Texture(Gdx.files.internal("buttons/PLAY.png"));
+        playLevelButtonSel = new Texture(Gdx.files.internal("buttons/PLAY_SEL.png"));
+        selectionButton = new Texture(Gdx.files.internal("buttons/BOATS.png"));
+        selectionButtonSel = new Texture(Gdx.files.internal("buttons/BOATS_SEL.png"));
+        tutorialButton = new Texture(Gdx.files.internal("buttons/TUTORIAL.png"));
+        tutorialButtonSel = new Texture(Gdx.files.internal("buttons/TUTORIAL_SEL.png"));
+        settingsButton = new Texture(Gdx.files.internal("buttons/SETTINGS.png"));
+        settingsButtonSel = new Texture(Gdx.files.internal("buttons/SETTINGS_SEL.png"));
+        quitButton = new Texture(Gdx.files.internal("buttons/QUIT.png"));
+        quitButtonSel = new Texture(Gdx.files.internal("buttons/QUIT_SEL.png"));
     }
 
 
@@ -94,30 +104,42 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        // Update the camera
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
 
-        //mouse coordinatesgi
+
+        // Set the viewport's dimensions
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        // Clear the screen
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        // Set the projection matrix of the batch to the combined matrix of the camera and viewport
+        game.batch.setProjectionMatrix(viewport.getCamera().combined);
+
+        // Get mouse coordinates
         float mouseX = Gdx.input.getX();
         float mouseY = Config.HEIGHT - Gdx.input.getY();
 
+        // Start drawing all images
 
-        //Starts drawing all images
         game.batch.begin();
-        //draws the initial Main background dragon image
+
+        // Draw the initial main background dragon image
         game.batch.draw(MenuImage, 0, 0, Config.WIDTH, Config.HEIGHT);
 
-        //draws the buttons
+        // Draw the buttons
         drawButtons(mouseX, mouseY);
 
-        //ends the draw
+        // End the draw
         game.batch.end();
 
-        //logic to detect if buttons are clicked
+        // Logic to detect if buttons are clicked
         if (Gdx.input.isTouched()) {
             onButtonClicked(mouseX, mouseY);
         }
     }
+
 
     /**
      * This method is used to check whether the user is hovering over a button.
@@ -225,7 +247,7 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height, true);
     }
 
     /**
