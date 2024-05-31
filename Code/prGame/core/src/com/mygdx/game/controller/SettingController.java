@@ -57,6 +57,7 @@ public class SettingController implements Screen{
         stage.addActor(table);
 
         // temporary until we have asset manager in
+        // loads a skin to organise all UI assets
         Skin skin = new Skin(Gdx.files.internal("skins/glassy-ui.json"));
 
         //create buttons
