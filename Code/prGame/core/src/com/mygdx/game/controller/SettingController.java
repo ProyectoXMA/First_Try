@@ -23,12 +23,16 @@ public class SettingController implements Screen{
     private final int BUTTON_WIDTH = Config.getWidth()/3;
     private final int BUTTON_HEIGHT = Config.getHeight()/8;
     private final float textSize = (float) BUTTON_HEIGHT / 135;
+
+    //booleans to check if user wants to change key binds
     private boolean awaitingLeftKeyChange = false;
     private boolean awaitingRightKeyChange = false;
+
+    //labels of key binds
     Label moveLeftText;
     Label moveRightText;
 
-    //Keybinds class
+    //Key binds class
     KeyBindings keyBinds;
 
     public SettingController(MyGdxGame game){
@@ -145,6 +149,7 @@ public class SettingController implements Screen{
             }
         });
 
+        //Checking which resolution was chosen in order to change it appropriately
         resolution.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -175,6 +180,7 @@ public class SettingController implements Screen{
                         dispose();
                         break;
                     default:
+                        //In case it fails
                         System.out.println("Unsupported resolution selected.");
                         break;
                 }
@@ -183,6 +189,11 @@ public class SettingController implements Screen{
 
     }
 
+    /**
+     * changeControls consists in a loop to check which is the next key pressed by the user
+     * depending on what key is awaiting to be changed
+     * @param action what action is changing key
+     */
     private void changeControls(UserAction action){
 
         for(int i = 0; i < Input.Keys.MAX_KEYCODE; i++){
@@ -211,7 +222,8 @@ public class SettingController implements Screen{
     @Override
     public void render(float delta) {
         view.update();
-        //Check if controls have to be changed
+
+        //Check if controls have to be changed, if so put ... as label text
         if(awaitingLeftKeyChange) {
             changeControls(UserAction.MOVE_LEFT);
             moveLeftText.setText("...");
@@ -256,6 +268,9 @@ public class SettingController implements Screen{
 
     }
 
+    /**
+     * Function to remove the current screen
+     */
     @Override
     public void dispose() {
         // dispose of assets when not needed anymore
