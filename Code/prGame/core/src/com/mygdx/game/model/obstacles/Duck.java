@@ -47,15 +47,10 @@ public class Duck extends Obstacle implements Movable {
     public void setSpeed(int speed){
         this.speed = speed;
     }
+    @Override
     public void accept(ObstacleVisitor visitor) {
         visitor.visitDuck(this);
     }
-
-    @Override
-    public void accept(CollidableVisitor visitor) {
-        visitor.visitObstacle(this);
-    }
-
     @Override
     public void destroy() {
         throw new UnsupportedOperationException("Unimplemented method 'destroy'");
