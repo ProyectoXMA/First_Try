@@ -38,8 +38,10 @@ public abstract class Obstacle extends GameObject implements Collidable {
      * Accepts a visitor of type CollidableVisitor and calls its visitObstacle method.
      * @param visitor the visitor to accept
      */
+    public abstract void accept(CollidableVisitor visitor);
+    /*
     public void accept(CollidableVisitor visitor){
         visitor.visitObstacle(this);
-    }
+    } Previous implementation, the accept should be done at the duck, log, stone level*/
 }
 

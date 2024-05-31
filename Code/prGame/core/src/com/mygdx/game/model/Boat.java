@@ -162,7 +162,7 @@ public class Boat extends GameObject implements Movable{
     public void accept(CollidableVisitor visitor) {
         visitor.visitBoat(this);
     }
-
+    //In this case as there are no boat type subclasses the implementation of the accept method is done at the right level
     @Override
     public void adjustX(float x) {
         super.setX(super.getX() + x);

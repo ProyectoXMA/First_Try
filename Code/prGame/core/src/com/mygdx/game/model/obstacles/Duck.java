@@ -1,6 +1,7 @@
 package com.mygdx.game.model.obstacles;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.model.CollidableVisitor;
 import com.mygdx.game.model.movement.Movable;
 import com.mygdx.game.model.movement.MovementStrategy;
 
@@ -48,6 +49,11 @@ public class Duck extends Obstacle implements Movable {
     }
     public void accept(ObstacleVisitor visitor) {
         visitor.visitDuck(this);
+    }
+
+    @Override
+    public void accept(CollidableVisitor visitor) {
+        visitor.visitObstacle(this);
     }
 
     @Override
