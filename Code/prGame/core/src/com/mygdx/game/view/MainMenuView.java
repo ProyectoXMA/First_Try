@@ -23,16 +23,16 @@ public class MainMenuView implements Screen {
     private final Texture MenuImage = new Texture(Gdx.files.internal("menu_background.jpeg"));
 
     //texture definition for buttons
-    private final Texture playLevelButton = new Texture(Gdx.files.internal("buttons/play.png"));
-    private final Texture playLevelButtonSel = new Texture(Gdx.files.internal("buttons/play_sel.png"));
-    private final Texture selectionButton = new Texture(Gdx.files.internal("buttons/boats.png"));
-    private final Texture selectionButtonSel = new Texture(Gdx.files.internal("buttons/boats_sel.png"));
-    private final Texture tutorialButton = new Texture(Gdx.files.internal("buttons/tutorial.png"));
-    private final Texture tutorialButtonSel = new Texture(Gdx.files.internal("buttons/tutorial_sel.png"));
-    private final Texture settingsButton = new Texture(Gdx.files.internal("buttons/settings.png"));
-    private final Texture settingsButtonSel = new Texture(Gdx.files.internal("buttons/settings_sel.png"));
-    private final Texture quitButton= new Texture(Gdx.files.internal("buttons/quit.png"));
-    private final Texture quitButtonSel = new Texture(Gdx.files.internal("buttons/quit_sel.png"));
+    private final Texture playLevelButton = new Texture(Gdx.files.internal("buttons/PLAY.png"));
+    private final Texture playLevelButtonSel = new Texture(Gdx.files.internal("buttons/PLAY_SEL.png"));
+    private final Texture selectionButton = new Texture(Gdx.files.internal("buttons/BOATS.png"));
+    private final Texture selectionButtonSel = new Texture(Gdx.files.internal("buttons/BOATS_SEL.png"));
+    private final Texture tutorialButton = new Texture(Gdx.files.internal("buttons/TUTORIAL.png"));
+    private final Texture tutorialButtonSel = new Texture(Gdx.files.internal("buttons/TUTORIAL_SEL.png"));
+    private final Texture settingsButton = new Texture(Gdx.files.internal("buttons/SETTINGS.png"));
+    private final Texture settingsButtonSel = new Texture(Gdx.files.internal("buttons/SETTINGS_SEL.png"));
+    private final Texture quitButton= new Texture(Gdx.files.internal("buttons/QUIT.png"));
+    private final Texture quitButtonSel = new Texture(Gdx.files.internal("buttons/QUIT_SEL.png"));
 
     //Coordinates for the play button
     private float playButtonY;
