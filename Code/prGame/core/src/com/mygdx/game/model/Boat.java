@@ -3,39 +3,98 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.movement.*;
 
-public class Boat implements Movable, Collidable, GameObject{
-    //ALL THIS STUFF IS FOR THE MOVEMENT
-    private MovementStrategy movementStrategy;
-    private Rectangle hitBox;
+/**
+ * The Boat class represents a boat in the game.
+ * It implements the Movable, Collidable, and GameObject interfaces.
+ * It is responsible for storing the boat's attributes.
+ * It delegates the movement (as all Movable objects) to a MovementStrategy.
+ */
+public class Boat extends GameObject implements Movable{
+    public static final int WIDTH = 50;
+    public static final int HEIGHT = 50;
 
-    //Constants for the power ups that can be given to the boat
-    //atributes for the boat, they are the base stats of the boat
+    private MovementStrategy movementStrategy;
+
+    private final BoatType type;
+    //Attributes for the boat, they are the base stats of the boat
     private final int baseHealth;
     private final int baseResistance;
     private final int baseHandling;
     private final int baseSpeed;
     private final int baseAcceleration;
-    //current atributes for the boat, they can be changed by the power ups and collisions
+    //Current attributes for the boat, they can be changed by the power ups and collisions
     private int currentHealth;
     private int currentResistance;
     private int currentSpeed;
     private int currenAcceleration;
     private boolean isInvencible;
-    //Constructor for the boat
-    public Boat (int health,int resistance, int handling, int speed, int acceleration, Rectangle hitBox){
+
+    /**
+     * Private constructor of class Boat, the only way to create a boat is using the factory method createBoat
+     * It receives the base stats of the boat and the hitbox of the boat
+     * @param health health of the boat
+     * @param resistance resistance to damage
+     * @param handling horizontal movement speed
+     * @param speed vertical movement speed
+     * @param acceleration acceleration of the boat
+     */
+    private Boat (BoatType type, int health, int resistance, int handling, int speed, int acceleration, Rectangle hitBox){
+        super(hitBox);
+        this.type = type;
         this.baseHealth = health;
         this.baseResistance = resistance;
         this.baseHandling = handling;
         this.baseSpeed = speed;
         this.baseAcceleration = acceleration;
-        this.hitBox = hitBox;
         currentHealth = baseHealth;
         currenAcceleration = baseAcceleration;
         currentResistance = baseResistance;
         currentSpeed = baseSpeed;
         isInvencible = false; //not invencible at the beginning, just when it is hit by an invencible power up
     }
+
+    /**
+     * Factory method to create a boat of a given type. The Boat contructor is private, so with his method we restrict the creation of boats to provided types.
+     * @param type the type of boat to create on which the stats depend
+     * @param x the x coordinate of the boat
+     * @param y the y coordinate of the boat
+     * @return a new boat of the given type
+     */
+    public static Boat createBoat(BoatType type, float x, float y) {
+        switch (type) {
+            case FAST:
+                return new Boat(type,100, 10, 100, 200, 10, new Rectangle(x, y, WIDTH, HEIGHT));
+            case STRONG:
+                return new Boat(type,200, 5, 50, 140, 5, new Rectangle(x, y, WIDTH, HEIGHT));
+            case CLASSIC:
+                return new Boat(type,150, 7, 70, 150, 7, new Rectangle(x, y, WIDTH, HEIGHT));
+            default:
+                throw new IllegalArgumentException("Not a valid boat type");
+        }
+    }
+    /**
+     * Factory method to create a boat of a given type. The Boat contructor is private, so with his method we restrict the creation of boats to provided types.
+     * @param type the type of boat to create on which the stats depend
+     * @param hitBox the hitbox of the boat
+     * @return a new boat of the given type
+     */
+    public static Boat createBoat(BoatType type, Rectangle hitBox) {
+        switch (type) {
+            case FAST:
+                return new Boat(type, 100, 10, 100, 200, 10, hitBox);
+            case STRONG:
+                return new Boat(type,200, 5, 50, 140, 5, hitBox);
+            case CLASSIC:
+                return new Boat(type, 150, 7, 70, 150, 7, hitBox);
+            default:
+                throw new IllegalArgumentException("Not a valid boat type");
+        }
+    }
+
     //Getters for the atributes of the boat
+    public BoatType getType(){
+        return type; //get the type of the boat
+    }
     public int getHealth(){
         return currentHealth; //get the current health
     }
@@ -93,17 +152,27 @@ public class Boat implements Movable, Collidable, GameObject{
         this.isInvencible = b;
     }
 
-    @Override
-    public Rectangle getHitbox() {
-        return hitBox;
-    }
-
+    /**
+     * Accepts a visitor of type CollidableVisitor to handle the collisions
+     */
     @Override
     public void accept(CollidableVisitor visitor) {
         visitor.visitBoat(this);
     }
 
-    //MovementStrategy is made in the MovementStrategy class, this is the strategy pattern
+    @Override
+    public void adjustX(float x) {
+        super.setX(super.getX() + x);
+    }
+    @Override
+    public void adjustY(float y) {
+        super.setY(super.getY() + y);
+    }
+
+    /**
+     * Delegate the movement to the MovementStrategy
+     * @param delta the time passed since the last frame
+     */
     @Override
     public void move(float delta) {
         movementStrategy.move(this, delta);

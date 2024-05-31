@@ -3,6 +3,11 @@ package com.mygdx.game.model;
 import com.mygdx.game.model.obstacles.Obstacle;
 import com.mygdx.game.model.powerUps.PowerUp;
 
+/**
+ * This class is responsible for handling collisions between objects.
+ * It implements the Visitor pattern, it visits all Collidable objects (Obstacle, Boat, PowerUp),
+ * check if a collision has occurred and handles it.
+ */
 public class CollisionHandler implements CollidableVisitor{
     private Boat boat;
     public void setBoat(Boat boat) {
