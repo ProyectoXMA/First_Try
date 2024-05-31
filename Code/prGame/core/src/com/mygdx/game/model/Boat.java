@@ -41,6 +41,7 @@ public class Boat extends GameObject implements Movable{
      */
     private Boat (BoatType type, int health, int resistance, int handling, int speed, int acceleration, Rectangle hitBox){
         super(hitBox);
+        this.setWasHit(false);
         this.type = type;
         this.baseHealth = health;
         this.baseResistance = resistance;
@@ -158,10 +159,7 @@ public class Boat extends GameObject implements Movable{
     /**
      * Accepts a visitor of type CollidableVisitor to handle the collisions
      */
-    @Override
-    public void accept(CollidableVisitor visitor) {
-        visitor.visitBoat(this);
-    }
+
     //In this case as there are no boat type subclasses the implementation of the accept method is done at the right level
     @Override
     public void adjustX(float x) {

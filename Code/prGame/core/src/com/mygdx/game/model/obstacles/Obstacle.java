@@ -21,6 +21,7 @@ public abstract class Obstacle extends GameObject implements Collidable {
     public Obstacle(int damage, Rectangle hitbox){
         super(hitbox);
         this.damage = damage;
+        this.setWasHit(false); // Originally it isn´t hit
     }
 
     public int getDamage(){
@@ -40,9 +41,6 @@ public abstract class Obstacle extends GameObject implements Collidable {
      * @param visitor the visitor to accept
      */
 
-    @Override
-    public void accept(CollidableVisitor visitor){
-        visitor.visitObstacle(this);
-    }
+
 }
 

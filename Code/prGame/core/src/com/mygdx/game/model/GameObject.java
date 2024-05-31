@@ -38,7 +38,7 @@ public abstract class GameObject implements Collidable{
         this.wasHit = wasHit;
     }
     public GameObject(float x, float y, float width, float height) {
-        this.wasHit = false;
+        this.wasHit = false; //When created it hasn´t been hit
         this.x = x;
         this.y = y;
         this.width = width;

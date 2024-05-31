@@ -17,27 +17,39 @@ public class CollisionHandler{
         return boat;
     }
 
-    public void visitObstacle(Obstacle obstacle) {
-        if (boat.getHitbox().overlaps(obstacle.getHitbox())) {
-            boat.adjustHealth(-obstacle.getDamage()); //En el momento en el que aplico algo a un barco, se aplica en todas las líneas
-            //Devuelve un true para que la lane sepa que se lo tiene que cargar
-            obstacle.destroy();//Pone la flag de wasHit a true
+    public void checkObstacleCollision(Obstacle obstacle) {
+        //It only calls visitObstacle in case it has not been hit
+
+        if (!obstacle.getWasHit()) { //In case the obstacle wasn´t hit yet, we look for the collision
+
+            if(boat.getHitbox().overlaps(obstacle.getHitbox())) //In case of collision
+            {
+                boat.adjustHealth(-obstacle.getDamage()); //Once we apply the effect to the boat and obstacles it is applied to all the lanes, as the object is passed by reference
+                obstacle.setWasHit(true); //We activate the flag to eliminate it, and to ensure no other lane applies the effects
+            }
+
         }
     }
 
 
-    public void visitBoat(Boat boat) {
-        if(this.boat.getHitbox().overlaps(boat.getHitbox())) { //By the client´s order when a boat collides with another both must be destroyed
-            this.boat.destroy();
-            boat.destroy();
-        }
+    public void checkBoatCollision(Boat boat) {
+        if(!boat.getWasHit()) //In case it wasn´t hit, and therefore the boat associated to the handler neither
+            if(this.boat.getHitbox().overlaps(boat.getHitbox())) { //By the client´s order when a boat collides with another both must be destroyed
+                //First lane to detect the collision sets both objets wasHit to true
+                this.boat.setWasHit(true);
+                boat.setWasHit(true);
+            }
     }
 
 
-    public void visitPowerUp(PowerUp powerUp) {
-        if (boat.getHitbox().overlaps(powerUp.getHitbox())) {
-            powerUp.applyPowerUp(boat);
-            powerUp.destroy();
-        }
+    public void checkPowerUpCollision(PowerUp powerUp) {
+
+        if(!powerUp.getWasHit()) //In case it wasn´t hit yet, we look for the collision
+            if (boat.getHitbox().overlaps(powerUp.getHitbox())) {
+
+                //It only enters if an overlap in items hitboxes was detected
+                powerUp.applyPowerUp(boat);
+                powerUp.setWasHit(true); //We activate the flag to ensure it is eliminated
+            }
     }
 }
