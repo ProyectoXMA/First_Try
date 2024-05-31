@@ -17,6 +17,7 @@ public abstract class PowerUp extends GameObject implements Collidable {
     //The constructor for the powerUp class
     public PowerUp(Rectangle hitbox){
         super(hitbox);
+        this.setWasHit(false);
     }
     public abstract void applyPowerUp(Boat boat);
 
@@ -25,5 +26,5 @@ public abstract class PowerUp extends GameObject implements Collidable {
         visitor.visitPowerUp(this);
     }/* Again, the accept implementation must be done at a lower level.*/
 
-    public abstract void accept(CollidableVisitor visitor);
+
 }

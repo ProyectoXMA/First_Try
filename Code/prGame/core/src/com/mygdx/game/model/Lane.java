@@ -136,17 +136,28 @@ public class Lane {
      */
     private void searchCollisions(CollisionHandler handler) { //Lane must be aware of an object´s destruction to eliminate it from the corresponding set
         for (Obstacle obstacle : obstacles) {
-            //if (handler.visitObstacle(obstacle); obstacles.remove(obstacle) //El visit del handler debe devolver el booleano
-            //Ya no haría falta llamar a esta línea xq ya se llama arriba
+
+
            //Cambiar el nombnre de visit para que no sea misleading
-            handler.visitObstacle(obstacle); //Esto debería ser (de manera análoga a lo de abajo), un obstacle.accept( "CollisionHandler" handler) y por tanto es accept el que devuelve el booleano que es el mismo que el que devuelve el handler
+
+            handler.checkObstacleCollision(obstacle); //In case it wasn´t hit yet, we look for the collision
+            if(obstacle.getWasHit()) obstacles.remove(obstacle); //If it was hit, we need to remove it from the obstacles set
+
         }
         for (PowerUp powerUp : powerUps) { //Cada vez que salgo del handler compruebo if it was hit y hago el remove
-//            handler.visitPowerUp(powerUp);
+           handler.checkPowerUpCollision(powerUp);
+           if(powerUp.getWasHit()) powerUps.remove(powerUp);
         }
         for(Boat otherBoat : boats) {
+
             if(handler.getBoat().equals(otherBoat)) continue;
-            handler.visitBoat(otherBoat);
+            handler.checkBoatCollision(otherBoat);
+            if(otherBoat.getWasHit())
+            {
+                //We remove the otherBoat and the handler boat
+                boats.remove(otherBoat);
+                boats.remove(handler.getBoat());
+            }
         }
     }
     public void moveObstacles(float delta) {
