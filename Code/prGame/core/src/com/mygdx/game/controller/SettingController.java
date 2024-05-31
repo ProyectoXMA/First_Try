@@ -1,6 +1,7 @@
 package com.mygdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,6 +11,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.util.Config;
+import com.mygdx.game.util.KeyBindings;
+import com.mygdx.game.util.UserAction;
 import com.mygdx.game.view.SettingView;
 
 public class SettingController implements Screen{
@@ -21,8 +24,12 @@ public class SettingController implements Screen{
     private final int BUTTON_HEIGHT = Config.getHeight()/8;
     private final float textSize = (float) BUTTON_HEIGHT / 135;
 
+    //Keybinds class
+    KeyBindings keyBinds;
+
     public SettingController(MyGdxGame game){
         this.game = game;
+        keyBinds = new KeyBindings();
 
         // create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
@@ -60,14 +67,24 @@ public class SettingController implements Screen{
         TextButton back = new TextButton("BACK", skin);
         back.getLabel().setFontScale(textSize);
 
+        //Create text
+        Label moveLeftText = new Label(Input.Keys.toString(keyBinds.getKeyForAction(UserAction.MOVE_LEFT)) , skin);
+        moveLeftText.setFontScale(textSize);
+        moveLeftText.setAlignment(Align.center);
+        Label moveRightText = new Label(Input.Keys.toString(keyBinds.getKeyForAction(UserAction.MOVE_RIGHT)) , skin);
+        moveRightText.setFontScale(textSize);
+        moveRightText.setAlignment(Align.center);
         //add buttons to table
+
+        table.add(moveLeftText).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
         table.add(changeLeft).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
-        table.row().pad(10, 0, 10, 0);
+        table.row().pad(10, 0, 10, 5);
+        table.add(moveRightText).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
         table.add(changeRight).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
         table.row();
-        table.add(resolution).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
+        table.add(resolution).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).colspan(2);
         table.row();
-        table.add(back).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
+        table.add(back).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).colspan(2);
 
 
         // create button listeners
@@ -83,6 +100,7 @@ public class SettingController implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //TODO
+                inputHandler(UserAction.MOVE_LEFT);
             }
         });
 
@@ -90,6 +108,7 @@ public class SettingController implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //TODO
+                inputHandler(UserAction.MOVE_RIGHT);
             }
         });
 
@@ -132,8 +151,13 @@ public class SettingController implements Screen{
 
     }
 
-    private void inputHandler(){
+    private void inputHandler(UserAction action){
 
+        InputManager manager = new InputManager();
+
+
+
+        keyBinds.setKeyBinding(action, 0);
     }
 
     @Override

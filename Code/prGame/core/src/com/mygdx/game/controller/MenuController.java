@@ -12,7 +12,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.util.Config;
 import com.mygdx.game.view.MenuView;
-import com.mygdx.game.view.RaceScreen;
+import com.mygdx.game.controller.LegController;
+import com.mygdx.game.view.MinigameScreen;
 
 public class MenuController implements Screen{
 
@@ -88,7 +89,7 @@ public class MenuController implements Screen{
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new RaceScreen(game));
+                game.setScreen(new LegController(game));
             }
         });
 
@@ -104,6 +105,8 @@ public class MenuController implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //TODO
+                dispose();
+                game.setScreen(new MinigameScreen(game, null));
             }
         });
 

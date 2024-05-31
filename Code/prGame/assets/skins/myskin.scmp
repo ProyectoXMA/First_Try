@@ -692,6 +692,26 @@ atlasData: {
 			type: TEXTURE
 			hidden: false
 		}
+		{
+			file: C:/Users/manub/Documents/UMA/ASIGNATURAS/Intro_Software/Proyecto/UMA-ISE24-E1/Code/prGame/assets/buttons/label_template.png
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: label_template
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			tvgData: null
+			type: TEXTURE
+			hidden: false
+		}
 	]
 	fontDrawables: [
 		{
@@ -1949,19 +1969,19 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: font
+						value: font-big
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
 						name: fontColor
 						optional: true
-						value: null
+						value: black
 					}
 					background: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: background
 						optional: true
-						value: null
+						value: label_template
 					}
 				}
 				deletable: false
