@@ -34,19 +34,11 @@ public class Leg {
         this.unusedLogs = new HashSet<>();
         this.unusedStones = new HashSet<>();
 
-        //TODO: A bit harcoded this...
-        float centerOfLane = (float) ((PLAYER_LANE + 0.5) * Lane.WIDTH);
-        Boat playerBoat = Boat.createBoat(player.getBoatType(), centerOfLane-Boat.WIDTH, 0);
-        MovementStrategy playerControlledStrategy = new PlayerControlledStrategy();
-        playerBoat.setMovementStrategy(playerControlledStrategy);
-        player.setBoat(playerBoat);
-
         for (int i = 0; i < NUMBER_OF_LANES; i++) {
-            centerOfLane = (float) ((i + 0.5) * Lane.WIDTH);
             if(i == PLAYER_LANE)
-                lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), playerBoat));
+                lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), player.getBoat()));
             else
-                lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), Boat.createBoat(BoatType.getRandomType(), centerOfLane-Boat.WIDTH, 0)));
+                lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), Boat.createBoat(BoatType.getRandomType())));
         }
     }
     public List<Lane> getLanes() {

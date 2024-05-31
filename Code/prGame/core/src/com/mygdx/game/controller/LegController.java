@@ -34,8 +34,7 @@ public class LegController implements Screen {
         this.leg = new Leg(1, game.getPlayer());
         this.view = new LegView(game, leg);
         this.inputManager = new InputManager();
-        //TODO: This is a bit of a trick, we should not hardcode this and find abetter way to subscribe any playerControlled object to the inputManager
-        this.inputManager.addSubscriber((InputSubscribed) game.getPlayer().getBoat().getMovementStrategy());
+        this.inputManager.addSubscriber(game.getPlayer());
 
         // Load the drop sound effect and the rain background "music"
         dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));

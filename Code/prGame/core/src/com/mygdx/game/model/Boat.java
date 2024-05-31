@@ -27,6 +27,7 @@ public class Boat extends GameObject implements Movable{
     private int currentResistance;
     private int currentSpeed;
     private int currenAcceleration;
+
     private boolean isInvencible;
 
     /**
@@ -58,7 +59,7 @@ public class Boat extends GameObject implements Movable{
      * @param type the type of boat to create on which the stats depend
      * @param x the x coordinate of the boat
      * @param y the y coordinate of the boat
-     * @return a new boat of the given type
+     * @return a new boat of the given type at the given position (x,y)
      */
     public static Boat createBoat(BoatType type, float x, float y) {
         switch (type) {
@@ -75,17 +76,16 @@ public class Boat extends GameObject implements Movable{
     /**
      * Factory method to create a boat of a given type. The Boat contructor is private, so with his method we restrict the creation of boats to provided types.
      * @param type the type of boat to create on which the stats depend
-     * @param hitBox the hitbox of the boat
-     * @return a new boat of the given type
+     * @return a new boat of the given type with default position (0,0)
      */
-    public static Boat createBoat(BoatType type, Rectangle hitBox) {
+    public static Boat createBoat(BoatType type) {
         switch (type) {
             case FAST:
-                return new Boat(type, 100, 10, 100, 200, 10, hitBox);
+                return new Boat(type, 100, 10, 100, 200, 10, new Rectangle(0, 0, WIDTH, HEIGHT));
             case STRONG:
-                return new Boat(type,200, 5, 50, 140, 5, hitBox);
+                return new Boat(type,200, 5, 50, 140, 5, new Rectangle(0, 0, WIDTH, HEIGHT));
             case CLASSIC:
-                return new Boat(type, 150, 7, 70, 150, 7, hitBox);
+                return new Boat(type, 150, 7, 70, 150, 7, new Rectangle(0, 0, WIDTH, HEIGHT));
             default:
                 throw new IllegalArgumentException("Not a valid boat type");
         }
@@ -100,6 +100,9 @@ public class Boat extends GameObject implements Movable{
     }
     public int getResistance(){
         return currentResistance; //get the current resistance
+    }
+    public int getHandling(){
+        return baseHandling; //get the current resistance
     }
     public int getSpeed(){
         return currentSpeed; //get the current speed

@@ -9,6 +9,7 @@ public abstract class GameObject implements Collidable{
     private float x, y;
     private Rectangle hitbox;
     private final float width, height;
+    private boolean wasHit;
     public float getX() {
         return x;
     }
@@ -30,7 +31,14 @@ public abstract class GameObject implements Collidable{
     public void setY(float y) {
         this.y = y;
     }
+    public boolean getWasHit() {
+        return wasHit;
+    }
+    public void setWasHit(boolean wasHit) {
+        this.wasHit = wasHit;
+    }
     public GameObject(float x, float y, float width, float height) {
+        this.wasHit = false;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -38,11 +46,7 @@ public abstract class GameObject implements Collidable{
         this.hitbox = new Rectangle(x, y, width, height);
     }
     public GameObject(Rectangle hitbox) {
-        this.hitbox = hitbox;
-        this.x = hitbox.x;
-        this.y = hitbox.y;
-        this.width = hitbox.width;
-        this.height = hitbox.height;
+        this(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
     }
     public abstract void destroy();
 }
