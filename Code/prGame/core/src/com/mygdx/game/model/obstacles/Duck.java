@@ -1,5 +1,6 @@
 package com.mygdx.game.model.obstacles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.CollidableVisitor;
 import com.mygdx.game.model.movement.Movable;
@@ -60,6 +61,7 @@ public class Duck extends Obstacle implements Movable {
     }
     @Override
     public void destroy() {
-        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+        Gdx.app.log("Duck", "Duck destroyed");
+        //throw new UnsupportedOperationException("Unimplemented method 'destroy'");
     }
 }

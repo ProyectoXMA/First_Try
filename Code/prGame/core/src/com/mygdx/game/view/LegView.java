@@ -78,7 +78,7 @@ public class LegView {
 
         // Begin a new batch and draw the bucket and all drops
         game.batch.begin();
-        drawBackground();
+        //drawBackground();
         drawLeg();
         drawUI();
         game.batch.end();

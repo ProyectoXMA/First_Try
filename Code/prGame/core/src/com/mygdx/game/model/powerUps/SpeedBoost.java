@@ -13,9 +13,4 @@ public class SpeedBoost extends PowerUp{
     public void applyPowerUp(Boat boat) {
         boat.adjustSpeed(SPEED_INCREASE);
     }
-
-    @Override
-    public void destroy() {
-        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
-    }
 }

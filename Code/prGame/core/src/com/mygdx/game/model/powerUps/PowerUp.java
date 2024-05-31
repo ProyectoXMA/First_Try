@@ -1,5 +1,6 @@
 package com.mygdx.game.model.powerUps;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.Boat;
 import com.mygdx.game.model.Collidable;
@@ -20,4 +21,9 @@ public abstract class PowerUp extends GameObject implements Collidable {
 
     }
     public abstract void applyPowerUp(Boat boat);
+    @Override
+    public void destroy(){
+        Gdx.app.log("PowerUp", "PowerUp destroyed");
+        //throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+    }
 }

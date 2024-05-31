@@ -1,5 +1,6 @@
 package com.mygdx.game.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.movement.*;
 
@@ -65,13 +66,13 @@ public class Boat extends GameObject implements Movable{
         Boat newBoat;
         switch (type) {
             case FAST:
-                newBoat = new Boat(type,100, 10, 100, 200, 10, new Rectangle(x, y, WIDTH, HEIGHT));
+                newBoat = new Boat(type,100, 10, 200, 70, 10, new Rectangle(x, y, WIDTH, HEIGHT));
                 break;
             case STRONG:
-                newBoat = new Boat(type,200, 5, 50, 140, 5, new Rectangle(x, y, WIDTH, HEIGHT));
+                newBoat = new Boat(type,200, 5, 70, 40, 5, new Rectangle(x, y, WIDTH, HEIGHT));
                 break;
             case CLASSIC:
-                newBoat=  new Boat(type,150, 7, 70, 150, 7, new Rectangle(x, y, WIDTH, HEIGHT));
+                newBoat=  new Boat(type,150, 7, 100, 50, 7, new Rectangle(x, y, WIDTH, HEIGHT));
                 break;
             default:
                 throw new IllegalArgumentException("Not a valid boat type");
@@ -187,6 +188,8 @@ public class Boat extends GameObject implements Movable{
     }
     @Override
     public void destroy() {
-        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+        //TODO: Is this necesary?
+        Gdx.app.log("Boat", "Boat destroyed");
+        //throw new UnsupportedOperationException("Unimplemented method 'destroy'");
     }
 }
