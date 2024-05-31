@@ -20,11 +20,4 @@ public abstract class PowerUp extends GameObject implements Collidable {
 
     }
     public abstract void applyPowerUp(Boat boat);
-
-    /*@Override
-    public void accept(CollidableVisitor visitor) {
-        visitor.visitPowerUp(this);
-    }/* Again, the accept implementation must be done at a lower level.*/
-
-
 }

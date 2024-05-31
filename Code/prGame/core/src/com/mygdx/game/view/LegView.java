@@ -18,6 +18,7 @@ import com.mygdx.game.model.powerUps.HealthBoost;
 import com.mygdx.game.model.powerUps.Invincibility;
 import com.mygdx.game.model.powerUps.PowerUp;
 import com.mygdx.game.model.powerUps.SpeedBoost;
+import com.mygdx.game.util.Config;
 
 import java.util.Set;
 
@@ -84,7 +85,7 @@ public class LegView {
     }
 
     private void drawBackground() {
-        game.batch.draw(backgroundImage, 0, 0);
+        game.batch.draw(backgroundImage, 0, 0, Config.getWidth(), Config.getHeight());
     }
     private void drawLeg() {
         for(Lane lane : leg.getLanes()) {
@@ -131,12 +132,15 @@ public class LegView {
                 //TODO: Change the boatImage to the actual types images
                 case FAST:
                     game.batch.draw(boatImage, boat.getX(), boat.getY());
+                    break;
                 case STRONG:
                     game.batch.draw(boatImage, boat.getX(), boat.getY());
+                    break;
                 case CLASSIC:
                     game.batch.draw(boatImage, boat.getX(), boat.getY());
+                    break;
                 default:
-                    throw new IllegalArgumentException("Not a valid boat type");
+                    throw new IllegalArgumentException("Not a valid boat type" + boat.getType());
             }
         }
     }

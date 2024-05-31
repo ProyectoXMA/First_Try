@@ -104,7 +104,7 @@ public class LegController implements Screen {
         update(delta);
         view.render(bucket, raindrops, dropsGathered);
         //leg.update(delta);
-        //view.render();
+        //view.render(leg);
     }
 
 

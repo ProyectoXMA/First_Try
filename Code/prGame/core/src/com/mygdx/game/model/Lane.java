@@ -1,8 +1,15 @@
 package com.mygdx.game.model;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.movement.MoveObstacleVisitor;
+import com.mygdx.game.model.obstacles.Duck;
+import com.mygdx.game.model.obstacles.Log;
 import com.mygdx.game.model.obstacles.Obstacle;
+import com.mygdx.game.model.obstacles.Stone;
+import com.mygdx.game.model.powerUps.HealthBoost;
+import com.mygdx.game.model.powerUps.Invincibility;
 import com.mygdx.game.model.powerUps.PowerUp;
+import com.mygdx.game.model.powerUps.SpeedBoost;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -36,13 +43,27 @@ public class Lane {
         boats.add(boat);
         this.partiallyOutBounds = new HashSet<>();
     }
-
     /**
      * This method sets the initial position of the boat in the center of the lane.
      */
     private void setInitialBoatPosition() {
         boat.setX(lanePosition + (float) WIDTH / 2 - boat.getWidth() / 2);
         boat.setY(0);
+    }
+    //TODO: think of another way, this is a bit ugly
+    public static Lane createLane(int laneId, int nDucks, int nLogs, int nStones, Boat boat) {
+        Set<Obstacle> obstacles = new HashSet<>();
+        Set<PowerUp> powerUps = new HashSet<>();
+        for(int i = 0; i < nStones; i++)
+            obstacles.add(new Stone());
+        for(int i = 0; i < nDucks; i++)
+            obstacles.add(new Duck());
+        for(int i = 0; i < nLogs; i++)
+            obstacles.add(new Log());
+        return new Lane(laneId, obstacles, powerUps, boat);
+    }
+    public static Lane createLane(int laneId, Boat boat) {
+        return createLane(laneId, 0, 0, 0, boat);
     }
 
     public int getLaneId() {
@@ -163,6 +184,7 @@ public class Lane {
     }
     public void moveBoats(float delta) {
         for (Boat boat : boats) {
+            //This movement is handled by the movements strategies
             boat.move(delta);
         }
     }
@@ -213,6 +235,7 @@ public class Lane {
      * @return a set with all the new objects that are partially out of bounds
      */
     public Set<GameObject> getNewPartiallyOutBounds() {
+        //Add all partially out of bounds objects (even the ones that were already partially out of bounds)
         Set<GameObject> newOutBounds = new HashSet<>();
         for(Obstacle obstacle : obstacles) {
             partiallyOutBounds(obstacle, newOutBounds);
@@ -224,6 +247,7 @@ public class Lane {
             partiallyOutBounds(boat, newOutBounds);
         }
         //TODO: This is not very efficient(not the worse either), think of another way
+        //Remove the objects that were already partially out of bounds
         newOutBounds.removeAll(partiallyOutBounds);
         return newOutBounds;
     }
