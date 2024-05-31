@@ -17,6 +17,7 @@ public class MoveObstacleVisitor implements ObstacleVisitor {
     }
     @Override
     public void visitLog(Log log) {
+
     }
 
     @Override

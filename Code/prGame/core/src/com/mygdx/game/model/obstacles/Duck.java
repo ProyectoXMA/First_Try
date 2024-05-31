@@ -5,12 +5,15 @@ import com.mygdx.game.model.CollidableVisitor;
 import com.mygdx.game.model.movement.Movable;
 import com.mygdx.game.model.movement.MovementStrategy;
 
+import static com.badlogic.gdx.math.MathUtils.random;
+
+
+    //DONDE SE INICIALIZA EL MOVEMENT STRATEGY DEL PATO?????
 public class Duck extends Obstacle implements Movable {
     //MovementStrategy is not implemented here, just the pattern
     MovementStrategy movementStrategy;
     //attributes of the obstacle Duck
     private int speed;
-
     @Override
     public void adjustX(float x) {
         super.setX(super.getX() + x);
@@ -33,13 +36,20 @@ public class Duck extends Obstacle implements Movable {
     public MovementStrategy getMovementStrategy() {
         return movementStrategy;
     }
+
+
+
     //Constructor for the obstacle Duck
     public Duck(int damage, int speed, Rectangle hitBox){
         super(damage, hitBox);
         this.speed = speed;
     }
+
+
+
     //Getters for the exclusive attributes of the obstacle Duck
     @Override
+
     public int getSpeed(){
         return speed;
     }
@@ -47,7 +57,6 @@ public class Duck extends Obstacle implements Movable {
     public void setSpeed(int speed){
         this.speed = speed;
     }
-    @Override
     public void accept(ObstacleVisitor visitor) {
         visitor.visitDuck(this);
     }
