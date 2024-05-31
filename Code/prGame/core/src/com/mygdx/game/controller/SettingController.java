@@ -18,6 +18,7 @@ public class SettingController {
 
     public void handleInput(float mouseX, float mouseY, float changeLeftX, float changeLeftY,
                             float changeRightX, float changeRightY, float muteButtonX, float muteButtonY,
+                            float saveButtonX, float saveButtonY,
                             float changeButtonWidth, float changeButtonHeight, SettingModel model) {
 
         // Return to main Menu if "Esc" Key is pressed
@@ -25,16 +26,19 @@ public class SettingController {
             game.setScreen(new MainMenuView(game));
         }
 
-        // Handle awaiting key change
+        // Handel which button left/right has been selected and detect the new key to assigned
         if (awaitingKeyChange) {
             for (int i = 0; i < Input.Keys.MAX_KEYCODE; i++) {
                 if (Gdx.input.isKeyJustPressed(i)) {
-                    String key = Input.Keys.toString(i);
+                    String key = Input.Keys.toString(i); //Transform the key pressed into a string.
+
+                    //Detect for left/right change
                     if (keyChangeTarget.equals("left")) {
                         model.setLeftKey(key);
                     } else if (keyChangeTarget.equals("right")) {
                         model.setRightKey(key);
                     }
+
                     awaitingKeyChange = false;
                     keyChangeTarget = "";
                     //When the new assignment of the key is done stop showing message for change it.
@@ -54,18 +58,18 @@ public class SettingController {
                 if (mouseX >= changeLeftX && mouseX <= changeLeftX + changeButtonWidth &&
                         mouseY >= changeLeftY && mouseY <= changeLeftY + changeButtonHeight) {
                     model.setTextRightChange(false);
+                    keyChangeTarget = "left";
                     awaitingKeyChange = true;
                     model.setTextLeftChange(true);
-                    keyChangeTarget = "left";
                 }
 
                 // ChangeRightKey
                 if (mouseX >= changeRightX && mouseX <= changeRightX + changeButtonWidth &&
                         mouseY >= changeRightY && mouseY <= changeRightY + changeButtonHeight) {
                     model.setTextLeftChange(false);
+                    keyChangeTarget = "right";
                     awaitingKeyChange = true;
                     model.setTextRightChange(true);
-                    keyChangeTarget = "right";
                 }
 
                 // ChangeMuteValue
@@ -73,6 +77,13 @@ public class SettingController {
                         mouseY >= muteButtonY && mouseY <= muteButtonY + changeButtonHeight) {
                     model.changeMute();
                 }
+
+                //SaveChanges
+                if (mouseX >= saveButtonX && mouseX <= saveButtonX + changeButtonWidth &&
+                        mouseY >= saveButtonY && mouseY <= saveButtonY + changeButtonHeight) {
+                    //Still to implement
+                }
+
             }
         } else {
             clickNotPressed = true;

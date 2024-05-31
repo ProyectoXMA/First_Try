@@ -11,10 +11,9 @@ public class SettingModel implements Disposable {
     private String leftKey;
     private String rightKey;
 
-    //For seing the text message for change the key assigment:
+    //For seeing the text message for change the key assignment:
     private boolean textLeftChange;
     private boolean textRightChange;
-
 
     public SettingModel(boolean isMute) {
         this.isMute=isMute;
