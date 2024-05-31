@@ -124,6 +124,7 @@ public class Lane {
     public void applyCollisions() {
         CollisionHandler handler = new CollisionHandler();
         for (Boat boat : boats) {
+
             handler.setBoat(boat); //Assigns to handler a specific boat
             searchCollisions(handler);
         }
@@ -137,10 +138,11 @@ public class Lane {
         for (Obstacle obstacle : obstacles) {
             //if (handler.visitObstacle(obstacle); obstacles.remove(obstacle) //El visit del handler debe devolver el booleano
             //Ya no haría falta llamar a esta línea xq ya se llama arriba
-            obstacle.accept(handler); //Esto debería ser (de manera análoga a lo de abajo), un obstacle.accept( "CollisionHandler" handler) y por tanto es accept el que devuelve el booleano que es el mismo que el que devuelve el handler
+           //Cambiar el nombnre de visit para que no sea misleading
+            handler.visitObstacle(obstacle); //Esto debería ser (de manera análoga a lo de abajo), un obstacle.accept( "CollisionHandler" handler) y por tanto es accept el que devuelve el booleano que es el mismo que el que devuelve el handler
         }
-        for (PowerUp powerUp : powerUps) {
-            handler.visitPowerUp(powerUp);
+        for (PowerUp powerUp : powerUps) { //Cada vez que salgo del handler compruebo if it was hit y hago el remove
+//            handler.visitPowerUp(powerUp);
         }
         for(Boat otherBoat : boats) {
             if(handler.getBoat().equals(otherBoat)) continue;

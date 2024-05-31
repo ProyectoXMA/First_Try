@@ -11,15 +11,10 @@ public class Log extends Obstacle {
     public Log(int damage, Rectangle hitBox){
         super(damage, hitBox);
     }
+    @Override
     public void accept(ObstacleVisitor visitor) {
         visitor.visitLog(this);
     }
-
-    @Override
-    public void accept(CollidableVisitor visitor) {
-        visitor.visitObstacle(this);
-    }
-
     @Override
     public void destroy() {
         throw new UnsupportedOperationException("Unimplemented method 'destroy'");
