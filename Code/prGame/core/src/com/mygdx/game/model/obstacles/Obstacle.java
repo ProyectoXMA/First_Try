@@ -24,6 +24,7 @@ public abstract class Obstacle extends GameObject implements Collidable {
 
     }
 
+
     public int getDamage(){
         return damage;
     }
