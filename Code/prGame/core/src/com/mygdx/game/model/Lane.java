@@ -37,6 +37,9 @@ public class Lane {
         this.partiallyOutBounds = new HashSet<>();
     }
 
+    /**
+     * This method sets the initial position of the boat in the center of the lane.
+     */
     private void setInitialBoatPosition() {
         boat.setX(lanePosition + (float) WIDTH / 2 - boat.getWidth() / 2);
         boat.setY(0);

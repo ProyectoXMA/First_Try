@@ -103,6 +103,8 @@ public class LegController implements Screen {
     public void render(float delta) {//This render is updating the model, by means of update, and the view.
         update(delta);
         view.render(bucket, raindrops, dropsGathered);
+        //leg.update(delta);
+        //view.render();
     }
 
 
