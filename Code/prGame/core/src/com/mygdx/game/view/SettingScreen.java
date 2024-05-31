@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -36,6 +37,7 @@ public class SettingScreen implements Screen {
     private boolean textRightChange;
 
     // Texture for Button
+    GlyphLayout glyphLayout;
     Texture changeButton;
     Texture changeButtonSel;
     Texture muteButton;
@@ -54,7 +56,7 @@ public class SettingScreen implements Screen {
     private final int muteButtonY = (Config.getHeight()/2) - buttonHeight - 20;
     private final int saveButtonX = (Config.getWidth()) - (Config.getWidth()/3) - buttonWidth;
     private final int saveButtonY = (Config.getHeight()/2) - buttonHeight *2 - 80;
-    private final int volumeImageX = muteButtonX-100;
+    private final int volumeImageX = muteButtonX-150;
     private final int volumeImageY = (Config.getHeight()/2) - buttonHeight - 20;
     private final int volumeImageWidth = 90;
     private final int volumeImageHeight = 90;
@@ -82,9 +84,16 @@ public class SettingScreen implements Screen {
         textLeftChange=false;
         textRightChange=false;
 
-
-        //Initialize Font
+        /**
+        * BitmapFont is used to draw text on the screen and
+         * GlyphLayout is used to compute the size of the text.
+         * font creates a new BitmapFont for drawing text.
+         */
+        glyphLayout = new GlyphLayout();
         font = new BitmapFont();
+        font.setColor(Color.BLACK);
+        font.getData().setScale(2);
+        //Initialize Font
 
         // Initialize Buttons
         changeButton = new Texture(Gdx.files.internal("buttons/change.png"));
@@ -152,35 +161,46 @@ public class SettingScreen implements Screen {
         drawButton(mouseX, mouseY, saveButtonX, saveButtonY, buttonWidth, buttonHeight, saveButton, saveButtonSel);
         game.batch.draw(model.getCurrentVolumeTexture(), volumeImageX, volumeImageY, volumeImageWidth, volumeImageHeight);
 
-        //Draw fonts
-        font.setColor(new Color(0,0,0,1));
-        font.getData().setScale(500);
-
         //Variables for the font which is next to the buttons.
-        float fontKeyLeftX =(Config.getWidth()) - (Config.getWidth() /3) - buttonWidth -150;
+        float fontKeyLeftX =(Config.getWidth()) - (Config.getWidth() /3) - buttonWidth -300;
         float fontKeyLeftY =(Config.getHeight() /2) + buttonHeight + 20 + ((float) buttonHeight /2);
-        float fontKeyRightX =(Config.getWidth()) - ((float) Config.getWidth() /3) - buttonWidth -150;
+        float fontKeyRightX =(Config.getWidth()) - ((float) Config.getWidth() /3) - buttonWidth -300;
         float fontKeyRightY =((float) Config.getHeight() /2) + ((float) buttonHeight /2);
-        float fontVolumeX =((Config.getWidth()) - ((float) Config.getWidth() /3) - buttonWidth -150);
+        float fontVolumeX =((Config.getWidth()) - ((float) Config.getWidth() /3) - buttonWidth -300);
         float fontVolumeY =((float) Config.getHeight() /2) - buttonHeight - 20 + ((float) buttonHeight /2);
         float fontEscX =((float) Config.getWidth() /2)-90;
-        float fontEscY =20;
+        float fontEscY =40;
 
-        game.font.draw(game.batch,("Left Key:  ") + "[ " + model.getLeftKey()+ " ]", fontKeyLeftX, fontKeyLeftY);
-        game.font.draw(game.batch,("Right Key:  "+ "[ " +model.getRightKey()+" ]"), fontKeyRightX, fontKeyRightY);
-        game.font.draw(game.batch,"Volume:  ", fontVolumeX, fontVolumeY);
-        game.font.draw(game.batch,"Press Esc to return to Main Menu ",fontEscX, fontEscY);
+        //Font for the left key message
+        String fontLeft = ("Left Key:  ") + "[ " + model.getLeftKey()+ " ]";
+        glyphLayout.setText(font, fontLeft);
+        font.draw(game.batch, fontLeft, fontKeyLeftX, fontKeyLeftY);
+
+        //Font for the right key message
+        String fontRight = ("Right Key:  ") + "[ " + model.getRightKey()+ " ]";
+        glyphLayout.setText(font, fontRight);
+        font.draw(game.batch, fontRight, fontKeyRightX, fontKeyRightY);
+
+        //Font for Volume message
+        String fontVolume = "Volume:  ";
+        glyphLayout.setText(font, fontVolume);
+        font.draw(game.batch,fontVolume, fontVolumeX, fontVolumeY);
+
+        //Font for Esc message
+        String fontEsc = "Press Esc to return to Main Menu ";
+        glyphLayout.setText(font, fontEsc);
+        font.draw(game.batch,fontEsc, fontEscX, fontEscY);
 
         //When you want to change the key settings a message is display otherwise not.
         if (model.isTextLeftChange()){
             float fontConfX = (Config.getWidth()) - ((float) Config.getWidth() /3) + 20;
             float fontConfY = ((float) Config.getHeight() /2) + buttonHeight + 20 + ((float) buttonHeight /2);
-            game.font.draw(game.batch,"Press the new Key to assigned to Right movement. Remember to save changes.", fontConfX, fontConfY);
+            font.draw(game.batch,"Press the new Key to assigned to Right movement. Remember to save changes.", fontConfX, fontConfY);
         }
         if (model.isTextRightChange()){
             float fontConfX = (Config.getWidth()) - ((float) Config.getWidth() /3) + 20;
             float fontConfY = ((float) Config.getHeight() /2) + ((float) buttonHeight /2);
-            game.font.draw(game.batch,"Press the new Key to assigned to Right movement. Remember to save changes.", fontConfX, fontConfY);
+            font.draw(game.batch,"Press the new Key to assigned to Right movement. Remember to save changes.", fontConfX, fontConfY);
 
         }
 
