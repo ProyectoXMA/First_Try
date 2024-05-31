@@ -31,9 +31,15 @@ public class Lane {
         this.obstacles = obstacles;
         this.powerUps = powerUps;
         this.boat = boat;
+        setInitialBoatPosition();
         this.boats = new HashSet<>();
         boats.add(boat);
         this.partiallyOutBounds = new HashSet<>();
+    }
+
+    private void setInitialBoatPosition() {
+        boat.setX(lanePosition + (float) WIDTH / 2 - boat.getWidth() / 2);
+        boat.setY(0);
     }
 
     public int getLaneId() {

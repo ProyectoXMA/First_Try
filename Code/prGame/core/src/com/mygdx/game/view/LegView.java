@@ -14,6 +14,10 @@ import com.mygdx.game.model.obstacles.Duck;
 import com.mygdx.game.model.obstacles.Log;
 import com.mygdx.game.model.obstacles.Obstacle;
 import com.mygdx.game.model.obstacles.Stone;
+import com.mygdx.game.model.powerUps.HealthBoost;
+import com.mygdx.game.model.powerUps.Invincibility;
+import com.mygdx.game.model.powerUps.PowerUp;
+import com.mygdx.game.model.powerUps.SpeedBoost;
 
 import java.util.Set;
 
@@ -25,6 +29,9 @@ public class LegView {
     private static final Texture duckImage = new Texture("obstacles/duck.png");
     private static final Texture logImage = new Texture("obstacles/logHorizontal.png");
     private static final Texture stoneImage = new Texture("obstacles/stone.png");
+    private static final Texture invincibilityImage = new Texture("powerUps/shield.png");
+    private static final Texture healthBoostImage = new Texture("powerUps/health.png");
+    private static final Texture speedBoostImage = new Texture("powerUps/speed.png");
     private static final Texture backgroundImage = new Texture("dragon.jpeg");
     private static final Texture laneLimitImage = stoneImage;
 
@@ -87,6 +94,7 @@ public class LegView {
     private void drawLane(Lane lane) {
         drawLimits(lane.getLanePosition(), lane.getWidth());
         drawObstacles(lane.getObstacles());
+        drawPowerUps(lane.getPowerUps());
         drawBoat(lane.getBoats());
     }
     private void drawLimits(float lanePosition, float laneWidth) {
@@ -103,6 +111,17 @@ public class LegView {
                 game.batch.draw(logImage, obstacle.getX(), obstacle.getY());
             } else if (obstacle instanceof Stone) {
                 game.batch.draw(stoneImage, obstacle.getX(), obstacle.getY());
+            }
+        }
+    }
+    private void drawPowerUps(Set<PowerUp> powerUps) {
+        for(PowerUp powerUp : powerUps) {
+            if(powerUp instanceof Invincibility) {
+                game.batch.draw(invincibilityImage, powerUp.getX(), powerUp.getY());
+            } else if (powerUp instanceof HealthBoost) {
+                game.batch.draw(healthBoostImage, powerUp.getX(), powerUp.getY());
+            } else if (powerUp instanceof SpeedBoost) {
+                game.batch.draw(speedBoostImage, powerUp.getX(), powerUp.getY());
             }
         }
     }
