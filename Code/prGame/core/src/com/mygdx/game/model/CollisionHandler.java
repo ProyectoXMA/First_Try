@@ -16,10 +16,7 @@ public class CollisionHandler{
     public Boat getBoat() {
         return boat;
     }
-
     public void checkObstacleCollision(Obstacle obstacle) {
-
-
         if (!obstacle.getWasHit()) { //In case the obstacle wasn´t hit yet, we look for the collision
             if(boat.getHitbox().overlaps(obstacle.getHitbox())) //In case of collision
             {
@@ -29,8 +26,6 @@ public class CollisionHandler{
 
         }
     }
-
-
     public void checkBoatCollision(Boat boat) {
         if(!boat.getWasHit()) //In case it wasn´t hit, and therefore the boat associated to the handler neither
             if(this.boat.getHitbox().overlaps(boat.getHitbox())) { //By the client´s order when a boat collides with another both must be destroyed
@@ -39,13 +34,9 @@ public class CollisionHandler{
                 boat.setWasHit(true);
             }
     }
-
-
     public void checkPowerUpCollision(PowerUp powerUp) {
-
         if(!powerUp.getWasHit()) //In case it wasn´t hit yet, we look for the collision
             if (boat.getHitbox().overlaps(powerUp.getHitbox())) {
-
                 //It only enters if an overlap in items hitboxes was detected
                 powerUp.applyPowerUp(boat);
                 powerUp.setWasHit(true); //We activate the flag to ensure it is eliminated

@@ -38,7 +38,7 @@ public class Leg {
             if(i == PLAYER_LANE)
                 lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), player.getBoat()));
             else
-                lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), Boat.createBoat(BoatType.getRandomType())));
+                lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), Boat.createBoat(false, BoatType.getRandomType())));
         }
     }
     public List<Lane> getLanes() {
@@ -85,6 +85,7 @@ public class Leg {
         Set<GameObject> newPartialOutOfBounds = lane.getNewPartiallyOutBounds();
         for(GameObject gameObject : newPartialOutOfBounds){
             Lane newLane = determineNewLaneByPosition(gameObject, lane);
+            //If the lane to which the object should be added is a limit one, it is removed
             if (newLane == null) {
                 lane.removeGameObject(gameObject);
                 gameObject.destroy();

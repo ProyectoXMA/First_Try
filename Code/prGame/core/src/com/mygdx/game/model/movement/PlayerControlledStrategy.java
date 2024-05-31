@@ -25,22 +25,24 @@ public class PlayerControlledStrategy implements MovementStrategy, InputSubscrib
         float horizontalSpeed = movable instanceof Boat ? ((Boat) movable).getHandling() : movable.getSpeed();
         //In any case, the vertical speed is the speed of the object.
         float verticalSpeed = movable.getSpeed();
-        switch (nextAction) {
-            case MOVE_LEFT:
-                movable.adjustX(-horizontalSpeed * delta);
-                movable.adjustY(verticalSpeed * delta);
-                Gdx.app.log("Input","Moving to the left");
-                break;
-            case MOVE_RIGHT:
-                movable.adjustX(horizontalSpeed * delta);
-                movable.adjustY(verticalSpeed * delta);
-                Gdx.app.log("Input","Moving to the right");
-                break;
-            default:
-                //In case no user action is detected, the object will continue moving in the same direction (upwards).
-                movable.adjustY(verticalSpeed * delta);
-                break;
-        }
+        if(nextAction != null)
+            switch (nextAction) {
+                case MOVE_LEFT:
+                    movable.adjustX(-horizontalSpeed * delta);
+                    movable.adjustY(verticalSpeed * delta);
+                    Gdx.app.log("Input","Moving to the left");
+                    break;
+                case MOVE_RIGHT:
+                    movable.adjustX(horizontalSpeed * delta);
+                    movable.adjustY(verticalSpeed * delta);
+                    Gdx.app.log("Input","Moving to the right");
+                    break;
+                default:
+                    Gdx.app.log("Input","Weird action detected: "+nextAction);
+                    break;
+            }
+        //In case no user action is detected, the object will continue moving in the same direction (upwards).
+        movable.adjustY(verticalSpeed * delta);
     }
 
     /**

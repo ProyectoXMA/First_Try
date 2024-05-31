@@ -13,7 +13,7 @@ public class Player implements InputSubscribed {
     private static final BoatType DEFAULT_BOAT_TYPE = BoatType.CLASSIC;
     private Boat boat;
     public Player(BoatType boatType) {
-        boat = Boat.createBoat(boatType);
+        boat = Boat.createBoat(true, boatType);
         setBoat(boat);
     }
     public Player(){
@@ -42,6 +42,8 @@ public class Player implements InputSubscribed {
      */
     @Override
     public void listen(boolean press, UserAction action) {
-        ((PlayerControlledStrategy) boat.getMovementStrategy()).listen(press, action);
+        //Check if the action is a movement action, if so, notify the boat
+        if (action == UserAction.MOVE_LEFT || action == UserAction.MOVE_RIGHT)
+            ((PlayerControlledStrategy) boat.getMovementStrategy()).listen(press, action);
     }
 }
