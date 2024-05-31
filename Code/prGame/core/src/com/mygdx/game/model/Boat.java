@@ -41,7 +41,6 @@ public class Boat extends GameObject implements Movable{
      */
     private Boat (BoatType type, int health, int resistance, int handling, int speed, int acceleration, Rectangle hitBox){
         super(hitBox);
-        this.setWasHit(false);
         this.type = type;
         this.baseHealth = health;
         this.baseResistance = resistance;

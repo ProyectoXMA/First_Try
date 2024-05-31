@@ -126,6 +126,7 @@ public class Lane {
         for (Boat boat : boats) {
 
             handler.setBoat(boat); //Assigns to handler a specific boat
+            if(boat.getWasHit()) continue;
             searchCollisions(handler);
         }
     }
@@ -137,27 +138,21 @@ public class Lane {
     private void searchCollisions(CollisionHandler handler) { //Lane must be aware of an object´s destruction to eliminate it from the corresponding set
         for (Obstacle obstacle : obstacles) {
 
-
-           //Cambiar el nombnre de visit para que no sea misleading
-
-            handler.checkObstacleCollision(obstacle); //In case it wasn´t hit yet, we look for the collision
+            handler.checkObstacleCollision(obstacle);
             if(obstacle.getWasHit()) obstacles.remove(obstacle); //If it was hit, we need to remove it from the obstacles set
 
         }
-        for (PowerUp powerUp : powerUps) { //Cada vez que salgo del handler compruebo if it was hit y hago el remove
+        for (PowerUp powerUp : powerUps) {
            handler.checkPowerUpCollision(powerUp);
            if(powerUp.getWasHit()) powerUps.remove(powerUp);
         }
         for(Boat otherBoat : boats) {
 
             if(handler.getBoat().equals(otherBoat)) continue;
+
             handler.checkBoatCollision(otherBoat);
-            if(otherBoat.getWasHit())
-            {
-                //We remove the otherBoat and the handler boat
-                boats.remove(otherBoat);
-                boats.remove(handler.getBoat());
-            }
+            if(otherBoat.getWasHit()) boats.remove(otherBoat);
+            if(handler.getBoat().getWasHit()) boats.remove(handler.getBoat());
         }
     }
     public void moveObstacles(float delta) {
