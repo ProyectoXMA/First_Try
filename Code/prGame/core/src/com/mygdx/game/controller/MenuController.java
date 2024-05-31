@@ -66,7 +66,7 @@ public class MenuController implements Screen{
 
         //add buttons to table
         table.add(play).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
-        table.row().pad(10, 0, 10, 0);
+        table.row();
         table.add(boats).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
         table.row();
         table.add(tutorial).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);

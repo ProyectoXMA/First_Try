@@ -23,13 +23,17 @@ public class SettingController implements Screen{
     private final int BUTTON_WIDTH = Config.getWidth()/3;
     private final int BUTTON_HEIGHT = Config.getHeight()/8;
     private final float textSize = (float) BUTTON_HEIGHT / 135;
-    private boolean awaitingKeyChange = false;
+    private boolean awaitingLeftKeyChange = false;
+    private boolean awaitingRightKeyChange = false;
+    Label moveLeftText;
+    Label moveRightText;
 
     //Keybinds class
     KeyBindings keyBinds;
 
     public SettingController(MyGdxGame game){
         this.game = game;
+        //Creates a keybindings instance to be able to change keys
         keyBinds = new KeyBindings();
 
         // create stage and set it as input processor
@@ -54,8 +58,15 @@ public class SettingController implements Screen{
         //create buttons
         TextButton changeLeft = new TextButton("CHANGE", skin);
         changeLeft.getLabel().setFontScale(textSize);
+
         TextButton changeRight = new TextButton("CHANGE", skin);
         changeRight.getLabel().setFontScale(textSize);
+
+        TextButton mute = new TextButton("MUTE", skin);
+        changeRight.getLabel().setFontScale(textSize);
+
+        TextButton back = new TextButton("BACK", skin);
+        back.getLabel().setFontScale(textSize);
 
         //resolution selectBox
         String[] availableResolutions = new String[]{"RESOLUTION","1920x1080","1280x720","1024x768","800x600"};
@@ -65,23 +76,35 @@ public class SettingController implements Screen{
         resolution.setAlignment(Align.center);
         resolution.getStyle().listStyle.font.getData().scale(textSize);
 
-        TextButton back = new TextButton("BACK", skin);
-        back.getLabel().setFontScale(textSize);
-
-        //Create text
-        Label moveLeftText = new Label(Input.Keys.toString(keyBinds.getKeyForAction(UserAction.MOVE_LEFT)) , skin);
+        //Create labels
+        moveLeftText = new Label(Input.Keys.toString(keyBinds.getKeyForAction(UserAction.MOVE_LEFT)) , skin);
         moveLeftText.setFontScale(textSize);
         moveLeftText.setAlignment(Align.center);
-        Label moveRightText = new Label(Input.Keys.toString(keyBinds.getKeyForAction(UserAction.MOVE_RIGHT)) , skin);
+
+        moveRightText = new Label(Input.Keys.toString(keyBinds.getKeyForAction(UserAction.MOVE_RIGHT)) , skin);
         moveRightText.setFontScale(textSize);
         moveRightText.setAlignment(Align.center);
-        //add buttons to table
 
+        Label moveLeftTitle = new Label("MOVE LEFT", skin);
+        moveLeftTitle.setFontScale(textSize);
+        moveLeftTitle.setAlignment(Align.center);
+
+        Label moveRightTitle = new Label("MOVE RIGHT", skin);
+        moveRightTitle.setFontScale(textSize);
+        moveRightTitle.setAlignment(Align.center);
+
+        //add buttons to table
+        table.add(moveLeftTitle).size(BUTTON_WIDTH, BUTTON_HEIGHT).colspan(2);
+        table.row().pad(0, 0, 10, 0);
         table.add(moveLeftText).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
         table.add(changeLeft).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
-        table.row().pad(10, 0, 10, 5);
+        table.row().pad(0, 0, 10, 0);
+        table.add(moveRightTitle).size(BUTTON_WIDTH, BUTTON_HEIGHT).colspan(2);
+        table.row().pad(0, 0, 10, 0);
         table.add(moveRightText).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
         table.add(changeRight).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
+        table.row();
+        table.add(mute).size(BUTTON_WIDTH, BUTTON_HEIGHT).colspan(2);
         table.row();
         table.add(resolution).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).colspan(2);
         table.row();
@@ -100,29 +123,31 @@ public class SettingController implements Screen{
         changeLeft.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO
-                awaitingKeyChange = true;
-                inputHandler(UserAction.MOVE_LEFT);
-                moveLeftText.getText().clear();
-                moveLeftText.getText().insert(0, keyBinds.getKeyForAction(UserAction.MOVE_LEFT));
+                //Sets Left Movement to changing
+                awaitingLeftKeyChange = true;
             }
         });
 
         changeRight.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                //Sets Right Movement to changing
+                awaitingRightKeyChange = true;
+            }
+        });
+
+        mute.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
                 //TODO
-                awaitingKeyChange = true;
-                inputHandler(UserAction.MOVE_RIGHT);
-                moveRightText.getText().clear();
-                moveRightText.getText().insert(0, keyBinds.getKeyForAction(UserAction.MOVE_RIGHT));
+                Config.muted = !Config.muted;
+                System.out.println("muted: " + Config.muted);
             }
         });
 
         resolution.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO
                 String selectedResolution = resolution.getSelected();
                 switch (selectedResolution) {
                     case "1920x1080":
@@ -158,17 +183,27 @@ public class SettingController implements Screen{
 
     }
 
-    private void inputHandler(UserAction action){
+    private void changeControls(UserAction action){
 
-        if(awaitingKeyChange) {
-            for (int i = 0; i < Input.Keys.MAX_KEYCODE; i++) {
-                if (Gdx.input.isKeyJustPressed(i)) {
+        for(int i = 0; i < Input.Keys.MAX_KEYCODE; i++){
+            if (Gdx.input.isKeyJustPressed(i)) {
 
-                    keyBinds.setKeyBinding(action, i); //Sets new key as action
-                    //When the new assignment of the key is done stop showing message for change it.
-                    awaitingKeyChange = false;
+                keyBinds.setKeyBinding(action, i); //Sets new key as action
+                //When the new assignment of the key is done stop showing message for change it.
+                awaitingLeftKeyChange = false;
+                awaitingRightKeyChange = false;
+
+            } if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                if(action == UserAction.MOVE_RIGHT) {
+                    keyBinds.setKeyBinding(action, keyBinds.getKeyForAction(UserAction.MOVE_RIGHT));
+                } else {
+                    keyBinds.setKeyBinding(action, keyBinds.getKeyForAction(UserAction.MOVE_LEFT));
                 }
+
+                awaitingLeftKeyChange = false;
+                awaitingRightKeyChange = false;
             }
+
         }
 
     }
@@ -176,6 +211,17 @@ public class SettingController implements Screen{
     @Override
     public void render(float delta) {
         view.update();
+        //Check if controls have to be changed
+        if(awaitingLeftKeyChange) {
+            changeControls(UserAction.MOVE_LEFT);
+            moveLeftText.setText("...");
+        } else if(awaitingRightKeyChange) {
+            changeControls(UserAction.MOVE_RIGHT);
+            moveRightText.setText("...");
+        } else {
+            moveLeftText.setText(Input.Keys.toString(keyBinds.getKeyForAction(UserAction.MOVE_LEFT)));
+            moveRightText.setText(Input.Keys.toString(keyBinds.getKeyForAction(UserAction.MOVE_RIGHT)));
+        }
     }
 
     /**

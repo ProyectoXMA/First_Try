@@ -16,9 +16,7 @@ public class Config {
      */
     private static int HEIGHT = 600;
 
-    public Config(int width, int height) {
-
-    }
+    public static boolean muted = false;
 
     public static int getWidth() {
         return WIDTH;
