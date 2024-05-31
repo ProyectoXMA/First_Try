@@ -23,6 +23,7 @@ public class SettingController implements Screen{
     private final int BUTTON_WIDTH = Config.getWidth()/3;
     private final int BUTTON_HEIGHT = Config.getHeight()/8;
     private final float textSize = (float) BUTTON_HEIGHT / 135;
+    private boolean awaitingKeyChange = false;
 
     //Keybinds class
     KeyBindings keyBinds;
@@ -100,7 +101,10 @@ public class SettingController implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //TODO
+                awaitingKeyChange = true;
                 inputHandler(UserAction.MOVE_LEFT);
+                moveLeftText.getText().clear();
+                moveLeftText.getText().insert(0, keyBinds.getKeyForAction(UserAction.MOVE_LEFT));
             }
         });
 
@@ -108,7 +112,10 @@ public class SettingController implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //TODO
+                awaitingKeyChange = true;
                 inputHandler(UserAction.MOVE_RIGHT);
+                moveRightText.getText().clear();
+                moveRightText.getText().insert(0, keyBinds.getKeyForAction(UserAction.MOVE_RIGHT));
             }
         });
 
@@ -153,11 +160,18 @@ public class SettingController implements Screen{
 
     private void inputHandler(UserAction action){
 
-        InputManager manager = new InputManager();
+        if(awaitingKeyChange) {
+            for (int i = 0; i < Input.Keys.MAX_KEYCODE; i++) {
+                if (Gdx.input.isKeyJustPressed(i)) {
+                    //Detect for left/right change
+                    keyBinds.setKeyBinding(action, i); //Sets new key as action
 
+                    //When the new assignment of the key is done stop showing message for change it.
+                    awaitingKeyChange = false;
+                }
+            }
+        }
 
-
-        keyBinds.setKeyBinding(action, 0);
     }
 
     @Override
