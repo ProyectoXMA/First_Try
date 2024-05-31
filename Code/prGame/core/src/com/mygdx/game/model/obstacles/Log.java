@@ -1,5 +1,6 @@
 package com.mygdx.game.model.obstacles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.Boat;
 import com.mygdx.game.model.CollidableVisitor;
@@ -23,6 +24,7 @@ public class Log extends Obstacle {
     }
     @Override
     public void destroy() {
-        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+        Gdx.app.log("Log", "Log destroyed");
+        //throw new UnsupportedOperationException("Unimplemented method 'destroy'");
     }
 }

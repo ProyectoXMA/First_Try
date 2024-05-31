@@ -12,8 +12,4 @@ public class HealthBoost extends PowerUp {
     public void applyPowerUp(Boat boat) {
         boat.adjustHealth(HEALTH_INCREASE);
     }
-    @Override
-    public void destroy() {
-        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
-    }
 }

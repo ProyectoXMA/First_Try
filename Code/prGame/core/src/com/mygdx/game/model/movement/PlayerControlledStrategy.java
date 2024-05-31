@@ -52,6 +52,6 @@ public class PlayerControlledStrategy implements MovementStrategy, InputSubscrib
      */
     @Override
     public void listen(boolean press, UserAction action) {
-        nextAction = press? action : null;
+        nextAction = press? action : action == nextAction? null : nextAction;
     }
 }

@@ -1,5 +1,6 @@
 package com.mygdx.game.model.obstacles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.Collidable;
 import com.mygdx.game.model.CollidableVisitor;
@@ -36,12 +37,11 @@ public abstract class Obstacle extends GameObject implements Collidable {
      */
     //Maybe we should delete it
     public abstract void accept(ObstacleVisitor visitor);
-
-    /**
-     * Accepts a visitor of type CollidableVisitor and calls its visitObstacle method.
-     * @param visitor the visitor to accept
-     */
-
+    @Override
+    public void destroy() {
+        Gdx.app.log("Obstacle", "Obstacle destroyed");
+        //throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+    }
 
 }
 
