@@ -21,7 +21,7 @@ public abstract class Obstacle extends GameObject implements Collidable {
     public Obstacle(int damage, Rectangle hitbox){
         super(hitbox);
         this.damage = damage;
-        this.setWasHit(false); // Originally it isn´t hit
+
     }
 
     public int getDamage(){

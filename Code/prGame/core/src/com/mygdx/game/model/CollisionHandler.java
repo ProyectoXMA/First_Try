@@ -18,10 +18,9 @@ public class CollisionHandler{
     }
 
     public void checkObstacleCollision(Obstacle obstacle) {
-        //It only calls visitObstacle in case it has not been hit
+
 
         if (!obstacle.getWasHit()) { //In case the obstacle wasn´t hit yet, we look for the collision
-
             if(boat.getHitbox().overlaps(obstacle.getHitbox())) //In case of collision
             {
                 boat.adjustHealth(-obstacle.getDamage()); //Once we apply the effect to the boat and obstacles it is applied to all the lanes, as the object is passed by reference
