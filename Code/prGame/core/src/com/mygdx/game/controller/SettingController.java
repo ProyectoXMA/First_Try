@@ -86,6 +86,13 @@ public class SettingController implements Screen{
             }
         });
 
+        changeRight.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //TODO
+            }
+        });
+
         resolution.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -123,12 +130,9 @@ public class SettingController implements Screen{
             }
         });
 
-        changeRight.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                //TODO
-            }
-        });
+    }
+
+    private void inputHandler(){
 
     }
 
