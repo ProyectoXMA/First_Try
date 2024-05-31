@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.view.MainMenuView;
+import com.mygdx.game.controller.MenuController;
 
 /**
  * The MyGdxGame class extends the Game class from the LibGDX framework.
@@ -29,7 +29,7 @@ public class MyGdxGame extends Game {
 		batch = new SpriteBatch();
 		font = new BitmapFont(); // Default Arial font
 
-		this.setScreen(new MainMenuView(this));
+		this.setScreen(new MenuController(this));
 	}
 
 	/**
