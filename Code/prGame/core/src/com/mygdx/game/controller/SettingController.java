@@ -163,9 +163,8 @@ public class SettingController implements Screen{
         if(awaitingKeyChange) {
             for (int i = 0; i < Input.Keys.MAX_KEYCODE; i++) {
                 if (Gdx.input.isKeyJustPressed(i)) {
-                    //Detect for left/right change
-                    keyBinds.setKeyBinding(action, i); //Sets new key as action
 
+                    keyBinds.setKeyBinding(action, i); //Sets new key as action
                     //When the new assignment of the key is done stop showing message for change it.
                     awaitingKeyChange = false;
                 }
