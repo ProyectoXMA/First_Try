@@ -2,13 +2,14 @@ package com.mygdx.game.model.movement;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.util.Config;
 
 public class RandomMoveStrategy implements MovementStrategy {
     private static final float MOVEMENT_TIME_LIMIT = 2.0f; // Time limit for each movement direction (in seconds)
-    private static final int leftLIMIT = 0;
-    private static final int rightLIMIT = 3200;
+    private static final int leftLIMIT = 10;
+    private static final int rightLIMIT = Config.getWidth() - 10;
     private static final int bottomLIMIT = 0;
-    private static final int topLIMIT = 1800; // Example top limit, we do not know yey which it is
+    private static final int topLIMIT = 1800; // Example top limit, we do not know yey w
     private boolean isMovingLeft;
     private boolean isMovingUp;
     private float movementTimer; // Timer to track how long the object has been moving in the current direction

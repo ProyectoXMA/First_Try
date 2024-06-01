@@ -1,10 +1,12 @@
 package com.mygdx.game.model.movement;
 
+import com.mygdx.game.util.Config;
+
 import static com.badlogic.gdx.math.MathUtils.random;
 
 public class StraightMoveStrategy implements MovementStrategy {
-    private static final int leftLIMIT = 0;
-    private static final int rightLIMIT = 3200;
+    private static final int leftLIMIT = 10;
+    private static final int rightLIMIT = Config.getWidth() - 10;
     private boolean isMovingLeft;
 
     public StraightMoveStrategy() { //When the strategy is created the isMovingLeft is randomly selected.

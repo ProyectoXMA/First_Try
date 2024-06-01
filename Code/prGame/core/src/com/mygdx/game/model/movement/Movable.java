@@ -1,6 +1,7 @@
 package com.mygdx.game.model.movement;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.model.powerUps.PowerUp;
 
 public interface Movable {
     public void adjustX(float x);
@@ -15,4 +16,6 @@ public interface Movable {
     int getSpeed();
     ;
     void setSpeed(int speed);
+
+
 }
