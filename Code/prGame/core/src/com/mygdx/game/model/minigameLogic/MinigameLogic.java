@@ -28,12 +28,12 @@ public class MinigameLogic {
 
     public MinigameLogic(GameState gameState) {
         this.gameState = gameState;
-        this.words = Arrays.asList("Dragon", "Boat", "Racing", "Duck", "Ancient", "Ritualistic", "China", "Competition", "River", "Tradition");
+        this.words = Arrays.asList("Dragon", "Boat", "Racing", "Duck", "Ancient", "China","River","Log","Stone");
         
         successCounter = 0;
         failCounter = 0;
         typedWord = "";
-        timeLimit = 10000;
+        timeLimit = 5000;
         incorrectSound = Gdx.audio.newSound(Gdx.files.internal("incorrectSound.mp3"));
         savedSound = Gdx.audio.newSound(Gdx.files.internal("respawnSound.mp3"));
         typeSound = Gdx.audio.newSound(Gdx.files.internal("typeSound.mp3"));
@@ -110,7 +110,7 @@ public class MinigameLogic {
      * typedWord is reseted on every function call
      */
     public void generateNewWord(){
-        r = new Random().nextInt(10); // bound to number n of words in List<String> words
+        r = new Random().nextInt(9); // bound to number n of words in List<String> words
         currentWord = words.get(r);
         typedWord = "";
     }
