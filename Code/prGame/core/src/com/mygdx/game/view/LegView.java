@@ -100,7 +100,7 @@ public class LegView {
         float playerBoatHeight = leg.getLanes().get(Leg.PLAYER_LANE).getBoat().getY();
         float horizontalCenter = (float) Config.getWidth() / 2;
         float verticalCenter = (float) Config.getHeight() / 2;
-        camera.position.set(horizontalCenter, Math.max(playerBoatHeight, verticalCenter), 0);
+        camera.position.set(horizontalCenter, Math.max(playerBoatHeight, verticalCenter-100), 0);
         Gdx.app.debug("LegView", "Camara position: " + camera.position.x + " " + camera.position.y);
     }
     private void drawLane(Lane lane) {

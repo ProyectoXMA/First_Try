@@ -18,7 +18,6 @@ public class AIControlledStrategy implements MovementStrategy {
     private static final int rightLIMIT = Config.getWidth() - 10;
     private Lane visibleLane;
     private float evasionChance; // Chance of evading an obstacle or boat
-    float verticalSpeed;
 
     public AIControlledStrategy(Lane currentLane, float evasionChance) {
         this.visibleLane = currentLane;
@@ -31,54 +30,46 @@ public class AIControlledStrategy implements MovementStrategy {
 
     @Override
     public void move(Movable movable, float delta) {
-        if (!(movable instanceof Boat)) {
-            throw new IllegalArgumentException("Movable must be an instance of Boat");
-        }
-
-        Boat boat = (Boat) movable;
-
-
-        float movableLeftLimit = boat.getHitbox().x;
-        float movableRightLimit = boat.getHitbox().x + boat.getHitbox().width;
-        int speed = boat.getSpeed();
+        float movableLeftLimit = movable.getHitbox().x;
+        float movableRightLimit = movable.getHitbox().x + movable.getHitbox().width;
+        int speed = movable.getSpeed();
 
         boolean isMovingLeft = MathUtils.randomBoolean(); // Random initial direction
-
-
-        movable.adjustY(verticalSpeed * delta); //We first move it upwards in the y axes
+        
+        movable.adjustY(speed * delta); //We first move it upwards in the y axes
 
         for (Obstacle obstacle : visibleLane.getObstacles()) {
-            if (isNear(boat.getHitbox(), obstacle.getHitbox(), REACTION_DISTANCE)) {
+            if (isNear(movable.getHitbox(), obstacle.getHitbox(), REACTION_DISTANCE)) {
                 if (MathUtils.random() < evasionChance) {
                     if (isMovingLeft) {
-                        boat.adjustX(-speed * delta); // Move left to evade
+                        movable.adjustX(-speed * delta); // Move left to evade
                     } else {
-                        boat.adjustX(speed * delta); // Move right to evade
+                        movable.adjustX(speed * delta); // Move right to evade
                     }
                 }
             }
         }
 
         for (Boat otherBoat : visibleLane.getBoats()) {
-            if (!otherBoat.equals(boat) && isNear(boat.getHitbox(), otherBoat.getHitbox(), REACTION_DISTANCE)) {
+            if (!otherBoat.equals(movable) && isNear(movable.getHitbox(), otherBoat.getHitbox(), REACTION_DISTANCE)) {
                 if (MathUtils.random() < evasionChance) {
                     if (isMovingLeft) {
-                        boat.adjustX(-speed * delta); // Move left to evade
+                        movable.adjustX(-speed * delta); // Move left to evade
                     } else {
-                        boat.adjustX(speed * delta); // Move right to evade
+                        movable.adjustX(speed * delta); // Move right to evade
                     }
                 }
             }
         }
 
         for (PowerUp powerUp : visibleLane.getPowerUps()) {
-            if (isNear(boat.getHitbox(), powerUp.getHitbox(), REACTION_DISTANCE)) {
+            if (isNear(movable.getHitbox(), powerUp.getHitbox(), REACTION_DISTANCE)) {
                 if (MathUtils.random() < evasionChance) {
                     // Move towards the power-up
-                    if (boat.getHitbox().x < powerUp.getHitbox().x) {
-                        boat.adjustX(speed * delta); // Move right to collect
+                    if (movable.getHitbox().x < powerUp.getHitbox().x) {
+                        movable.adjustX(speed * delta); // Move right to collect
                     } else {
-                        boat.adjustX(-speed * delta); // Move left to collect
+                        movable.adjustX(-speed * delta); // Move left to collect
                     }
                 }
             }
@@ -87,16 +78,16 @@ public class AIControlledStrategy implements MovementStrategy {
         // Check if the boat is within the lane limits and adjust direction if necessary
         if (movableLeftLimit <= leftLIMIT) {
             isMovingLeft = false;
-            boat.adjustX(speed * delta);
+            movable.adjustX(speed * delta);
         } else if (movableRightLimit >= rightLIMIT) {
             isMovingLeft = true;
-            boat.adjustX(-speed * delta);
+            movable.adjustX(-speed * delta);
         } else {
             // Continue moving in the current direction if within limits
             if (isMovingLeft) {
-                boat.adjustX(-speed * delta);
+                movable.adjustX(-speed * delta);
             } else {
-                boat.adjustX(speed * delta);
+                movable.adjustX(speed * delta);
             }
         }
     }

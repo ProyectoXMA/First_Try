@@ -12,8 +12,8 @@ import com.mygdx.game.util.Config;
  * It delegates the movement (as all Movable objects) to a MovementStrategy.
  */
 public class Boat extends GameObject implements Movable{
-    public static final int WIDTH = Config.getWidth()/135;
-    public static final int HEIGHT = Config.getHeight()/120;
+    public static final int WIDTH = Config.getWidth()/40;
+    public static final int HEIGHT = Config.getHeight()/20;
 
     private MovementStrategy movementStrategy;
 
