@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.controller.MenuController;
 
 public class LoseScreen implements Screen {
     // attributes for the screen
@@ -51,7 +52,7 @@ public class LoseScreen implements Screen {
         stage.draw();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             losingMusic.stop();
-            game.setScreen(new MainMenuView(game));
+            game.setScreen(new MenuController(game));
         }
         game.batch.begin();
         game.batch.draw(backgroundImage,0,50,800,480);

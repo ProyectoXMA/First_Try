@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.model.Player;
-import com.mygdx.game.view.MainMenuView;
+import com.mygdx.game.controller.MenuController;
 
 /**
  * The MyGdxGame class extends the Game class from the LibGDX framework.
@@ -36,9 +36,8 @@ public class MyGdxGame extends Game {
 		player = new Player();
 		batch = new SpriteBatch();
 		font = new BitmapFont(); // Default Arial font
-		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		Gdx.app.log("Input","Initiating log messages");
-		this.setScreen(new MainMenuView(this));
+
+		this.setScreen(new MenuController(this));
 	}
 
 	/**
