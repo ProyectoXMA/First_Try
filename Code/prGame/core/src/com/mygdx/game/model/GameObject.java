@@ -6,30 +6,28 @@ import com.badlogic.gdx.math.Rectangle;
  * This class enforces certain methods to be implemented by all game-objects classes.
  */
 public abstract class GameObject implements Collidable{
-    private float x, y;
     private Rectangle hitbox;
-    private final float width, height;
     private boolean wasHit;
     public float getX() {
-        return x;
+        return hitbox.getX();
     }
     public float getY() {
-        return y;
+        return hitbox.getY();
     }
     public float getWidth() {
-        return width;
+        return hitbox.getWidth();
     }
     public float getHeight() {
-        return height;
+        return hitbox.getHeight();
     }
     public Rectangle getHitbox() {
         return hitbox;
     }
     public void setX(float x) {
-        this.x = x;
+        this.hitbox.x = x;
     }
     public void setY(float y) {
-        this.y = y;
+        this.hitbox.y = y;
     }
     public boolean getWasHit() {
         return wasHit;
@@ -39,10 +37,6 @@ public abstract class GameObject implements Collidable{
     }
     public GameObject(float x, float y, float width, float height) {
         this.wasHit = false; //When created it hasn´t been hit
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
         this.hitbox = new Rectangle(x, y, width, height);
     }
     public GameObject(Rectangle hitbox) {

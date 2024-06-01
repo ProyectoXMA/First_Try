@@ -1,5 +1,6 @@
 package com.mygdx.game.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.controller.InputSubscribed;
@@ -19,7 +20,7 @@ import java.util.Set;
  */
 public class Leg {
     private static final int NUMBER_OF_LANES = 4;
-    private static final int PLAYER_LANE = 3;
+    public static final int PLAYER_LANE = 1;
 
     private int level;
     private List<Lane> lanes;
@@ -80,11 +81,13 @@ public class Leg {
     private void handleLaneTransitions(Lane lane) {
         Set<GameObject> totalOutOfBounds = lane.getTotallyOutBounds();
         for(GameObject gameObject : totalOutOfBounds){
+            Gdx.app.debug("Leg", "Object " + gameObject.getClass() + " totally out of bounds");
             lane.removeGameObject(gameObject);
         }
         Set<GameObject> newPartialOutOfBounds = lane.getNewPartiallyOutBounds();
         for(GameObject gameObject : newPartialOutOfBounds){
             Lane newLane = determineNewLaneByPosition(gameObject, lane);
+            Gdx.app.debug("Leg", "Object " + gameObject.getClass() + " partially out of bounds. Going from lane " + lane.getLaneId() + " to lane " + newLane.getLaneId());
             //If the lane to which the object should be added is a limit one, it is removed
             if (newLane == null) {
                 lane.removeGameObject(gameObject);

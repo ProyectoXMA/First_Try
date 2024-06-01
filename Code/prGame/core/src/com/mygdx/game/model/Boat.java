@@ -3,6 +3,7 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.movement.*;
+import com.mygdx.game.util.Config;
 
 /**
  * The Boat class represents a boat in the game.
@@ -11,8 +12,8 @@ import com.mygdx.game.model.movement.*;
  * It delegates the movement (as all Movable objects) to a MovementStrategy.
  */
 public class Boat extends GameObject implements Movable{
-    public static final int WIDTH = 10;
-    public static final int HEIGHT = 10;
+    public static final int WIDTH = Config.getWidth()/135;
+    public static final int HEIGHT = Config.getHeight()/120;
 
     private MovementStrategy movementStrategy;
 

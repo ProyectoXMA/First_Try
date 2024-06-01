@@ -82,6 +82,9 @@ public class Lane {
     public Set<Boat> getBoats() {
         return boats;
     }
+    public Boat getBoat() {
+        return boat;
+    }
     public Set<Obstacle> getObstacles() {
         return obstacles;
     }
@@ -101,7 +104,6 @@ public class Lane {
         } else if(gameObject instanceof PowerUp) {
             addPowerUp((PowerUp) gameObject);
         } else if(gameObject instanceof Boat) {
-            Gdx.app.log("Lane", "Boat " + boat.getType() + " added to lane " + getLaneId());
             addBoat((Boat) gameObject);
         }
     }
@@ -123,23 +125,29 @@ public class Lane {
         }
     }
     private void addObstacle(Obstacle obstacle) {
+        Gdx.app.debug("Lane " + getLaneId(), "Obstacle added to lane " + getLaneId());
         obstacles.add(obstacle);
     }
     private void addPowerUp(PowerUp powerUp) {
+        Gdx.app.debug("Lane " + getLaneId(), "PowerUp added to lane " + getLaneId());
         powerUps.add(powerUp);
     }
     private void addBoat(Boat boat) {
+        Gdx.app.debug("Lane " + getLaneId(), "Boat " + boat.getType() + " added to lane " + getLaneId());
         boats.add(boat);
     }
     private void removeObstacle(Obstacle obstacle) {
+        Gdx.app.debug("Lane " + getLaneId(), "Obstacle removed from lane " + getLaneId());
         obstacles.remove(obstacle);
         partiallyOutBounds.remove(obstacle);
     }
     private void removePowerUp(PowerUp powerUp) {
+        Gdx.app.debug("Lane " + getLaneId(), "PowerUp removed from lane " + getLaneId());
         powerUps.remove(powerUp);
         partiallyOutBounds.remove(powerUp);
     }
     private void removeBoat(Boat boat) {
+        Gdx.app.debug("Lane " + getLaneId(), "Boat " + boat.getType() + " removed from lane " + getLaneId());
         boats.remove(boat);
         partiallyOutBounds.remove(boat);
     }
@@ -162,7 +170,8 @@ public class Lane {
                     handler.setBoat(boat);
                     searchCollisions(handler);
                 });
-        boats.removeIf(Boat::getWasHit); //After the handler has checked all the boats, we remove the ones that were hit
+        boats.stream().filter(Boat::getWasHit).forEach(boat -> System.out.println("Removing boat: " + boat));//After the handler has checked all the boats, we remove the ones that were hit
+        boats.removeIf(Boat::getWasHit);
     }
 
     /**
@@ -191,6 +200,7 @@ public class Lane {
         }*/
         boats.stream()
                 .filter(otherBoat -> !handler.getBoat().equals(otherBoat)) //Filter the boat that is not the same as the one assigned to the handler
+                .peek(otherBoat -> Gdx.app.debug("Lane " + getLaneId(), "Analyzing invader boat " + otherBoat.getType()))
                 .forEach(handler::checkBoatCollision); //Passes each of the boats to the handler
         //We don't yet remove the boats that were hit, as that would change the collection we are iterating over (the boats), so we remove them later.
     }
@@ -205,7 +215,7 @@ public class Lane {
         /*for (Obstacle obstacle : obstacles) {
             obstacle.accept(moveVisitor); //
         }*/
-        obstacles.forEach(obstacle -> obstacle.accept(moveVisitor));
+        obstacles.stream().peek(obstacle -> Gdx.app.debug("Obstacle", obstacle.toString())).forEach(obstacle -> obstacle.accept(moveVisitor));
     }
 
     /**
