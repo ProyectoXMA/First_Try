@@ -2,13 +2,11 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -34,8 +32,6 @@ public class MenuController implements Screen{
     Skin skin;
 
     //Booleans to see credits and tutorial
-    private boolean showingCredits = false;
-    private boolean showingTutorial = false;
 
     //menu table
     Table menuTable;
@@ -75,7 +71,7 @@ public class MenuController implements Screen{
         menuTable = new Table();
         menuTable.setVisible(true);
         menuTable.setFillParent(true);
-        menuTable.setDebug(true);
+        menuTable.setDebug(false);
         stage.addActor(menuTable);
 
         //create buttons
@@ -92,24 +88,28 @@ public class MenuController implements Screen{
         TextButton quit = new TextButton("QUIT", skin);
         quit.getLabel().setFontScale(textSize);
 
+        //create game Title
+        Label gameTitle = new Label("", skin);
+        gameTitle.setStyle(skin.get("gameTitle", Label.LabelStyle.class));
+
         // add buttons to table
-        menuTable.add(play).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
-        menuTable.row();
-        menuTable.add(boats).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
-        menuTable.row();
-        menuTable.add(tutorial).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
-        menuTable.row();
-        menuTable.add(settings).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
-        menuTable.row();
-        menuTable.add(credits).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
-        menuTable.row();
-        menuTable.add(quit).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
+        menuTable.add(gameTitle).size((float) (BUTTON_WIDTH*3.5), BUTTON_HEIGHT).colspan(2).pad(0,0,100,0);
+        menuTable.row().pad(0,0,20,0);
+        menuTable.add(play).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,0,0).align(Align.right);
+        menuTable.add(tutorial).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,0,0).align(Align.left);
+        menuTable.row().pad(0,0,20,0);
+        menuTable.add(boats).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,0,0).align(Align.right);
+        menuTable.add(settings).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,0,0).align(Align.left);
+        menuTable.row().pad(0,0,5,0);
+        menuTable.add(credits).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).colspan(2);
+        menuTable.row().pad(0,0,5,0);
+        menuTable.add(quit).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).colspan(2);
 
         // credits Table creation
         creditsTable = new Table();
         creditsTable.setPosition(0, -Config.getHeight());
         creditsTable.setFillParent(true);
-        creditsTable.setDebug(true);
+        creditsTable.setDebug(false);
         stage.addActor(creditsTable);
 
         //credits text
@@ -131,7 +131,7 @@ public class MenuController implements Screen{
         tutorialTable = new Table();
         tutorialTable.setPosition(0, Config.getHeight());
         tutorialTable.setFillParent(true);
-        tutorialTable.setDebug(true);
+        tutorialTable.setDebug(false);
         stage.addActor(tutorialTable);
 
         //tutorial text
@@ -161,7 +161,7 @@ public class MenuController implements Screen{
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new LegController(game));
+                game.setScreen(new MinigameScreen(game, null));
             }
         });
 
@@ -176,7 +176,6 @@ public class MenuController implements Screen{
         tutorial.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO
                 tutorial();
             }
         });
@@ -191,7 +190,6 @@ public class MenuController implements Screen{
         credits.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO
                 credits();
             }
         });
@@ -214,7 +212,6 @@ public class MenuController implements Screen{
 
     private void tutorial() {
         System.out.println("Exit Tutorial");
-        showingTutorial = true;
         //make menu not interactive
         menuTable.setTouchable(Touchable.disabled);
         //start animations
@@ -228,7 +225,6 @@ public class MenuController implements Screen{
     private void credits() {
         System.out.println("Enter Credits");
         // Activates flag to start showing credits loop
-        showingCredits = true;
         //make menu not interactive
         menuTable.setTouchable(Touchable.disabled);
         //start animations
@@ -242,7 +238,6 @@ public class MenuController implements Screen{
     private  void exitCredits() {
         System.out.println("Exit Credits");
         //stop showing credits
-       showingCredits = false;
 
         //make menu interactive again
         menuTable.setTouchable(Touchable.enabled);
@@ -257,7 +252,6 @@ public class MenuController implements Screen{
     private  void exitTutorial() {
         System.out.println("Exit Tutorial");
         //stop showing credits
-        showingCredits = false;
 
         //make menu interactive again
         menuTable.setTouchable(Touchable.enabled);

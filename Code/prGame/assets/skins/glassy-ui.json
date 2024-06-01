@@ -121,6 +121,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		fontColor: black
 		background: Scroll_PNG_Clipart_smaller
 	}
+	gameTitle: {
+		font: font
+		background: title
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: {
