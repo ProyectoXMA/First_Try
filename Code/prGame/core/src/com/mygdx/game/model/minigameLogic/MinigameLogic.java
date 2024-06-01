@@ -28,12 +28,12 @@ public class MinigameLogic {
 
     public MinigameLogic(GameState gameState) {
         this.gameState = gameState;
-        this.words = Arrays.asList("Dragon", "Boat", "Racing", "Duck", "Ancient", "Ritualistic", "China", "Competition", "River", "Tradition");
+        this.words = Arrays.asList("Dragon", "Boat", "Racing", "Duck", "Ancient", "China","River","Log","Stone");
         
         successCounter = 0;
         failCounter = 0;
         typedWord = "";
-        timeLimit = 10000;
+        timeLimit = 5000;
         incorrectSound = Gdx.audio.newSound(Gdx.files.internal("incorrectSound.mp3"));
         savedSound = Gdx.audio.newSound(Gdx.files.internal("respawnSound.mp3"));
         typeSound = Gdx.audio.newSound(Gdx.files.internal("typeSound.mp3"));

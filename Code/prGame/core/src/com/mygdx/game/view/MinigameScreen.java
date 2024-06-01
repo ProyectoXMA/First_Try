@@ -17,6 +17,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controller.LegController;
 import com.mygdx.game.controller.MinigameController;
 import com.mygdx.game.model.minigameLogic.MinigameLogic;
+import com.mygdx.game.util.Config;
 
 
 public class MinigameScreen implements Screen {
@@ -32,7 +33,7 @@ public class MinigameScreen implements Screen {
     private final MinigameController minigameController;
 
 // Dimensions of assets
-    private final int panelHeight = 180;
+    private final int panelHeight = 400;
     private final int panelWidth = 300;
     private final int timerHeight = 20;
     private final int timerWidth = 20;
@@ -59,11 +60,11 @@ public class MinigameScreen implements Screen {
         epicMusic.setVolume((float)0.1);
         
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, Config.getWidth(), Config.getHeight());
 
-        backgroundImage = new Texture(Gdx.files.internal("possible_background.png"));
-        textOutput = new Texture(Gdx.files.internal("textPanel2.png"));
-        playerInput = new Texture(Gdx.files.internal("textPanel2.png"));
+        backgroundImage = new Texture(Gdx.files.internal("minigameBackground.png"));
+        textOutput = new Texture(Gdx.files.internal("woodenPlank2.png"));
+        playerInput = new Texture(Gdx.files.internal("woodenPlank.png"));
         timerIcon = new Texture(Gdx.files.internal("timerIcon.png"));
         /**
          * Text formatting for the minigame
@@ -89,7 +90,7 @@ public class MinigameScreen implements Screen {
          * viewport is used to determine screen dimensions and has various methods to implement a responsive behavior
          * stage displays all the actors involved in the screen (UI, buttons, labels, etc)
          */
-        viewport = new ExtendViewport(800, 480);
+        viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
         minigameLogic.generateAdapter();
         epicMusic.play();
@@ -111,37 +112,37 @@ public class MinigameScreen implements Screen {
         game.batch.begin();
 
         // Background sceneary
-        game.batch.draw(backgroundImage,-100, -100, 1000, 800);
+        game.batch.draw(backgroundImage,0,0, Config.getWidth(), Config.getHeight());
         // Shows on screen the panel with the word to type
-        game.batch.draw(textOutput, 250, 250, panelWidth, panelHeight);
+        game.batch.draw(textOutput,Config.getWidth()-(panelWidth+250), Config.getHeight()-((panelHeight/2)+90), panelWidth, panelHeight);
         String text = "MEMORIZE AND TYPE!!";
         glyphLayout.setText(font, text);                                                  
-        game.font.draw(game.batch,text,315,400);
+        game.font.draw(game.batch,text,(Config.getWidth()/2)-80,Config.getHeight()-50);
         // Calls the first word to display
         String character = minigameLogic.getShowedString();
         glyphLayout.setText(font, character);
-        game.font.draw(game.batch, character, 350, 350);
+        game.font.draw(game.batch, character,(Config.getWidth()/2)-10,Config.getHeight()-100);
         // Displays on real time user input
         String reply = "Reply: " + minigameLogic.getTypedWord();
         glyphLayout.setText(font, reply);
-        game.batch.draw(playerInput, 250, 50, panelWidth, 80);
-        game.font.draw(game.batch,reply, 275,100);
+        game.batch.draw(playerInput, Config.getWidth()-(panelWidth+250),Config.getHeight()-(panelHeight+150), panelWidth, panelHeight/5);
+        game.font.draw(game.batch,reply, Config.getWidth()-(panelWidth+200),Config.getHeight()-(panelHeight+100));
         // Displays timer countdown
         String timer = String.format("[%.2f]", minigameLogic.getRemainingTime());
         glyphLayout.setText(font, timer);           
-        game.batch.draw(timerIcon, 725, 454, timerWidth, timerHeight);
-        game.font.draw(game.batch,timer, 750, 470);
+        game.batch.draw(timerIcon, Config.getWidth()-65, Config.getHeight()-25, timerWidth, timerHeight);
+        game.font.draw(game.batch,timer, Config.getWidth()-40, Config.getHeight()-10);
         // Displays to the user the attempts left to try to complete the minigame before Game Over
         String timeLeft = "Remaining attempts: " + (3-minigameLogic.getFailCounter());
         glyphLayout.setText(font, timeLeft);
-        game.font.draw(game.batch,timeLeft,300,50);
+        game.font.draw(game.batch,timeLeft,Config.getWidth()-(panelWidth+175),Config.getHeight()-(panelHeight+150));
 
         game.batch.end();
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true);
+        viewport.update(Config.getWidth(),Config.getHeight(), true);
     }
 
     @Override
