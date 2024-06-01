@@ -46,7 +46,6 @@ public class RandomMoveStrategy implements MovementStrategy {
                 movable.adjustX(-speed * delta);
             }
         } else {
-        } else {
             if (movableRightLimit >= rightLIMIT) {
                 isMovingLeft = true;
                 movable.adjustX(-speed * delta);
