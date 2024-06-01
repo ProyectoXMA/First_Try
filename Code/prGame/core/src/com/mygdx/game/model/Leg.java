@@ -4,15 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.controller.InputSubscribed;
+import com.mygdx.game.model.movement.AIControlledStrategy;
+import com.mygdx.game.model.movement.MoveObstacleVisitor;
 import com.mygdx.game.model.movement.MovementStrategy;
 import com.mygdx.game.model.movement.PlayerControlledStrategy;
 import com.mygdx.game.model.obstacles.*;
 import com.mygdx.game.model.powerUps.PowerUp;
+import com.mygdx.game.model.powerUps.PowerUpType;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * This class represents the control logic of each Leg.
@@ -28,46 +33,106 @@ public class Leg {
     private Set<PowerUp> allPowerUps;
     private Set<Boat> allBoats;
 
+    /**
+     * The constructor of the Leg class.
+     * It generates the obstacles, powerUps and boats for each lane, and passes them to the lanes upon creation.
+     * First it generates all the obstacles and powerUps, and then iteratively creates the lanes and their corresponding boat.
+     * The player's boat is stored in the Player class, while the other boats have to be created with the static factory method.
+     * To split the gameObjects evenly, we make use of the java streams. We create a stream from the whole set, skip the objects
+     * assigned to previous lanes and get the first n objects for the current lane.
+     * Performance is not an issue as streams are lazy.
+     * @param level level of the game
+     * @param player the player object that stores the player's boat
+     */
     public Leg(int level, Player player){
         this.level = level;
         this.lanes = new ArrayList<>(NUMBER_OF_LANES);
-        this.allObstacles = new HashSet<>();
-        this.allPowerUps = new HashSet<>();
+        this.allObstacles = createObstacles(Lane.NUMBER_OBSTACLES * NUMBER_OF_LANES);
+        this.allPowerUps = createPowerUps(Lane.NUMBER_POWERUPS * NUMBER_OF_LANES);
         this.allBoats = new HashSet<>();
 
         for (int i = 0; i < NUMBER_OF_LANES; i++) {
-            if(i == PLAYER_LANE)
-                lanes.add(Lane.createLane(i, 10, 10, 5, player.getBoat()));
-            else
-                lanes.add(Lane.createLane(i, 10, 10, 5, Boat.createBoat(false, BoatType.getRandomType())));
+            Boat laneBoat = i == PLAYER_LANE ? player.getBoat() : Boat.createBoat(BoatType.getRandomType());
+            allBoats.add(laneBoat);
+            Gdx.app.debug("Leg", "Boats created: " + allBoats.size());
+            Lane newLane = Lane.createLane(i,
+                    allObstacles.stream()
+                            .skip(i * Lane.NUMBER_OBSTACLES) //Skip the obstacles of the previous lanes
+                            .limit(Lane.NUMBER_OBSTACLES) //Get the number of needed obstacles for this lane
+                            .collect(Collectors.toSet()), //Convert the stream into a set
+                    allPowerUps.stream()
+                            .skip(i * Lane.NUMBER_POWERUPS) //Skip the powerUps of the previous lanes
+                            .limit(Lane.NUMBER_POWERUPS) //Get the number of needed powerUps for this lane
+                            .collect(Collectors.toSet()), //Convert the stream into a set
+                    laneBoat);
+            lanes.add(newLane);
+            if(i != PLAYER_LANE) laneBoat.setMovementStrategy(new AIControlledStrategy(newLane));
+            //If the lane is the player's lane, its movement strategy has been assigned by the Player class
         }
+    }
+
+    /**
+     * This method creates a set of obstacles of a given size.
+     * It uses the static factory method provided by the Obstacle class to create the obstacles.
+     * @param numObstacles the number of obstacles to create
+     * @return a set of obstacles
+     */
+    private Set<Obstacle> createObstacles(int numObstacles){
+        Set<Obstacle> obstacles = new HashSet<>();
+        for (int i = 0; i < numObstacles; i++) {
+            obstacles.add(Obstacle.createObstacle(ObstacleType.getRandomType()));
+        }
+        return obstacles;
+    }
+
+    /**
+     * This method creates a set of powerUps of a given size.
+     * It uses the static factory method provided by the PowerUp class to create the powerUps.
+     * @param numPowerUps the number of powerUps to create
+     * @return a set of powerUps
+     */
+    private Set<PowerUp> createPowerUps(int numPowerUps){
+        Set<PowerUp> powerUps = new HashSet<>();
+        for (int i = 0; i < numPowerUps; i++) {
+            powerUps.add(PowerUp.createPowerUp(PowerUpType.getRandomType()));
+        }
+        return powerUps;
     }
     public List<Lane> getLanes() {
         return lanes;
     }
 
     /**
-     * This method updates the state of the Leg as the model
+     * This method updates the state of the Leg as the model:
+     * It moves the boats and obstacles, applies collisions and handles lane transitions.
      * It should be called by the controller in each frame.
      * @param delta the time elapsed since the last update
      */
     public void update(float delta){
+        moveBoats(delta);
+        moveObstacles(delta);
         for (Lane lane : lanes) {
-            update(lane, delta);
+            lane.applyCollisions();
+            handleLaneTransitions(lane);
         }
     }
 
     /**
-     * This method updates the state of a lane based on the time elapsed.
-     * It moves the obtacles nad boats, applies collisions and handles lane transitions from one lane to another.
-     * @param lane the lane to update
-     * @param delta the time elapsed since the last update
+     * This method iterates over all obstacles in the lane and sends them a visitor to move them.
+     * When each obstacle accepts the visitor, the visitor will move the obstacle.
+     * @param delta time elapsed since last frame
      */
-    private void update(Lane lane, float delta){
-        lane.moveBoats(delta);
-        lane.moveObstacles(delta);
-        lane.applyCollisions();
-        handleLaneTransitions(lane);
+    public void moveObstacles(float delta) {
+        MoveObstacleVisitor moveVisitor = new MoveObstacleVisitor(delta);
+        allObstacles.stream().peek(obstacle -> Gdx.app.debug("Obstacle", obstacle.toString())).forEach(obstacle -> obstacle.accept(moveVisitor));
+    }
+
+    /**
+     * This method iterates over all boats in the lane and call their move method.
+     * @param delta time elapsed since last frame
+     */
+    public void moveBoats(float delta) {
+        allBoats.forEach(boat -> boat.move(delta));
     }
 
     /**
