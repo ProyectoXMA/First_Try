@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.controller.MenuController;
+import com.mygdx.game.util.Config;
 
 public class LoseScreen implements Screen {
     // attributes for the screen
@@ -27,16 +29,15 @@ public class LoseScreen implements Screen {
     public LoseScreen(final MyGdxGame game){
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false,800,480);
-        backgroundImage = new Texture(Gdx.files.internal("LosingScreen.jpg"));
+        camera.setToOrtho(false,Config.getWidth(),Config.getHeight());
+        backgroundImage = new Texture(Gdx.files.internal("GameOverScreen.png"));
         losingMusic = Gdx.audio.newMusic(Gdx.files.internal("LosingSound.mp3"));
         losingMusic.setLooping(true);
-
     }
 
     @Override
     public void show() {
-        viewport = new ExtendViewport(800, 480);
+        viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
         losingMusic.play();
         losingMusic.setVolume((float)0.1);
@@ -51,16 +52,15 @@ public class LoseScreen implements Screen {
         stage.draw();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             losingMusic.stop();
-            game.setScreen(new MainMenuView(game));
+            game.setScreen(new MenuController(game));
         }
         game.batch.begin();
-        game.batch.draw(backgroundImage,0,50,800,480);
-        game.font.draw(game.batch, "Press ENTER to go to MAIN MENU", 300,30);
+        game.batch.draw(backgroundImage,0,0,Config.getWidth(),Config.getHeight());
         game.batch.end();
     }
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true);
+        viewport.update(Config.getWidth(), Config.getHeight(), true);
     }
 
     @Override

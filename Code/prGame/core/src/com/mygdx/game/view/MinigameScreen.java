@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,8 +15,10 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.GameState;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.controller.LegController;
 import com.mygdx.game.controller.MinigameController;
 import com.mygdx.game.model.minigameLogic.MinigameLogic;
+import com.mygdx.game.util.Config;
 
 
 public class MinigameScreen implements Screen {
@@ -31,15 +34,15 @@ public class MinigameScreen implements Screen {
     private final MinigameController minigameController;
 
 // Dimensions of assets
-    private final int panelHeight = 180;
-    private final int panelWidth = 300;
+    //private final int panelHeight = 400;
+    //private final int panelWidth = 350;
     private final int timerHeight = 20;
     private final int timerWidth = 20;
 
 // Assets on screen
     private Texture backgroundImage;
-    private Texture textOutput;
-    private Texture playerInput;
+    //private Texture textOutput;
+    //private Texture playerInput;
     private Texture timerIcon;
     private BitmapFont font;
     Music epicMusic;
@@ -58,11 +61,11 @@ public class MinigameScreen implements Screen {
         epicMusic.setVolume((float)0.1);
         
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, Config.getWidth(), Config.getHeight());
 
-        backgroundImage = new Texture(Gdx.files.internal("possible_background.png"));
-        textOutput = new Texture(Gdx.files.internal("textPanel2.png"));
-        playerInput = new Texture(Gdx.files.internal("textPanel2.png"));
+        backgroundImage = new Texture(Gdx.files.internal("minigameBackground.png"));
+        //textOutput = new Texture(Gdx.files.internal("woodenPlank2.png"));
+        //playerInput = new Texture(Gdx.files.internal("woodenPlank.png"));
         timerIcon = new Texture(Gdx.files.internal("timerIcon.png"));
         /**
          * Text formatting for the minigame
@@ -75,8 +78,8 @@ public class MinigameScreen implements Screen {
          */  
         glyphLayout = new GlyphLayout();
         font = new BitmapFont();
-        font.setColor(Color.BLACK);
-        font.getData().setScale(10);
+        font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        font.getData().setScale(10,10); 
     }
 
 
@@ -88,7 +91,7 @@ public class MinigameScreen implements Screen {
          * viewport is used to determine screen dimensions and has various methods to implement a responsive behavior
          * stage displays all the actors involved in the screen (UI, buttons, labels, etc)
          */
-        viewport = new ExtendViewport(800, 480);
+        viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
         minigameLogic.generateAdapter();
         epicMusic.play();
@@ -107,39 +110,70 @@ public class MinigameScreen implements Screen {
         minigameController.checkScreenTransition();
 
         game.batch.begin();
-
+        game.batch.draw(backgroundImage,0,0, Config.getWidth(), Config.getHeight());
+        if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
+            String text = "MEMORIZE-TYPE!!";
+            glyphLayout.setText(font, text);                                                  
+            game.font.draw(game.batch,text,(Config.getWidth()/2)-70,Config.getHeight()-70); 
+        }else{
+            String text = "MEMORIZE-TYPE!!";
+            glyphLayout.setText(font, text);                                                  
+            game.font.draw(game.batch,text,(Config.getWidth()/2)-70,Config.getHeight()-50);
+        }
         // Background sceneary
-        game.batch.draw(backgroundImage,-100, -100, 1000, 800);
+        
         // Shows on screen the panel with the word to type
-        game.batch.draw(textOutput, 250, 250, panelWidth, panelHeight);
-        String text = "MEMORIZE AND TYPE!!";
-        glyphLayout.setText(font, text);                                                  
-        game.font.draw(game.batch,text,315,400);
+        //game.batch.draw(textOutput,(Config.getWidth()/2)-150, Config.getHeight()-250, panelWidth, panelHeight);
         // Calls the first word to display
-        String character = minigameLogic.getShowedString();
-        glyphLayout.setText(font, character);
-        game.font.draw(game.batch, character, 350, 350);
+        if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
+            String character = minigameLogic.getShowedString();
+            glyphLayout.setText(font, character);
+            game.font.draw(game.batch, character,(Config.getWidth()/2)-10,Config.getHeight()-120);
+        }else{
+            String character = minigameLogic.getShowedString();
+            glyphLayout.setText(font, character);
+            game.font.draw(game.batch, character,(Config.getWidth()/2)-10,Config.getHeight()-90);
+        }
         // Displays on real time user input
-        String reply = "Reply: " + minigameLogic.getTypedWord();
-        glyphLayout.setText(font, reply);
-        game.batch.draw(playerInput, 250, 50, panelWidth, 80);
-        game.font.draw(game.batch,reply, 275,100);
-        // Displays timer countdown
-        String timer = String.format("[%.2f]", minigameLogic.getRemainingTime());
-        glyphLayout.setText(font, timer);           
-        game.batch.draw(timerIcon, 725, 454, timerWidth, timerHeight);
-        game.font.draw(game.batch,timer, 750, 470);
-        // Displays to the user the attempts left to try to complete the minigame before Game Over
-        String timeLeft = "Remaining attempts: " + (3-minigameLogic.getFailCounter());
-        glyphLayout.setText(font, timeLeft);
-        game.font.draw(game.batch,timeLeft,300,50);
-
+        if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
+            String reply = "Reply: " + minigameLogic.getTypedWord();
+            glyphLayout.setText(font, reply);
+            game.font.draw(game.batch,reply, (Config.getWidth()/2)-80,(Config.getHeight()/17)+100);
+        }else{
+            String reply = "Reply: " + minigameLogic.getTypedWord();
+            glyphLayout.setText(font, reply);
+            game.font.draw(game.batch,reply, (Config.getWidth()/2)-80,(Config.getHeight()/17)+60);
+        }
+        // Displays timer countdown        
+        if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
+            String timer = String.format("[%.2f]", minigameLogic.getRemainingTime());
+            glyphLayout.setText(font, timer);           
+            game.batch.draw(timerIcon, Config.getWidth()-70, Config.getHeight()-25, timerWidth, timerHeight);
+            game.font.draw(game.batch,timer, Config.getWidth()-40, Config.getHeight()-10);
+        }else{
+            String timer = String.format("[%.2f]", minigameLogic.getRemainingTime());
+            glyphLayout.setText(font, timer);           
+            game.batch.draw(timerIcon, Config.getWidth()-60, Config.getHeight()-25, timerWidth, timerHeight);
+            game.font.draw(game.batch,timer, Config.getWidth()-40, Config.getHeight()-10);
+        }
+        // Displays to the user the attempts left to try to complete the minigame before Game Over        
+        if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
+            String timeLeft = "Remaining attempts: " + (3-minigameLogic.getFailCounter());
+            glyphLayout.setText(font, timeLeft);
+            game.font.draw(game.batch,timeLeft,(Config.getWidth()/2)-80,(Config.getHeight()/17));
+        }else{
+            String timeLeft = "Remaining attempts: " + (3-minigameLogic.getFailCounter());
+            glyphLayout.setText(font, timeLeft);
+            game.font.draw(game.batch,timeLeft,(Config.getWidth()/2)-80,(Config.getHeight()/17));
+    
+        }
+        
         game.batch.end();
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true);
+        viewport.update(Config.getWidth(),Config.getHeight(), true);
     }
 
     @Override
