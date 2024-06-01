@@ -2,17 +2,23 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.util.Config;
 import com.mygdx.game.view.MenuView;
-import com.mygdx.game.controller.LegController;
 import com.mygdx.game.view.MinigameScreen;
 
 public class MenuController implements Screen{
@@ -24,6 +30,25 @@ public class MenuController implements Screen{
     private final int BUTTON_HEIGHT = Config.getHeight()/8;
     private final float textSize = (float) BUTTON_HEIGHT / 135;
 
+    //initialise skin
+    Skin skin;
+
+    //Booleans to see credits and tutorial
+    private boolean showingCredits = false;
+    private boolean showingTutorial = false;
+
+    //menu table
+    Table menuTable;
+
+    //credits table
+    Table creditsTable;
+
+    //tutorial table
+    Table tutorialTable;
+
+    //credits text
+    String creditsText;
+
     public MenuController(MyGdxGame game){
         this.game = game;
 
@@ -33,6 +58,11 @@ public class MenuController implements Screen{
 
         // create a view for the settings
         view = new MenuView(stage);
+
+        // skin loading
+        skin = new Skin(Gdx.files.internal("skins/glassy-ui.json"));
+        // text to be shown in credits
+        creditsText = "1\n2\n3\n4\n5\n6\n7\n8\n9";
     }
 
     /**
@@ -41,14 +71,12 @@ public class MenuController implements Screen{
      */
     @Override
     public void show() {
-        // Create a table that fills the screen. Everything else will go inside this table.
-        Table table = new Table();
-        table.setFillParent(true);
-        table.setDebug(false);
-        stage.addActor(table);
-
-        // temporary until we have asset manager in
-        Skin skin = new Skin(Gdx.files.internal("skins/glassy-ui.json"));
+        // Create a menu table that fills the screen. Everything menu related will go inside this table.
+        menuTable = new Table();
+        menuTable.setVisible(true);
+        menuTable.setFillParent(true);
+        menuTable.setDebug(true);
+        stage.addActor(menuTable);
 
         //create buttons
         TextButton play = new TextButton("PLAY", skin);
@@ -64,18 +92,62 @@ public class MenuController implements Screen{
         TextButton quit = new TextButton("QUIT", skin);
         quit.getLabel().setFontScale(textSize);
 
-        //add buttons to table
-        table.add(play).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
-        table.row();
-        table.add(boats).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
-        table.row();
-        table.add(tutorial).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
-        table.row();
-        table.add(settings).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
-        table.row();
-        table.add(credits).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
-        table.row();
-        table.add(quit).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
+        // add buttons to table
+        menuTable.add(play).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
+        menuTable.row();
+        menuTable.add(boats).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
+        menuTable.row();
+        menuTable.add(tutorial).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
+        menuTable.row();
+        menuTable.add(settings).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
+        menuTable.row();
+        menuTable.add(credits).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
+        menuTable.row();
+        menuTable.add(quit).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
+
+        // credits Table creation
+        creditsTable = new Table();
+        creditsTable.setPosition(0, -Config.getHeight());
+        creditsTable.setFillParent(true);
+        creditsTable.setDebug(true);
+        stage.addActor(creditsTable);
+
+        //credits text
+        Label creditsLabel = new Label(creditsText, skin);
+        creditsLabel.setStyle(skin.get("creditsLabel", Label.LabelStyle.class));
+        creditsLabel.setAlignment(Align.center);
+        creditsLabel.setFontScale(textSize);
+
+        // back button to exit credits
+        TextButton backCredits = new TextButton("BACK", skin);
+        backCredits.getLabel().setFontScale(textSize);
+
+        // add button to credits table
+        creditsTable.add(creditsLabel).center().size(BUTTON_WIDTH*3, BUTTON_HEIGHT*6);
+        creditsTable.row();
+        creditsTable.add(backCredits).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
+
+        // Tutorial Table creation
+        tutorialTable = new Table();
+        tutorialTable.setPosition(0, Config.getHeight());
+        tutorialTable.setFillParent(true);
+        tutorialTable.setDebug(true);
+        stage.addActor(tutorialTable);
+
+        //tutorial text
+        Label tutorialLabel = new Label("This is the Tutorial", skin);
+        tutorialLabel.setStyle(skin.get("creditsLabel", Label.LabelStyle.class));
+        tutorialLabel.setAlignment(Align.center);
+        tutorialLabel.setFontScale(textSize);
+
+        // back button to exit tutorial
+        TextButton backTutorial = new TextButton("BACK", skin);
+        backTutorial.getLabel().setFontScale(textSize);
+
+        // add button to tutorial table
+        tutorialTable.add(tutorialLabel).center().size(BUTTON_WIDTH*3, BUTTON_HEIGHT*6);
+        tutorialTable.row();
+        tutorialTable.add(backTutorial).center().size(BUTTON_WIDTH, BUTTON_HEIGHT);
 
 
         // create button mouse listeners
@@ -105,8 +177,7 @@ public class MenuController implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //TODO
-                dispose();
-                game.setScreen(new MinigameScreen(game, null));
+                tutorial();
             }
         });
 
@@ -117,10 +188,82 @@ public class MenuController implements Screen{
             }
         });
 
-        //Create button keyboard listeners
+        credits.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //TODO
+                credits();
+            }
+        });
 
+        backTutorial.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                    exitTutorial();
+            }
+        });
 
+        backCredits.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                    exitCredits();
+            }
+        });
 
+    }
+
+    private void tutorial() {
+        System.out.println("Exit Tutorial");
+        showingTutorial = true;
+        //make menu not interactive
+        menuTable.setTouchable(Touchable.disabled);
+        //start animations
+        tutorialTable.addAction(Actions.moveTo(0, 0, 1f, Interpolation.bounceOut));
+        menuTable.addAction(Actions.moveTo(0, -Config.getHeight(), 1f, Interpolation.bounceOut));
+    }
+
+    /**
+     *
+     */
+    private void credits() {
+        System.out.println("Enter Credits");
+        // Activates flag to start showing credits loop
+        showingCredits = true;
+        //make menu not interactive
+        menuTable.setTouchable(Touchable.disabled);
+        //start animations
+        creditsTable.addAction(Actions.moveTo(0, 0, 1f, Interpolation.bounceOut));
+        menuTable.addAction(Actions.moveTo(0, Config.getHeight(), 1f, Interpolation.bounceOut));
+    }
+
+    /**
+     *
+     */
+    private  void exitCredits() {
+        System.out.println("Exit Credits");
+        //stop showing credits
+       showingCredits = false;
+
+        //make menu interactive again
+        menuTable.setTouchable(Touchable.enabled);
+        //start animations
+        menuTable.addAction(Actions.moveTo(0, 0, 1f, Interpolation.bounceOut));
+        creditsTable.addAction(Actions.moveTo(0, -Config.getHeight(), 1f, Interpolation.bounceOut));
+    }
+
+    /**
+     *
+     */
+    private  void exitTutorial() {
+        System.out.println("Exit Tutorial");
+        //stop showing credits
+        showingCredits = false;
+
+        //make menu interactive again
+        menuTable.setTouchable(Touchable.enabled);
+        //start animations
+        menuTable.addAction(Actions.moveTo(0, 0, 1f, Interpolation.bounceOut));
+        tutorialTable.addAction(Actions.moveTo(0, Config.getHeight(), 1f, Interpolation.bounceOut));
     }
 
     /**

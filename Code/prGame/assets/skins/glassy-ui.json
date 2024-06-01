@@ -116,6 +116,11 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: font
 		fontColor: black
 	}
+	creditsLabel: {
+		font: font-big
+		fontColor: black
+		background: Scroll_PNG_Clipart_smaller
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: {
@@ -227,8 +232,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
-		background: window
-		titleFont: font
+		background: Scroll_PNG_Clipart_smaller
+		titleFont: font-big
 		titleFontColor: black
 	}
 }
