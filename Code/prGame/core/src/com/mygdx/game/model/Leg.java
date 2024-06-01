@@ -19,7 +19,7 @@ import java.util.Set;
  */
 public class Leg {
     private static final int NUMBER_OF_LANES = 4;
-    private static final int PLAYER_LANE = 0;
+    private static final int PLAYER_LANE = 3;
 
     private int level;
     private List<Lane> lanes;
