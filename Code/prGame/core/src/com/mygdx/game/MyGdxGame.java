@@ -36,7 +36,7 @@ public class MyGdxGame extends Game {
 		player = new Player();
 		batch = new SpriteBatch();
 		font = new BitmapFont(); // Default Arial font
-
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		this.setScreen(new MenuController(this));
 	}
 

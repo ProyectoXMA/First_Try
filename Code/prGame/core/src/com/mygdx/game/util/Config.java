@@ -9,12 +9,12 @@ public class Config {
     /**
      * The WIDTH constant is set to the current width of the application window at the time of class loading.
      */
-    private static int WIDTH = 800;
+    private static int WIDTH = 1920;
 
     /**
      * The HEIGHT constant is set to the current height of the application window at the time of class loading.
      */
-    private static int HEIGHT = 600;
+    private static int HEIGHT = 1080;
 
     public static boolean muted = false;
 

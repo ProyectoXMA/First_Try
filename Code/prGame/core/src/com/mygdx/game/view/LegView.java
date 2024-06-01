@@ -45,7 +45,7 @@ public class LegView {
         this.leg = leg;
         // Create the camera and the SpriteBatch
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Config.getWidth(), 480);
+        camera.setToOrtho(false, Config.getWidth(),  Config.getHeight());
     }
     public Camera getCamera() {
         return camera;
@@ -79,7 +79,6 @@ public class LegView {
 
         // Tell the SpriteBatch to render in the coordinate system specified by the camera
         game.batch.setProjectionMatrix(camera.combined);
-
         // Begin a new batch and draw the bucket and all drops
         game.batch.begin();
         //drawBackground();
@@ -92,9 +91,17 @@ public class LegView {
         game.batch.draw(backgroundImage, 0, 0, Config.getWidth(), Config.getHeight());
     }
     private void drawLeg() {
+        followPlayer();
         for(Lane lane : leg.getLanes()) {
             drawLane(lane);
         }
+    }
+    private void followPlayer() {
+        float playerBoatHeight = leg.getLanes().get(Leg.PLAYER_LANE).getBoat().getY();
+        float horizontalCenter = (float) Config.getWidth() / 2;
+        float verticalCenter = (float) Config.getHeight() / 2;
+        camera.position.set(horizontalCenter, Math.max(playerBoatHeight, verticalCenter), 0);
+        Gdx.app.debug("LegView", "Camara position: " + camera.position.x + " " + camera.position.y);
     }
     private void drawLane(Lane lane) {
         drawLimits(lane.getLanePosition(), lane.getWidth());

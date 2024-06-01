@@ -3,6 +3,7 @@ package com.mygdx.game.model.movement;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.controller.InputSubscribed;
 import com.mygdx.game.model.Boat;
+import com.mygdx.game.model.GameObject;
 import com.mygdx.game.util.UserAction;
 
 /**
@@ -29,20 +30,20 @@ public class PlayerControlledStrategy implements MovementStrategy, InputSubscrib
             switch (nextAction) {
                 case MOVE_LEFT:
                     movable.adjustX(-horizontalSpeed * delta);
-                    movable.adjustY(verticalSpeed * delta);
-                    Gdx.app.log("Input","Moving to the left");
+                    Gdx.app.log("Boat " + ((Boat) movable).getType(),"Moving to the left");
                     break;
                 case MOVE_RIGHT:
                     movable.adjustX(horizontalSpeed * delta);
-                    movable.adjustY(verticalSpeed * delta);
-                    Gdx.app.log("Input","Moving to the right");
+                    Gdx.app.log("Boat " + ((Boat) movable).getType(),"Moving to the right");
                     break;
                 default:
-                    Gdx.app.log("Input","Weird action detected: "+nextAction);
+                    Gdx.app.log("Boat " + ((Boat) movable).getType(),"Weird action detected: "+nextAction);
                     break;
             }
         //In case no user action is detected, the object will continue moving in the same direction (upwards).
         movable.adjustY(verticalSpeed * delta);
+        Gdx.app.debug("Boat " + movable.toString(), "Position : " + movable.getHitbox());
+        Gdx.app.debug("Boat", "Boats position: " + ((GameObject) movable).getX() + " " + ((GameObject) movable).getY());
     }
 
     /**
