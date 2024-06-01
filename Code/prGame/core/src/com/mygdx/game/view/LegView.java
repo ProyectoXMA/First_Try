@@ -1,8 +1,11 @@
 package com.mygdx.game.view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -26,7 +29,8 @@ public class LegView {
     final MyGdxGame game;
     private Leg leg;
     OrthographicCamera camera;
-    private static final Texture boatImage = new Texture("boats/resistanceBoat.png");
+    private static final Texture boatResistanceImage = new Texture("boats/resistanceBoat.png");
+    private static final Texture boatSpeedImage = new Texture("boats/speedBoat.png");
     private static final Texture duckImage = new Texture("obstacles/duck.png");
     private static final Texture logImage = new Texture("obstacles/logHorizontal.png");
     private static final Texture stoneImage = new Texture("obstacles/stone.png");
@@ -41,7 +45,7 @@ public class LegView {
         this.leg = leg;
         // Create the camera and the SpriteBatch
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, Config.getWidth(), 480);
     }
     public Camera getCamera() {
         return camera;
@@ -60,7 +64,7 @@ public class LegView {
         // Begin a new batch and draw the bucket and all drops
         game.batch.begin();
         game.font.draw(game.batch, "Some text here " + dropsGathered, 0, 480);
-        game.batch.draw(boatImage, bucket.x, bucket.y, bucket.width, bucket.height);
+        game.batch.draw(boatSpeedImage, bucket.x, bucket.y, bucket.width, bucket.height);
         for (Rectangle raindrop : raindrops) {
             game.batch.draw(duckImage, raindrop.x, raindrop.y);
         }
@@ -100,8 +104,8 @@ public class LegView {
     }
     private void drawLimits(float lanePosition, float laneWidth) {
         //TODO: Revise this and the image Limits
-        game.batch.draw(laneLimitImage, lanePosition, 0);
-        game.batch.draw(laneLimitImage, lanePosition + laneWidth, 0);
+        game.batch.draw(laneLimitImage, lanePosition, 10);
+        game.batch.draw(laneLimitImage, lanePosition + laneWidth, 10);
     }
     private void drawObstacles(Set<Obstacle> obstacles) {
         //TODO: Revise this, switch should be better. But how?
@@ -131,13 +135,13 @@ public class LegView {
             switch (boat.getType()) {
                 //TODO: Change the boatImage to the actual types images
                 case FAST:
-                    game.batch.draw(boatImage, boat.getX(), boat.getY());
+                    game.batch.draw(boatSpeedImage, boat.getX(), boat.getY());
                     break;
                 case STRONG:
-                    game.batch.draw(boatImage, boat.getX(), boat.getY());
+                    game.batch.draw(boatResistanceImage, boat.getX(), boat.getY());
                     break;
                 case CLASSIC:
-                    game.batch.draw(boatImage, boat.getX(), boat.getY());
+                    game.batch.draw(duckImage, boat.getX(), boat.getY());
                     break;
                 default:
                     throw new IllegalArgumentException("Not a valid boat type" + boat.getType());
@@ -160,7 +164,8 @@ public class LegView {
         //TODO
     }
     public void dispose() {
-        boatImage.dispose();
+        boatSpeedImage.dispose();
+        boatResistanceImage.dispose();
         duckImage.dispose();
         logImage.dispose();
         stoneImage.dispose();

@@ -1,5 +1,6 @@
 package com.mygdx.game.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.movement.MoveObstacleVisitor;
 import com.mygdx.game.model.obstacles.Duck;
@@ -10,11 +11,14 @@ import com.mygdx.game.model.powerUps.HealthBoost;
 import com.mygdx.game.model.powerUps.Invincibility;
 import com.mygdx.game.model.powerUps.PowerUp;
 import com.mygdx.game.model.powerUps.SpeedBoost;
+import com.mygdx.game.util.Config;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * This class represents a lane in the game.
@@ -22,7 +26,7 @@ import java.util.HashSet;
  * It also stores a reference to the assigned boat, and a List of all boats present in the lane, used to subtract health to invaders boats.
  */
 public class Lane {
-    public static final int WIDTH = 800;
+    public static final int WIDTH = Config.getWidth()/4;
     private final int laneId;
     private final float lanePosition; //Horizontal position of the lane from the left side of the screen to the left side of the lane
     private final Boat boat; //Boat asigned to this lane
@@ -97,6 +101,7 @@ public class Lane {
         } else if(gameObject instanceof PowerUp) {
             addPowerUp((PowerUp) gameObject);
         } else if(gameObject instanceof Boat) {
+            Gdx.app.log("Lane", "Boat " + boat.getType() + " added to lane " + getLaneId());
             addBoat((Boat) gameObject);
         }
     }
@@ -113,6 +118,7 @@ public class Lane {
         } else if(gameObject instanceof PowerUp) {
             removePowerUp((PowerUp) gameObject);
         } else if(gameObject instanceof Boat) {
+            boat.destroy();
             removeBoat((Boat) gameObject);
         }
     }
@@ -144,12 +150,19 @@ public class Lane {
      */
     public void applyCollisions() {
         CollisionHandler handler = new CollisionHandler();
-        for (Boat boat : boats) {
-
+        /*for (Boat boat : boats) {
             handler.setBoat(boat); //Assigns to handler a specific boat
             if(boat.getWasHit()) continue;
             searchCollisions(handler);
-        }
+        }*/
+        boats.stream()
+                .filter(boat -> !boat.getWasHit()) //If the boat was hit (by another boat), we don't need to check for collisions as it will be destroyed.
+                //Java streams use lazy evaluation, so the filter of an element will be evaluated just after the previous element is processed.
+                .forEach(boat -> {
+                    handler.setBoat(boat);
+                    searchCollisions(handler);
+                });
+        boats.removeIf(Boat::getWasHit); //After the handler has checked all the boats, we remove the ones that were hit
     }
 
     /**
@@ -157,36 +170,54 @@ public class Lane {
      * @param handler the visitor responsible for handling the collisions for its boat. Should be accepted by all Collidable objects.
      */
     private void searchCollisions(CollisionHandler handler) { //Lane must be aware of an object´s destruction to eliminate it from the corresponding set
-        for (Obstacle obstacle : obstacles) {
-
+        /*for (Obstacle obstacle : obstacles) {
             handler.checkObstacleCollision(obstacle);
             if(obstacle.getWasHit()) obstacles.remove(obstacle); //If it was hit, we need to remove it from the obstacles set
+        }*/
+        obstacles.forEach(handler::checkObstacleCollision); //Passes each of the obstacles to the handler
+        obstacles.removeIf(Obstacle::getWasHit); //After the handler has checked all the obstacles, we remove the ones that were hit
 
-        }
-        for (PowerUp powerUp : powerUps) {
+        /*for (PowerUp powerUp : powerUps) {
            handler.checkPowerUpCollision(powerUp);
            if(powerUp.getWasHit()) powerUps.remove(powerUp);
-        }
-        for(Boat otherBoat : boats) {
-
+        }*/
+        powerUps.forEach(handler::checkPowerUpCollision); //Passes each of the power-ups to the handler
+        powerUps.removeIf(PowerUp::getWasHit); //After the handler has checked all the power-ups, we remove the ones that were hit
+        /*for(Boat otherBoat : boats) {
             if(handler.getBoat().equals(otherBoat)) continue;
-
             handler.checkBoatCollision(otherBoat);
             if(otherBoat.getWasHit()) boats.remove(otherBoat);
             if(handler.getBoat().getWasHit()) boats.remove(handler.getBoat());
-        }
+        }*/
+        boats.stream()
+                .filter(otherBoat -> !handler.getBoat().equals(otherBoat)) //Filter the boat that is not the same as the one assigned to the handler
+                .forEach(handler::checkBoatCollision); //Passes each of the boats to the handler
+        //We don't yet remove the boats that were hit, as that would change the collection we are iterating over (the boats), so we remove them later.
     }
+
+    /**
+     * This method iterates over all obstacles in the lane and sends them a visitor to move them.
+     * When each obstacle accepts the visitor, the visitor will move the obstacle.
+     * @param delta time elapsed since last frame
+     */
     public void moveObstacles(float delta) {
         MoveObstacleVisitor moveVisitor = new MoveObstacleVisitor(delta);
-        for (Obstacle obstacle : obstacles) {
+        /*for (Obstacle obstacle : obstacles) {
             obstacle.accept(moveVisitor); //
-        }
+        }*/
+        obstacles.forEach(obstacle -> obstacle.accept(moveVisitor));
     }
+
+    /**
+     * This method iterates over all boats in the lane and call their move method.
+     * @param delta time elapsed since last frame
+     */
     public void moveBoats(float delta) {
-        for (Boat boat : boats) {
+        /*for (Boat boat : boats) {
             //This movement is handled by the movements strategies
             boat.move(delta);
-        }
+        }*/
+        boats.forEach(boat -> boat.move(delta));
     }
 
     /**
@@ -196,7 +227,7 @@ public class Lane {
      */
     public Set<GameObject> getTotallyOutBounds() {
         Set<GameObject> outBounds = new HashSet<>();
-        for(Obstacle obstacle : obstacles) {
+        /*for(Obstacle obstacle : obstacles) {
             totallyOutBounds(obstacle, outBounds);
         }
         for(PowerUp powerUp : powerUps) {
@@ -204,7 +235,10 @@ public class Lane {
         }
         for(Boat boat : boats) {
             totallyOutBounds(boat, outBounds);
-        }
+        }*/
+        obstacles   .forEach(obstacle   -> totallyOutBounds(obstacle, outBounds));
+        powerUps    .forEach(powerUp    -> totallyOutBounds(powerUp, outBounds));
+        boats       .forEach(boat       -> totallyOutBounds(boat, outBounds));
         return outBounds;
     }
 
@@ -232,11 +266,13 @@ public class Lane {
 
     /**
      * This method returns only the objects that have just become partially out of bounds to be added to other lanes.
+     * It uses java streams first to combine all the objects in a single stream and then to efficiently filtering the
+     * objects that are partially out of bounds and were not before.
      * @return a set with all the new objects that are partially out of bounds
      */
     public Set<GameObject> getNewPartiallyOutBounds() {
         //Add all partially out of bounds objects (even the ones that were already partially out of bounds)
-        Set<GameObject> newOutBounds = new HashSet<>();
+        /*Set<GameObject> newOutBounds = new HashSet<>();
         for(Obstacle obstacle : obstacles) {
             partiallyOutBounds(obstacle, newOutBounds);
         }
@@ -246,14 +282,23 @@ public class Lane {
         for(Boat boat : boats) {
             partiallyOutBounds(boat, newOutBounds);
         }
-        //TODO: This is not very efficient(not the worse either), think of another way
+        //This is not very efficient(not the worse either), think of another way
         //Remove the objects that were already partially out of bounds
-        newOutBounds.removeAll(partiallyOutBounds);
-        return newOutBounds;
+        newOutBounds.removeAll(partiallyOutBounds);*/
+        return Stream.of(
+                obstacles   .stream(),
+                powerUps    .stream(),
+                boats       .stream()
+                ).flatMap(s -> s) //Combine the streams in a single stream
+                .filter(this::partiallyOutBounds) //Filter the objects that are partially out of bounds
+                .filter(gameObject -> !partiallyOutBounds.contains(gameObject)) //Filter the objects that were already partially out of bounds
+                .collect(Collectors.toSet()); //Collect the objects in a set
     }
-    private void partiallyOutBounds(GameObject object, Set<GameObject> outBounds) {
-        if (object.getX() + object.getWidth() > lanePosition + WIDTH || object.getX() < lanePosition) {
-            outBounds.add(object);
-        }
+    /**
+     * This method checks if an object is partially out of bounds and adds it to the outBounds set if it is.
+     * It compares the left and right sides of the object with the left and right sides of the lane.
+     */
+    private boolean partiallyOutBounds(GameObject object) {
+        return (object.getX() + object.getWidth() > lanePosition + WIDTH || object.getX() < lanePosition);
     }
 }

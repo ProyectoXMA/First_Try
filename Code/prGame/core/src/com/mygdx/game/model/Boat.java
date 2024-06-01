@@ -11,8 +11,8 @@ import com.mygdx.game.model.movement.*;
  * It delegates the movement (as all Movable objects) to a MovementStrategy.
  */
 public class Boat extends GameObject implements Movable{
-    public static final int WIDTH = 50;
-    public static final int HEIGHT = 50;
+    public static final int WIDTH = 10;
+    public static final int HEIGHT = 10;
 
     private MovementStrategy movementStrategy;
 
@@ -189,7 +189,7 @@ public class Boat extends GameObject implements Movable{
     @Override
     public void destroy() {
         //TODO: Is this necesary?
-        Gdx.app.log("Boat", "Boat destroyed");
+        Gdx.app.log("Boat", "Boat " + getType() + "destroyed");
         //throw new UnsupportedOperationException("Unimplemented method 'destroy'");
     }
 }
