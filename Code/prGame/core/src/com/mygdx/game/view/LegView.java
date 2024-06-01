@@ -37,7 +37,7 @@ public class LegView {
     private static final Texture invincibilityImage = new Texture("powerUps/shield.png");
     private static final Texture healthBoostImage = new Texture("powerUps/health.png");
     private static final Texture speedBoostImage = new Texture("powerUps/speed.png");
-    private static final Texture backgroundImage = new Texture("dragon.jpeg");
+    private static final Texture backgroundImage = new Texture("background.png");
     private static final Texture laneLimitImage = stoneImage;
 
     public LegView(final MyGdxGame game, Leg leg) {
@@ -81,14 +81,14 @@ public class LegView {
         game.batch.setProjectionMatrix(camera.combined);
         // Begin a new batch and draw the bucket and all drops
         game.batch.begin();
-        //drawBackground();
+        drawBackground();
         drawLeg();
         drawUI();
         game.batch.end();
     }
 
     private void drawBackground() {
-        game.batch.draw(backgroundImage, 0, 0, Config.getWidth(), Config.getHeight());
+        game.batch.draw(backgroundImage, 0, 0, Config.getWidth(), Config.getHeight()*3);
     }
     private void drawLeg() {
         followPlayer();

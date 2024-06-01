@@ -24,22 +24,22 @@ public class Leg {
 
     private int level;
     private List<Lane> lanes;
-    private Set<Duck> unusedDucks; //Unused purpose is storing objects that have been deleted, in order to reuse them, making the logic more efficient.
-    private Set<Log> unusedLogs; // However the creation and deletion of obstacles shouldn´t be a performance issue regarding the amount of items.
-    private Set<Stone> unusedStones;
+    private Set<Obstacle> allObstacles;
+    private Set<PowerUp> allPowerUps;
+    private Set<Boat> allBoats;
 
     public Leg(int level, Player player){
         this.level = level;
         this.lanes = new ArrayList<>(NUMBER_OF_LANES);
-        this.unusedDucks = new HashSet<>();
-        this.unusedLogs = new HashSet<>();
-        this.unusedStones = new HashSet<>();
+        this.allObstacles = new HashSet<>();
+        this.allPowerUps = new HashSet<>();
+        this.allBoats = new HashSet<>();
 
         for (int i = 0; i < NUMBER_OF_LANES; i++) {
             if(i == PLAYER_LANE)
-                lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), player.getBoat()));
+                lanes.add(Lane.createLane(i, 10, 10, 5, player.getBoat()));
             else
-                lanes.add(new Lane(i, new HashSet<>(), new HashSet<>(), Boat.createBoat(false, BoatType.getRandomType())));
+                lanes.add(Lane.createLane(i, 10, 10, 5, Boat.createBoat(false, BoatType.getRandomType())));
         }
     }
     public List<Lane> getLanes() {
@@ -87,7 +87,7 @@ public class Leg {
         Set<GameObject> newPartialOutOfBounds = lane.getNewPartiallyOutBounds();
         for(GameObject gameObject : newPartialOutOfBounds){
             Lane newLane = determineNewLaneByPosition(gameObject, lane);
-            Gdx.app.debug("Leg", "Object " + gameObject.getClass() + " partially out of bounds. Going from lane " + lane.getLaneId() + " to lane " + newLane.getLaneId());
+            //Gdx.app.debug("Leg", "Object " + gameObject.getClass() + " partially out of bounds. Going from lane " + lane.getLaneId() + " to lane " + newLane.getLaneId());
             //If the lane to which the object should be added is a limit one, it is removed
             if (newLane == null) {
                 lane.removeGameObject(gameObject);

@@ -13,12 +13,11 @@ import com.mygdx.game.model.powerUps.PowerUp;
 import com.mygdx.game.model.powerUps.SpeedBoost;
 import com.mygdx.game.util.Config;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static com.badlogic.gdx.math.MathUtils.random;
 
 /**
  * This class represents a lane in the game.
@@ -26,7 +25,9 @@ import java.util.stream.Stream;
  * It also stores a reference to the assigned boat, and a List of all boats present in the lane, used to subtract health to invaders boats.
  */
 public class Lane {
+    private static Random RND = new Random();
     public static final int WIDTH = Config.getWidth()/4;
+    public static final int HEIGHT = Config.getHeight()*3;
     private final int laneId;
     private final float lanePosition; //Horizontal position of the lane from the left side of the screen to the left side of the lane
     private final Boat boat; //Boat asigned to this lane
@@ -59,11 +60,11 @@ public class Lane {
         Set<Obstacle> obstacles = new HashSet<>();
         Set<PowerUp> powerUps = new HashSet<>();
         for(int i = 0; i < nStones; i++)
-            obstacles.add(new Stone());
+            obstacles.add(new Stone(RND.nextInt(Config.getWidth()),RND.nextInt(Lane.HEIGHT)));
         for(int i = 0; i < nDucks; i++)
-            obstacles.add(new Duck());
+            obstacles.add(new Duck(RND.nextInt(Config.getWidth()),RND.nextInt(Lane.HEIGHT)));
         for(int i = 0; i < nLogs; i++)
-            obstacles.add(new Log());
+            obstacles.add(new Log(RND.nextInt(Config.getWidth()),RND.nextInt(Lane.HEIGHT)));
         return new Lane(laneId, obstacles, powerUps, boat);
     }
     public static Lane createLane(int laneId, Boat boat) {

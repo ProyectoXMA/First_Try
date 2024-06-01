@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.CollidableVisitor;
 import com.mygdx.game.model.movement.Movable;
 import com.mygdx.game.model.movement.MovementStrategy;
+import com.mygdx.game.model.movement.RandomMoveStrategy;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 
@@ -23,6 +24,7 @@ public class Duck extends Obstacle implements Movable {
     public Duck(int x, int y){
         super(DAMAGE, new Rectangle(x, y, WIDTH, HEIGHT));
         this.speed = SPEED;
+        this.setMovementStrategy(new RandomMoveStrategy());
     }
     public Duck(){
         this(0,0);
