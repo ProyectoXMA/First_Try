@@ -24,15 +24,14 @@ public class AIControlledStrategy implements MovementStrategy {
     private Set<Boat> boats;
     private Set<PowerUp> powerUps;
     private float evasionChance; // Chance of evading an obstacle or boat
-    private CollisionHandler collisionHandler;
+    float verticalSpeed;
 
     public AIControlledStrategy(Set<Obstacle> obstacles, Set<Boat> boats, Set<PowerUp> powerUps, float evasionChance) {
 
         this.obstacles = obstacles;
         this.boats = boats;
         this.powerUps = powerUps;
-        this.evasionChance = evasionChance;
-        this.collisionHandler = new CollisionHandler();
+        this.evasionChance = evasionChance; //Must be between 0 and 1
     }
 
     @Override
@@ -42,12 +41,16 @@ public class AIControlledStrategy implements MovementStrategy {
         }
 
         Boat boat = (Boat) movable;
-        collisionHandler.setBoat(boat);
+
 
         float movableLeftLimit = boat.getHitbox().x;
         float movableRightLimit = boat.getHitbox().x + boat.getHitbox().width;
         int speed = boat.getSpeed();
+
         boolean isMovingLeft = MathUtils.randomBoolean(); // Random initial direction
+
+
+        movable.adjustY(verticalSpeed * delta); //We first move it upwards in the y axes
 
         for (Obstacle obstacle : obstacles) {
             if (isNear(boat.getHitbox(), obstacle.getHitbox(), REACTION_DISTANCE)) {
@@ -57,22 +60,18 @@ public class AIControlledStrategy implements MovementStrategy {
                     } else {
                         boat.adjustX(speed * delta); // Move right to evade
                     }
-                } else {
-                    collisionHandler.checkObstacleCollision(obstacle);
                 }
             }
         }
 
         for (Boat otherBoat : boats) {
-            if (otherBoat != boat && isNear(boat.getHitbox(), otherBoat.getHitbox(), REACTION_DISTANCE)) {
+            if (!otherBoat.equals(boat) && isNear(boat.getHitbox(), otherBoat.getHitbox(), REACTION_DISTANCE)) {
                 if (MathUtils.random() < evasionChance) {
                     if (isMovingLeft) {
                         boat.adjustX(-speed * delta); // Move left to evade
                     } else {
                         boat.adjustX(speed * delta); // Move right to evade
                     }
-                } else {
-                    collisionHandler.checkBoatCollision(otherBoat);
                 }
             }
         }
@@ -86,8 +85,6 @@ public class AIControlledStrategy implements MovementStrategy {
                     } else {
                         boat.adjustX(-speed * delta); // Move left to collect
                     }
-                } else {
-                    collisionHandler.checkPowerUpCollision(powerUp);
                 }
             }
         }
@@ -108,6 +105,8 @@ public class AIControlledStrategy implements MovementStrategy {
             }
         }
     }
+
+
 
     private boolean isNear(Rectangle rect1, Rectangle rect2, float distance) {
         return rect1.overlaps(rect2) || rect1.contains(rect2) || rect2.contains(rect1) ||
