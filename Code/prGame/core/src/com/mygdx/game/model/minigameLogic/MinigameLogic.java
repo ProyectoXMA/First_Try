@@ -110,7 +110,7 @@ public class MinigameLogic {
      * typedWord is reseted on every function call
      */
     public void generateNewWord(){
-        r = new Random().nextInt(10); // bound to number n of words in List<String> words
+        r = new Random().nextInt(9); // bound to number n of words in List<String> words
         currentWord = words.get(r);
         typedWord = "";
     }

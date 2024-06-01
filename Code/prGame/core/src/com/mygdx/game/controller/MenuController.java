@@ -14,6 +14,7 @@ import com.mygdx.game.util.Config;
 import com.mygdx.game.view.MenuView;
 import com.mygdx.game.controller.LegController;
 import com.mygdx.game.view.MinigameScreen;
+import com.mygdx.game.view.minigameTutorial;
 
 public class MenuController implements Screen{
 
@@ -106,7 +107,7 @@ public class MenuController implements Screen{
             public void changed(ChangeEvent event, Actor actor) {
                 //TODO
                 dispose();
-                game.setScreen(new MinigameScreen(game, null));
+                game.setScreen(new minigameTutorial(game));
             }
         });
 

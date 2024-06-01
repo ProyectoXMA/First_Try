@@ -1,10 +1,7 @@
 package com.mygdx.game.view;
 
-import java.security.Key;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,30 +14,25 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.util.Config;
 
-public class LoseScreen implements Screen {
-    // attributes for the screen
+public class minigameTutorial2 implements Screen{
+     // attributes for the screen
     private Stage stage;
     private Viewport viewport;
-    private Music losingMusic;
     OrthographicCamera camera;
 // attributes for the screen
     private final MyGdxGame game;
     private Texture backgroundImage;
-    public LoseScreen(final MyGdxGame game){
+    public minigameTutorial2(final MyGdxGame game){
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false,Config.getWidth(),Config.getHeight());
-        backgroundImage = new Texture(Gdx.files.internal("GameOverScreen.png"));
-        losingMusic = Gdx.audio.newMusic(Gdx.files.internal("LosingSound.mp3"));
-        losingMusic.setLooping(true);
+        backgroundImage = new Texture(Gdx.files.internal("secondPhase.png"));
     }
 
     @Override
     public void show() {
         viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
-        losingMusic.play();
-        losingMusic.setVolume((float)0.1);
     }
 
     @Override
@@ -51,8 +43,7 @@ public class LoseScreen implements Screen {
         stage.act();
         stage.draw();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-            losingMusic.stop();
-            game.setScreen(new MenuController(game));
+            game.setScreen(new MinigameScreen(game,null));
         }
         game.batch.begin();
         game.batch.draw(backgroundImage,0,0,Config.getWidth(),Config.getHeight());
@@ -83,3 +74,4 @@ public class LoseScreen implements Screen {
         throw new UnsupportedOperationException("Unimplemented method 'dispose'");
     }
 }
+
