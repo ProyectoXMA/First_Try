@@ -22,7 +22,7 @@ public class BoatSelectionController implements Screen{
 
     private final MyGdxGame game;
     private final BoatSelectionView view;
-    private final Player player = new Player();
+    private final Player player;
     private final Stage stage;
     private final int BUTTON_WIDTH = Config.getWidth()/3;
     private final int BUTTON_HEIGHT = Config.getHeight()/8;
@@ -53,6 +53,9 @@ public class BoatSelectionController implements Screen{
 
         // create a view for the election menu
         view = new BoatSelectionView(stage);
+
+        //defines the player
+        player = game.getPlayer();
 
         // creates the lists
         Texture classicBoat = new Texture(Gdx.files.internal("boats/classicBoat.png"));
