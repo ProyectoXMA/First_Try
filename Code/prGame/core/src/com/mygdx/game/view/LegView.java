@@ -84,6 +84,7 @@ public class LegView {
         drawBackground();
         drawLeg();
         drawUI();
+        drawHealth();
         game.batch.end();
     }
 
@@ -160,7 +161,9 @@ public class LegView {
         //TODO
     }
     private void drawHealth() {
-        //TODO
+        int health = leg.getLanes().get(1).getBoat().getHealth();
+        String s = Integer.toString(health);
+        game.font.draw(game.batch,s,0,100);
     }
     private void drawScore() {
         //TODO
