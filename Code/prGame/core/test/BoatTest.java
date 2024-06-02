@@ -42,11 +42,11 @@ public class BoatTest {
     @Test
     void testAdjustAttributes() {
         boat.setHealth(100);
-        boat.setResistance(200);
+        boat.setResistance(5);
         boat.adjustHealth(50);
-        boat.adjustResistance(100);
+        boat.adjustResistance(1);
         assertEquals(150, boat.getHealth());
-        //assertEquals(300, boat.getResistance()); TO BE FIXED..
+        assertEquals(6, boat.getResistance());
     }
 
     @Test
