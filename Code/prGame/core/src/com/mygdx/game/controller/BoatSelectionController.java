@@ -26,7 +26,8 @@ public class BoatSelectionController implements Screen{
     private final Stage stage;
     private final int BUTTON_WIDTH = Config.getWidth()/3;
     private final int BUTTON_HEIGHT = Config.getHeight()/8;
-    private final float imageSize = (float) ((float) Config.getWidth() * 0.31);
+    private final float imageWidth = ((float) Config.getWidth()) * 0.5f;
+    private final float imageHeight = ((float) Config.getHeight()) * 0.5f;
     private final float textSize = (float) BUTTON_HEIGHT / 135;
 
     //Lists for cycling
@@ -103,9 +104,9 @@ public class BoatSelectionController implements Screen{
         //add buttons to table
         table.add(boatName).size(BUTTON_WIDTH*2, BUTTON_HEIGHT).colspan(3);
         table.row().pad(0, 0, 10, 0);
-        table.add(changeLeft).center().size((float) BUTTON_WIDTH /3, BUTTON_HEIGHT);
-        table.add(boat).size(imageSize);
-        table.add(changeRight).center().size((float) BUTTON_WIDTH /3, BUTTON_HEIGHT);
+        table.add(changeLeft).center().size((float) BUTTON_WIDTH/3, BUTTON_HEIGHT);
+        table.add(boat).size(imageWidth, imageHeight);
+        table.add(changeRight).center().size((float) BUTTON_WIDTH/3, BUTTON_HEIGHT);
         table.row().pad(0, 0, 10, 0);
         table.add(select).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).colspan(3);
         table.row().pad(0, 0, 10, 0);
