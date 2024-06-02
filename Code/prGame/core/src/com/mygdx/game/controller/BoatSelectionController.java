@@ -26,7 +26,7 @@ public class BoatSelectionController implements Screen{
     private final Stage stage;
     private final int BUTTON_WIDTH = Config.getWidth()/3;
     private final int BUTTON_HEIGHT = Config.getHeight()/8;
-    private final float imageWidth = ((float) Config.getWidth()) * 0.5f;
+    private final float imageWidth = ((float) Config.getWidth()) * 0.18f;
     private final float imageHeight = ((float) Config.getHeight()) * 0.5f;
     private final float textSize = (float) BUTTON_HEIGHT / 135;
 
