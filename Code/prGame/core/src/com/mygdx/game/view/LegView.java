@@ -118,22 +118,22 @@ public class LegView {
         //TODO: Revise this, switch should be better. But how?
         for (Obstacle obstacle : obstacles) {
             if (obstacle instanceof Duck) {
-                game.batch.draw(duckImage, obstacle.getX(), obstacle.getY());
+                game.batch.draw(duckImage, obstacle.getX(), obstacle.getY(), obstacle.getWidth(), obstacle.getHeight());
             } else if (obstacle instanceof Log) {
-                game.batch.draw(logImage, obstacle.getX(), obstacle.getY());
+                game.batch.draw(logImage, obstacle.getX(), obstacle.getY(), obstacle.getWidth(), obstacle.getHeight());
             } else if (obstacle instanceof Stone) {
-                game.batch.draw(stoneImage, obstacle.getX(), obstacle.getY());
+                game.batch.draw(stoneImage, obstacle.getX(), obstacle.getY(), obstacle.getWidth(), obstacle.getHeight());
             }
         }
     }
     private void drawPowerUps(Set<PowerUp> powerUps) {
         for(PowerUp powerUp : powerUps) {
             if(powerUp instanceof Invincibility) {
-                game.batch.draw(invincibilityImage, powerUp.getX(), powerUp.getY());
+                game.batch.draw(invincibilityImage, powerUp.getX(), powerUp.getY(), powerUp.getWidth(), powerUp.getHeight());
             } else if (powerUp instanceof HealthBoost) {
-                game.batch.draw(healthBoostImage, powerUp.getX(), powerUp.getY());
+                game.batch.draw(healthBoostImage, powerUp.getX(), powerUp.getY(), powerUp.getWidth(), powerUp.getHeight());
             } else if (powerUp instanceof SpeedBoost) {
-                game.batch.draw(speedBoostImage, powerUp.getX(), powerUp.getY());
+                game.batch.draw(speedBoostImage, powerUp.getX(), powerUp.getY(), powerUp.getWidth(), powerUp.getHeight());
             }
         }
     }
@@ -142,13 +142,13 @@ public class LegView {
             switch (boat.getType()) {
                 //TODO: Change the boatImage to the actual types images
                 case FAST:
-                    game.batch.draw(boatSpeedImage, boat.getX(), boat.getY());
+                    game.batch.draw(boatSpeedImage, boat.getX(), boat.getY(), boat.getWidth(), boat.getHeight());
                     break;
                 case STRONG:
-                    game.batch.draw(boatResistanceImage, boat.getX(), boat.getY());
+                    game.batch.draw(boatResistanceImage, boat.getX(), boat.getY(), boat.getWidth(), boat.getHeight());
                     break;
                 case CLASSIC:
-                    game.batch.draw(boatClassicImage, boat.getX(), boat.getY());
+                    game.batch.draw(boatClassicImage, boat.getX(), boat.getY(), boat.getWidth(), boat.getHeight());
                     break;
                 default:
                     throw new IllegalArgumentException("Not a valid boat type" + boat.getType());

@@ -5,20 +5,15 @@ package com.mygdx.game.util;
  * It uses the LibGDX Gdx.graphics to get the width and height of the application window.
  */
 public class Config {
-
-    //The frames per second at which the game will run.
     public static final int FPS = 30; //NFR002
-    /**
-     * The WIDTH constant is set to the current width of the application window at the time of class loading.
-     */
-    private static int WIDTH = 800;
-
-    /**
-     * The HEIGHT constant is set to the current height of the application window at the time of class loading.
-     */
-    private static int HEIGHT = 600;
-
+    public static int WIDTH = 1920;
+    public static int HEIGHT = 1080;
     public static boolean muted = false;
+    public static float BoatRelativeSize = 0.025f * Config.WIDTH;
+    public static float StoneRelativeSize = 0.03f * Config.WIDTH;
+    public static float LogRelativeSize = 0.015f * Config.WIDTH;
+    public static float DuckRelativeSize = 0.02f * Config.WIDTH;
+    public static float PowerUpRelativeSize = 1.5f * Config.WIDTH;
 
     public static int getWidth() {
         return WIDTH;
