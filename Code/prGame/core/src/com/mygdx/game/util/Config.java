@@ -6,8 +6,11 @@ package com.mygdx.game.util;
  */
 public class Config {
     public static final int FPS = 30; //NFR002
+
     public static int WIDTH = 1920;
     public static int HEIGHT = 1080;
+    public static KeyBindings keyBinds;
+
     public static boolean muted = false;
     public static float BoatRelativeSize = 0.025f * Config.WIDTH;
     public static float StoneRelativeSize = 0.03f * Config.WIDTH;

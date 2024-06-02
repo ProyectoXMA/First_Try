@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.mygdx.game.util.Config;
+import com.mygdx.game.util.KeyBindings;
 
 /**
 * This class is the entry point of the game, it contains the main method, which will be executed when launching
@@ -19,6 +20,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		// Create a new configuration object for the application
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+		Config.keyBinds = new KeyBindings();
 
 		// Set the foreground frames per second for the application
 		config.setForegroundFPS(Config.FPS);
