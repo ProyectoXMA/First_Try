@@ -8,7 +8,7 @@ import com.mygdx.game.util.Config;
 
 public class BoatSelectionView {
     private final Stage stage;
-    private final Texture MenuImage = new Texture(Gdx.files.internal("boat_selection_background2.jpeg"));
+    private final Texture MenuImage = new Texture(Gdx.files.internal("backgrounds/boat_selection_background.jpg"));
     public BoatSelectionView(Stage stage) {
         this.stage = stage;
     }

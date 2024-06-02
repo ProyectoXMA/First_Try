@@ -8,7 +8,7 @@ import com.mygdx.game.util.Config;
 
 public class SettingView {
     private final Stage stage;
-    private final Texture MenuImage = new Texture(Gdx.files.internal("menu_background.jpeg"));
+    private final Texture MenuImage = new Texture(Gdx.files.internal("backgrounds/settings_background.jpg"));
     public SettingView(Stage stage) {
     this.stage = stage;
     }
