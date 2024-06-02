@@ -87,7 +87,7 @@ public class LegView {
     }
 
     private void drawBackground() {
-        game.batch.draw(backgroundImage, 0, 0, Config.getWidth(), Config.getHeight()*3);
+        game.batch.draw(backgroundImage, 0, 0, Config.getWidth(), Config.getHeight());
     }
     private void drawLeg() {
         followPlayer();
@@ -100,7 +100,7 @@ public class LegView {
         float horizontalCenter = (float) Config.getWidth() / 2;
         float verticalCenter = (float) Config.getHeight() / 2;
 
-        camera.position.set(horizontalCenter, Math.max(playerBoatHeight, verticalCenter-100), 0);
+        camera.position.set(horizontalCenter, Math.max(playerBoatHeight, verticalCenter), 0);
         Gdx.app.debug("LegView", "Camara position: " + camera.position.x + " " + camera.position.y);
     }
     private void drawLane(Lane lane) {

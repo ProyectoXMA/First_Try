@@ -1,5 +1,6 @@
 package com.mygdx.game.model.movement;
 
+import com.mygdx.game.model.Lane;
 import com.mygdx.game.util.Config;
 
 import static com.badlogic.gdx.math.MathUtils.random;
@@ -16,7 +17,7 @@ public class StraightMoveStrategy implements MovementStrategy {
     public void move(Movable movable, float delta) {
         float movableLeftLimit = movable.getHitbox().x;
         float movableRightLimit = movable.getHitbox().x + movable.getHitbox().width;
-        int horizontalSpeed = movable.getSpeed();
+        float horizontalSpeed = movable.getSpeed();
         //I need to know if the movable was moving left of right previously.
         if(isMovingLeft) {// //The movable is moving left
             if(movableLeftLimit <= leftLIMIT){ //The object has reached its limit and must change the direction.

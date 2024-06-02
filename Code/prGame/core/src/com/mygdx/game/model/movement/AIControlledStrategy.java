@@ -33,7 +33,7 @@ public class AIControlledStrategy implements MovementStrategy {
         float laneRightLimit = laneLeftLimit + Lane.WIDTH;
         float movableLeftLimit = movable.getHitbox().x;
         float movableRightLimit = movable.getHitbox().x + movable.getHitbox().width;
-        int speed = movable.getSpeed();
+        float speed = movable.getSpeed();
 
         // Fixed vertical movement
         movable.adjustY(speed * delta);

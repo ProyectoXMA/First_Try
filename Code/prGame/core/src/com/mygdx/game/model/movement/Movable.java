@@ -9,6 +9,6 @@ public interface Movable {
     void setMovementStrategy(MovementStrategy movementStrategy);
     MovementStrategy getMovementStrategy();
     Rectangle getHitbox();
-    int getSpeed();
-    void setSpeed(int speed);
+    float getSpeed();
+    void setSpeed(float speed);
 }

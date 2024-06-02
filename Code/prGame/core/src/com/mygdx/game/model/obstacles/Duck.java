@@ -9,16 +9,17 @@ import com.mygdx.game.util.Config;
 
 public class Duck extends Obstacle implements Movable {
     private static final int DAMAGE = 40;
+    private static final int SPEED_MODIFIER = 50;
     private static final float WIDTH = 1.0f*Config.DuckRelativeSize;
     private static final float HEIGHT = 0.82f*Config.DuckRelativeSize;
-    private static final int SPEED = 100;
+    private static final float SPEED = 100;
     //MovementStrategy is not implemented here, just the pattern
     MovementStrategy movementStrategy;
     //attributes of the obstacle Duck
-    private int speed;
+    private float speed;
     //Constructor for the obstacle Duck
     public Duck(int x, int y){
-        super(DAMAGE, new Rectangle(x, y, WIDTH, HEIGHT));
+        super(DAMAGE, SPEED_MODIFIER, new Rectangle(x, y, WIDTH, HEIGHT));
         this.speed = SPEED;
         this.setMovementStrategy(new RandomMoveStrategy());
     }
@@ -27,11 +28,11 @@ public class Duck extends Obstacle implements Movable {
     }
     //Getters for the exclusive attributes of the obstacle Duck
     @Override
-    public int getSpeed(){
+    public float getSpeed(){
         return speed;
     }
     @Override
-    public void setSpeed(int speed){
+    public void setSpeed(float speed){
         this.speed = speed;
     }
     public void accept(ObstacleVisitor visitor) {
