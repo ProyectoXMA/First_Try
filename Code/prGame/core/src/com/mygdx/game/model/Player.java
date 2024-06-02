@@ -13,7 +13,7 @@ public class Player implements InputSubscribed {
     private static final BoatType DEFAULT_BOAT_TYPE = BoatType.CLASSIC;
     private Boat boat;
     public Player(BoatType boatType) {
-        boat = Boat.createBoat(true, boatType);
+        boat = Boat.createBoat(boatType);
         setBoat(boat);
     }
     public Player(){

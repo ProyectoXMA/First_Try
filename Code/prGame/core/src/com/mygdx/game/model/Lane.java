@@ -1,24 +1,15 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.model.movement.MoveObstacleVisitor;
-import com.mygdx.game.model.obstacles.Duck;
-import com.mygdx.game.model.obstacles.Log;
 import com.mygdx.game.model.obstacles.Obstacle;
-import com.mygdx.game.model.obstacles.Stone;
-import com.mygdx.game.model.powerUps.HealthBoost;
-import com.mygdx.game.model.powerUps.Invincibility;
 import com.mygdx.game.model.powerUps.PowerUp;
-import com.mygdx.game.model.powerUps.SpeedBoost;
 import com.mygdx.game.util.Config;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.*;
 
 /**
  * This class represents a lane in the game.
@@ -26,7 +17,13 @@ import java.util.stream.Stream;
  * It also stores a reference to the assigned boat, and a List of all boats present in the lane, used to subtract health to invaders boats.
  */
 public class Lane {
+
+    private static final Random RND = new Random();
     public static final int WIDTH = Config.getWidth()/4;
+    public static final int HEIGHT = Config.getHeight()*3;
+    public static final int NUMBER_OBSTACLES = 40;
+    public static final int NUMBER_POWERUPS = 5;
+
     private final int laneId;
     private final float lanePosition; //Horizontal position of the lane from the left side of the screen to the left side of the lane
     private final Boat boat; //Boat asigned to this lane
@@ -42,32 +39,22 @@ public class Lane {
         this.obstacles = obstacles;
         this.powerUps = powerUps;
         this.boat = boat;
-        setInitialBoatPosition();
         this.boats = new HashSet<>();
         boats.add(boat);
+        setCentralPosition(boat);
         this.partiallyOutBounds = new HashSet<>();
     }
-    /**
-     * This method sets the initial position of the boat in the center of the lane.
-     */
-    private void setInitialBoatPosition() {
-        boat.setX(lanePosition + (float) WIDTH / 2 - boat.getWidth() / 2);
-        boat.setY(0);
-    }
-    //TODO: think of another way, this is a bit ugly
-    public static Lane createLane(int laneId, int nDucks, int nLogs, int nStones, Boat boat) {
-        Set<Obstacle> obstacles = new HashSet<>();
-        Set<PowerUp> powerUps = new HashSet<>();
-        for(int i = 0; i < nStones; i++)
-            obstacles.add(new Stone());
-        for(int i = 0; i < nDucks; i++)
-            obstacles.add(new Duck());
-        for(int i = 0; i < nLogs; i++)
-            obstacles.add(new Log());
+
+    public static Lane createLane(int laneId, Set<Obstacle> obstacles, Set<PowerUp> powerUps, Boat boat) {
+        obstacles.forEach(obstacle -> setRandomPosition(obstacle, laneId));
+        powerUps.forEach(powerUp -> setRandomPosition(powerUp, laneId));
         return new Lane(laneId, obstacles, powerUps, boat);
     }
-    public static Lane createLane(int laneId, Boat boat) {
-        return createLane(laneId, 0, 0, 0, boat);
+    private void setCentralPosition(GameObject object){
+        object.setPosition(lanePosition + (float) WIDTH / 2 - boat.getWidth() / 2, 0);
+    }
+    private static void setRandomPosition(GameObject object, int laneId){
+        object.setPosition(Lane.WIDTH * laneId + RND.nextInt(Lane.WIDTH), RND.nextInt(Lane.HEIGHT));
     }
 
     public int getLaneId() {
@@ -179,55 +166,17 @@ public class Lane {
      * @param handler the visitor responsible for handling the collisions for its boat. Should be accepted by all Collidable objects.
      */
     private void searchCollisions(CollisionHandler handler) { //Lane must be aware of an object´s destruction to eliminate it from the corresponding set
-        /*for (Obstacle obstacle : obstacles) {
-            handler.checkObstacleCollision(obstacle);
-            if(obstacle.getWasHit()) obstacles.remove(obstacle); //If it was hit, we need to remove it from the obstacles set
-        }*/
         obstacles.forEach(handler::checkObstacleCollision); //Passes each of the obstacles to the handler
         obstacles.removeIf(Obstacle::getWasHit); //After the handler has checked all the obstacles, we remove the ones that were hit
 
-        /*for (PowerUp powerUp : powerUps) {
-           handler.checkPowerUpCollision(powerUp);
-           if(powerUp.getWasHit()) powerUps.remove(powerUp);
-        }*/
         powerUps.forEach(handler::checkPowerUpCollision); //Passes each of the power-ups to the handler
         powerUps.removeIf(PowerUp::getWasHit); //After the handler has checked all the power-ups, we remove the ones that were hit
-        /*for(Boat otherBoat : boats) {
-            if(handler.getBoat().equals(otherBoat)) continue;
-            handler.checkBoatCollision(otherBoat);
-            if(otherBoat.getWasHit()) boats.remove(otherBoat);
-            if(handler.getBoat().getWasHit()) boats.remove(handler.getBoat());
-        }*/
+
         boats.stream()
                 .filter(otherBoat -> !handler.getBoat().equals(otherBoat)) //Filter the boat that is not the same as the one assigned to the handler
                 .peek(otherBoat -> Gdx.app.debug("Lane " + getLaneId(), "Analyzing invader boat " + otherBoat.getType()))
                 .forEach(handler::checkBoatCollision); //Passes each of the boats to the handler
         //We don't yet remove the boats that were hit, as that would change the collection we are iterating over (the boats), so we remove them later.
-    }
-
-    /**
-     * This method iterates over all obstacles in the lane and sends them a visitor to move them.
-     * When each obstacle accepts the visitor, the visitor will move the obstacle.
-     * @param delta time elapsed since last frame
-     */
-    public void moveObstacles(float delta) {
-        MoveObstacleVisitor moveVisitor = new MoveObstacleVisitor(delta);
-        /*for (Obstacle obstacle : obstacles) {
-            obstacle.accept(moveVisitor); //
-        }*/
-        obstacles.stream().peek(obstacle -> Gdx.app.debug("Obstacle", obstacle.toString())).forEach(obstacle -> obstacle.accept(moveVisitor));
-    }
-
-    /**
-     * This method iterates over all boats in the lane and call their move method.
-     * @param delta time elapsed since last frame
-     */
-    public void moveBoats(float delta) {
-        /*for (Boat boat : boats) {
-            //This movement is handled by the movements strategies
-            boat.move(delta);
-        }*/
-        boats.forEach(boat -> boat.move(delta));
     }
 
     /**
@@ -237,15 +186,6 @@ public class Lane {
      */
     public Set<GameObject> getTotallyOutBounds() {
         Set<GameObject> outBounds = new HashSet<>();
-        /*for(Obstacle obstacle : obstacles) {
-            totallyOutBounds(obstacle, outBounds);
-        }
-        for(PowerUp powerUp : powerUps) {
-            totallyOutBounds(powerUp, outBounds);
-        }
-        for(Boat boat : boats) {
-            totallyOutBounds(boat, outBounds);
-        }*/
         obstacles   .forEach(obstacle   -> totallyOutBounds(obstacle, outBounds));
         powerUps    .forEach(powerUp    -> totallyOutBounds(powerUp, outBounds));
         boats       .forEach(boat       -> totallyOutBounds(boat, outBounds));

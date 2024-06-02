@@ -6,6 +6,8 @@ package com.mygdx.game.util;
  */
 public class Config {
 
+    //The frames per second at which the game will run.
+    public static final int FPS = 30; //NFR002
     /**
      * The WIDTH constant is set to the current width of the application window at the time of class loading.
      */

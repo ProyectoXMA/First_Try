@@ -39,7 +39,7 @@ public class LegController implements Screen {
         // Load the drop sound effect and the rain background "music"
         dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
         rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-        rainMusic.setLooping(true);
+        //rainMusic.setLooping(true);
 
         // Create a Rectangle to logically represent the bucket
         bucket = new Rectangle();

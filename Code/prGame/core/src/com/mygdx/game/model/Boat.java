@@ -12,8 +12,9 @@ import com.mygdx.game.util.Config;
  * It delegates the movement (as all Movable objects) to a MovementStrategy.
  */
 public class Boat extends GameObject implements Movable{
-    public static final int WIDTH = Config.getWidth()/135;
-    public static final int HEIGHT = Config.getHeight()/120;
+    public static final int WIDTH = Config.getWidth()/40;
+    public static final int HEIGHT = Config.getHeight()/20;
+
 
     private MovementStrategy movementStrategy;
 
@@ -63,7 +64,8 @@ public class Boat extends GameObject implements Movable{
      * @param y the y coordinate of the boat
      * @return a new boat of the given type at the given position (x,y)
      */
-    public static Boat createBoat(boolean playerRole, BoatType type, float x, float y) {
+
+    public static Boat createBoat(BoatType type, float x, float y) {
         Boat newBoat;
         switch (type) {
             case FAST:
@@ -78,8 +80,6 @@ public class Boat extends GameObject implements Movable{
             default:
                 throw new IllegalArgumentException("Not a valid boat type");
         }
-        MovementStrategy moveStrategy = playerRole? new PlayerControlledStrategy() : new AIControlledStrategy();
-        newBoat.setMovementStrategy(moveStrategy);
         return newBoat;
     }
     /**
@@ -87,8 +87,9 @@ public class Boat extends GameObject implements Movable{
      * @param type the type of boat to create on which the stats depend
      * @return a new boat of the given type with default position (0,0)
      */
-    public static Boat createBoat(boolean playerRole, BoatType type) {
-        return createBoat(true, type, 0, 0);
+
+    public static Boat createBoat(BoatType type) {
+        return createBoat(type, 0, 0);
     }
 
     //Getters for the atributes of the boat

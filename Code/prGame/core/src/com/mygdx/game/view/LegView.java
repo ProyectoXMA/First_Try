@@ -2,10 +2,8 @@ package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -81,14 +79,14 @@ public class LegView {
         game.batch.setProjectionMatrix(camera.combined);
         // Begin a new batch and draw the bucket and all drops
         game.batch.begin();
-        //drawBackground();
+        drawBackground();
         drawLeg();
         drawUI();
         game.batch.end();
     }
 
     private void drawBackground() {
-        game.batch.draw(backgroundImage, 0, 0, Config.getWidth(), Config.getHeight());
+        game.batch.draw(backgroundImage, 0, 0, Config.getWidth(), Config.getHeight()*3);
     }
     private void drawLeg() {
         followPlayer();
@@ -100,7 +98,8 @@ public class LegView {
         float playerBoatHeight = leg.getLanes().get(Leg.PLAYER_LANE).getBoat().getY();
         float horizontalCenter = (float) Config.getWidth() / 2;
         float verticalCenter = (float) Config.getHeight() / 2;
-        camera.position.set(horizontalCenter, Math.max(playerBoatHeight, verticalCenter), 0);
+
+        camera.position.set(horizontalCenter, Math.max(playerBoatHeight, verticalCenter-100), 0);
         Gdx.app.debug("LegView", "Camara position: " + camera.position.x + " " + camera.position.y);
     }
     private void drawLane(Lane lane) {

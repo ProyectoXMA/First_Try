@@ -2,14 +2,10 @@ package com.mygdx.game.model.obstacles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.model.CollidableVisitor;
 import com.mygdx.game.model.movement.Movable;
 import com.mygdx.game.model.movement.MovementStrategy;
+import com.mygdx.game.model.movement.RandomMoveStrategy;
 
-import static com.badlogic.gdx.math.MathUtils.random;
-
-
-    //DONDE SE INICIALIZA EL MOVEMENT STRATEGY DEL PATO?????
 public class Duck extends Obstacle implements Movable {
     private static final int DAMAGE = 40;
     private static final int WIDTH = 30;
@@ -23,6 +19,7 @@ public class Duck extends Obstacle implements Movable {
     public Duck(int x, int y){
         super(DAMAGE, new Rectangle(x, y, WIDTH, HEIGHT));
         this.speed = SPEED;
+        this.setMovementStrategy(new RandomMoveStrategy());
     }
     public Duck(){
         this(0,0);

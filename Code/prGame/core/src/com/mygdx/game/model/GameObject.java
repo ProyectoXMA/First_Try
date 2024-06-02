@@ -29,6 +29,10 @@ public abstract class GameObject implements Collidable{
     public void setY(float y) {
         this.hitbox.y = y;
     }
+    public void setPosition(float x, float y){
+        setX(x);
+        setY(y);
+    }
     public boolean getWasHit() {
         return wasHit;
     }

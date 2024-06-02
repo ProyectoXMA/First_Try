@@ -13,18 +13,34 @@ import com.mygdx.game.model.GameObject;
 public abstract class Obstacle extends GameObject implements Collidable {
     private int damage;
 
-
     /**
      * Constructs an Obstacle with the specified damage and hitbox.
      * @param damage the damage value of the obstacle
      * @param hitbox the hitbox of the obstacle
      */
-    public Obstacle(int damage, Rectangle hitbox){
+    protected Obstacle(int damage, Rectangle hitbox){
         super(hitbox);
         this.damage = damage;
 
     }
 
+    /**
+     * Factory method to create an obstacle given its type.
+     * @param type the type of obstacle to create
+     * @return the created obstacle
+     */
+    public static Obstacle createObstacle(ObstacleType type) {
+        switch (type) {
+            case LOG:
+                return new Log();
+            case DUCK:
+                return new Duck();
+            case STONE:
+                return new Stone();
+            default:
+                throw new IllegalArgumentException("Invalid obstacle type");
+        }
+    }
 
     public int getDamage(){
         return damage;
