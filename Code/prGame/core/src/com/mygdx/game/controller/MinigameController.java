@@ -4,6 +4,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.model.minigameLogic.MinigameLogic;
 import com.mygdx.game.view.LoseScreen;
 import com.mygdx.game.view.MinigameScreen;
+import com.mygdx.game.view.WinningScreen;
 
 public class MinigameController {
     
@@ -22,7 +23,7 @@ public class MinigameController {
         int res = minigameLogic.checkGameState();
         if (res == 1) {
             this.MinigameScreen.dispose();
-            game.setScreen(new LegController(game));
+            game.setScreen(new WinningScreen(game));
         } else if (res == 3) {
             this.MinigameScreen.dispose();
             game.setScreen(new LoseScreen(game));
