@@ -207,7 +207,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		focused: button_sel
 	}
 	small: {
-		font: font
+		font: font-big
 		up: button-small
 		down: button-small-down
 	}
