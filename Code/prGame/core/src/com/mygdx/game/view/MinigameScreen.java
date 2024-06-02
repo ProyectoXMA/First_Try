@@ -1,6 +1,7 @@
 package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
@@ -60,7 +61,7 @@ public class MinigameScreen implements Screen {
         epicMusic = Gdx.audio.newMusic(Gdx.files.internal("countdownMusic.mp3"));
         epicMusic.setLooping(true);
         if(!Config.muted) epicMusic.setVolume((float)0.1);
-        
+        else epicMusic.setVolume(0);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Config.getWidth(), Config.getHeight());
 
@@ -167,12 +168,11 @@ public class MinigameScreen implements Screen {
             String timeLeft = "Remaining attempts: " + (3-minigameLogic.getFailCounter());
             glyphLayout.setText(font, timeLeft);
             game.font.draw(game.batch,timeLeft,(Config.getWidth()/2)-80,(Config.getHeight()/17));
-    
-        }if(Gdx.input.isButtonPressed(Keys.Q)){
-           pause();
-           game.setScreen(new PauseController(game,new PauseViewScreen(game)));
         }
-        
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            epicMusic.stop();
+            game.setScreen(new PauseViewScreen(game));
+        }
         game.batch.end();
     }
 

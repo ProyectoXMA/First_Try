@@ -17,32 +17,31 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.util.Config;
 
-public class LoseScreen implements Screen {
+public class WinningScreen implements Screen {
     // attributes for the screen
     private Stage stage;
     private Viewport viewport;
-    private Music losingMusic;
+    private Music winningMusic;
     OrthographicCamera camera;
 // attributes for the screen
     private final MyGdxGame game;
     private Texture backgroundImage;
-    public LoseScreen(final MyGdxGame game){
+    public WinningScreen(final MyGdxGame game){
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false,Config.getWidth(),Config.getHeight());
-        backgroundImage = new Texture(Gdx.files.internal("losingScreen.png"));
-        losingMusic = Gdx.audio.newMusic(Gdx.files.internal("LosingSound.mp3"));
-        losingMusic.setLooping(true);
-        if(!Config.muted) losingMusic.setVolume((float)0.1);
-        else losingMusic.setVolume((float)0);
-
+        backgroundImage = new Texture(Gdx.files.internal("winningScreen.png"));
+        winningMusic = Gdx.audio.newMusic(Gdx.files.internal("winningTheme.mp3"));
+        winningMusic.setLooping(true);
+        if(!Config.muted) winningMusic.setVolume((float)0.1);
+        else winningMusic.setVolume((float)0);
     }
 
     @Override
     public void show() {
         viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
-        losingMusic.play();
+        winningMusic.play();
     }
 
     @Override
@@ -53,7 +52,7 @@ public class LoseScreen implements Screen {
         stage.act();
         stage.draw();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-            losingMusic.stop();
+            winningMusic.stop();
             game.setScreen(new MenuController(game));
         }
         game.batch.begin();

@@ -35,9 +35,9 @@ public class MinigameLogic {
         failCounter = 0;
         typedWord = "";
         timeLimit = 5000;
-        if(!Config.muted)incorrectSound = Gdx.audio.newSound(Gdx.files.internal("incorrectSound.mp3"));
-        if(!Config.muted)savedSound = Gdx.audio.newSound(Gdx.files.internal("respawnSound.mp3"));
-        if(!Config.muted)typeSound = Gdx.audio.newSound(Gdx.files.internal("typeSound.mp3"));
+        incorrectSound = Gdx.audio.newSound(Gdx.files.internal("incorrectSound.mp3"));
+        savedSound = Gdx.audio.newSound(Gdx.files.internal("respawnSound.mp3"));
+        typeSound = Gdx.audio.newSound(Gdx.files.internal("typeSound.mp3"));
     }
 
     public double getRemainingTime() {
@@ -120,7 +120,7 @@ public class MinigameLogic {
       * Method to verify typed words read from Player input
       */
       public void checkPartialWord(){
-        typeSound.play();
+        if(!Config.muted)typeSound.play();
 
         // First we declare what we expect to be typed in each interation
         String expectedSubstring = getCurrentWord();
@@ -141,7 +141,7 @@ public class MinigameLogic {
                     successCounter++;
                 }
             } else {
-                incorrectSound.play();
+                if(!Config.muted)incorrectSound.play();
                 currentCharIndex = 0; // On incorrect typing, reset word index to the firt character
                 failCounter++;
                 checkGameState();
@@ -161,7 +161,7 @@ public class MinigameLogic {
             //gameState.getMyBoat().adjustHealth(gameState.getBaseHealth());
             typeSound.dispose();
             incorrectSound.dispose();
-            savedSound.play();
+            if(!Config.muted)savedSound.play();
             savedSound.dispose();
             state = successCounter;
         }else if(failCounter == 3){

@@ -65,15 +65,12 @@ public class PauseController implements Screen{
         menuPause = new Table();
         menuPause.setVisible(true);
         menuPause.setFillParent(true);
-        menuPause.setDebug(false);
+        menuPause.setDebug(true);
         stage.addActor(menuPause);
-
         //create buttons
         TextButton play = new TextButton("RESUME", skin);
         play.getLabel().setFontScale(textSize);
         
-        TextButton settings = new TextButton("SETTINGS", skin);
-        settings.getLabel().setFontScale(textSize);
         
         TextButton quit = new TextButton("QUIT", skin);
         quit.getLabel().setFontScale(textSize);
@@ -84,34 +81,28 @@ public class PauseController implements Screen{
 
         // add buttons to table
         menuPause.add(gameTitle).size((float) (BUTTON_WIDTH*3.5), BUTTON_HEIGHT).colspan(2).pad(0,0,100,0);
-        menuPause.row().pad(0,0,20,0);
-        menuPause.add(play).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,0,0).align(Align.right);
-        menuPause.add(settings).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,0,0).align(Align.left);
-        menuPause.row().pad(0,0,5,0);
-        menuPause.add(quit).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).colspan(2);
+        menuPause.row().pad(0,0,0,0);
+        menuPause.add(play).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,0,0).align(Align.center);
+        menuPause.row().pad(0,0,0,0);
+        menuPause.add(quit).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,80,0).align(Align.center);
+        menuPause.row().pad(0,0,0,0);
+        menuPause.draw(game.batch, BUTTON_HEIGHT);
         // create button mouse listeners
         quit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
+                game.setScreen(new MenuController(game));
             }
         });
 
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                menuPause.setVisible(false);
-                game.resume();
+                pauseScreen.dispose();
+                game.setScreen(new MinigameScreen(game, null));
             }
         });
 
-        settings.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                dispose();
-                game.setScreen(new SettingController(game));
-            }
-        });
     }
 
     /**

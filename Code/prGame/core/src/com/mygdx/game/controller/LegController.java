@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleShader.Config;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -14,7 +15,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.model.Leg;
 import com.mygdx.game.view.LegView;
-
 public class LegController implements Screen {
     final MyGdxGame game;
     LegView view;
@@ -93,7 +93,6 @@ public class LegController implements Screen {
                 iter.remove();
             if (raindrop.overlaps(bucket)) {
                 dropsGathered++;
-                dropSound.play();
                 iter.remove();
             }
         }
@@ -133,7 +132,6 @@ public class LegController implements Screen {
     public void show() {
         // Start the playback of the background music when the screen is shown
         Gdx.input.setInputProcessor(this.inputManager);
-        rainMusic.play();
     }
     @Override
     public void dispose() {
