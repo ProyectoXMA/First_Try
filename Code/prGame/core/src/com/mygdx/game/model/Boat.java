@@ -119,7 +119,9 @@ public class Boat extends GameObject implements Movable{
     public void setAcceleration(int acceleration) {
         this.currenAcceleration = acceleration; //set the current acceleration
     }
-
+    public int getBaseHealth(){
+        return baseHealth;
+    }
     //Check that the boat is invencible just to make sure
     //that when colliding with an obstacle the boat is not decreesing its health
     public boolean isInvencible(){
