@@ -20,9 +20,9 @@ public class CollisionHandler{
     public void checkObstacleCollision(Obstacle obstacle) {
         Gdx.app.debug("CollisionHandler", "Checking obstacle collision");
         if (!obstacle.getWasHit()) { //In case the obstacle wasn´t hit yet, we look for the collision
-            if(boat.getHitbox().overlaps(obstacle.getHitbox())) //In case of collision
-            {
+            if(boat.getHitbox().overlaps(obstacle.getHitbox())){ //In case of collision
                 Gdx.app.log("CollisionHandler", "Obstacle collision detected! :" + obstacle.getClass() + " and " + this.boat.getType());
+                boat.adjustSpeed(-obstacle.getSpeedModifier()); //We apply the effect of the obstacle to the boat
                 boat.adjustHealth(-obstacle.getDamage()); //Once we apply the effect to the boat and obstacles it is applied to all the lanes, as the object is passed by reference
                 obstacle.setWasHit(true); //We activate the flag to eliminate it, and to ensure no other lane applies the effects
             }

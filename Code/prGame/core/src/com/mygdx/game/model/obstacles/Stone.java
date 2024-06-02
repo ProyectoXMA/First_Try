@@ -8,12 +8,13 @@ import com.mygdx.game.util.Config;
 
 public class Stone extends Obstacle {
     private static final int DAMAGE = 100;
+    private static final int SPEED_MODIFIER = 150;
     private static final float WIDTH = 1.0f*Config.StoneRelativeSize;
     private static final float HEIGHT = 0.66f*Config.StoneRelativeSize;
     //Attributes for the Stone obstacle
     //Constructor for the Stone obstacle
     public Stone(int x, int y) {
-        super(DAMAGE, new Rectangle(x, y, WIDTH, HEIGHT));
+        super(DAMAGE, SPEED_MODIFIER, new Rectangle(x, y, WIDTH, HEIGHT));
     }
     public Stone(){
         this(0,0);

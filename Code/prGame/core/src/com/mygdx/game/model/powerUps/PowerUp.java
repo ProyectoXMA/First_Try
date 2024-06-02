@@ -15,8 +15,6 @@ import com.mygdx.game.util.Config;
  * It accepts a visitor of type CollidableVisitor to detect and handle collisions.
  */
 public abstract class PowerUp extends GameObject implements Collidable {
-    private static final float WIDTH = 30 * Config.PowerUpRelativeSize;
-    private static final float HEIGHT = 30 * Config.PowerUpRelativeSize;
     //A powerUp has a powerUpType which is an enum that represents the type of powerUp we are colliding
     //The constructor for the powerUp class
     protected PowerUp(Rectangle hitbox){
@@ -26,11 +24,11 @@ public abstract class PowerUp extends GameObject implements Collidable {
     public static PowerUp createPowerUp(PowerUpType powerUpType, float x, float y){
         switch (powerUpType){
             case SPEED:
-                return new SpeedBoost(new Rectangle(x, y, WIDTH, HEIGHT));
+                return new SpeedBoost(new Rectangle(x, y, 0.6f * Config.PowerUpRelativeSize, 1.0f*Config.PowerUpRelativeSize));
             case INVINCIBILITY:
-                return new Invincibility(new Rectangle(x, y, WIDTH, HEIGHT));
+                return new Invincibility(new Rectangle(x, y,1.0f*Config.PowerUpRelativeSize, 1.0f*Config.PowerUpRelativeSize));
             case HEALTH:
-                return new HealthBoost(new Rectangle(x, y, WIDTH, HEIGHT));
+                return new HealthBoost(new Rectangle(x, y,1.0f*Config.PowerUpRelativeSize, 1.0f*Config.PowerUpRelativeSize));
             default:
                 throw new IllegalArgumentException("Invalid powerUpType");
         }
