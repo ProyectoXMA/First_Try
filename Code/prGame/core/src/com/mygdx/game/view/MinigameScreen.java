@@ -148,8 +148,8 @@ public class MinigameScreen implements Screen {
         if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
             String timer = String.format("[%.2f]", minigameLogic.getRemainingTime());
             glyphLayout.setText(font, timer);           
-            game.batch.draw(timerIcon, Config.getWidth()-70, Config.getHeight()-25, timerWidth, timerHeight);
-            game.font.draw(game.batch,timer, Config.getWidth()-40, Config.getHeight()-10);
+            game.batch.draw(timerIcon, Config.getWidth()-70, Config.getHeight()-45, timerWidth, timerHeight);
+            game.font.draw(game.batch,timer, Config.getWidth()-40, Config.getHeight()-30);
         }else{
             String timer = String.format("[%.2f]", minigameLogic.getRemainingTime());
             glyphLayout.setText(font, timer);           
