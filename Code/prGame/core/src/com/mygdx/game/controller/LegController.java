@@ -13,8 +13,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.model.Leg;
+import com.mygdx.game.model.minigameLogic.MinigameLogic;
 import com.mygdx.game.util.Config;
 import com.mygdx.game.view.LegView;
+import com.mygdx.game.view.LoseScreen;
 import com.mygdx.game.view.PauseViewScreen;
 import com.mygdx.game.view.minigameTutorial;
 
@@ -117,7 +119,8 @@ public class LegController implements Screen {
         if(leg.getLanes().get(1).getBoat().dead()){
             raceMusic.stop();
             raceMusic.dispose();
-            leg.getLanes().get(1).getBoat().setHealth(leg.getLanes().get(1).getBoat().getBaseHealth()/2);
+            leg.getLanes().get(1).getBoat().setHealth(leg.getLanes().get(1).getBoat().getBaseHealth());
+            if(leg.getLanes().get(1).getBoat().hasReturnToLifeExceeded()){game.setScreen(new LoseScreen(game));}
             game.setScreen(new minigameTutorial(game));
         }
         leg.update(delta);

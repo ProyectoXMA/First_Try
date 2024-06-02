@@ -26,7 +26,7 @@ public class Boat extends GameObject implements Movable{
     private int currentResistance;
     private float currentSpeed;
     private int currenAcceleration;
-
+    private boolean returnToLifeExceeded;
     private boolean isInvencible;
 
     /**
@@ -51,6 +51,7 @@ public class Boat extends GameObject implements Movable{
         currentResistance = baseResistance;
         currentSpeed = 0;
         isInvencible = false; //not invencible at the beginning, just when it is hit by an invencible power up
+        returnToLifeExceeded = false;
     }
 
     /**
@@ -121,6 +122,14 @@ public class Boat extends GameObject implements Movable{
     }
     public int getBaseHealth(){
         return baseHealth;
+    }
+
+    public boolean isReturnToLifeExceeded() {
+        return returnToLifeExceeded;
+    }
+    public void setReturnToLifeExceeded(boolean returnToLifeExceeded) {this.returnToLifeExceeded = returnToLifeExceeded;}
+    public boolean hasReturnToLifeExceeded() {
+        return returnToLifeExceeded;
     }
     //Check that the boat is invencible just to make sure
     //that when colliding with an obstacle the boat is not decreesing its health

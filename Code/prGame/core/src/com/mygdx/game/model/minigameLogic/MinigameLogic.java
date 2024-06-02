@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.mygdx.game.GameState;
+import com.mygdx.game.model.Boat;
 import com.mygdx.game.util.Config;
 
 public class MinigameLogic {
@@ -26,11 +27,9 @@ public class MinigameLogic {
     private Sound incorrectSound;
     private Sound savedSound;
     private Sound typeSound;
-
     public MinigameLogic(GameState gameState) {
         this.gameState = gameState;
         this.words = Arrays.asList("Dragon", "Boat", "Racing", "Duck", "Ancient", "China","River","Log","Stone");
-        
         successCounter = 0;
         failCounter = 0;
         typedWord = "";
@@ -63,6 +62,8 @@ public class MinigameLogic {
     public GameState getGameState() {
         return gameState;
     }
+
+    public int getSuccessCounter() {return successCounter;}
 
     /**
      * @return word  that will currently be displayed up to currentCharIndex
