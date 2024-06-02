@@ -6,6 +6,7 @@ import com.mygdx.game.model.Boat;
 import com.mygdx.game.model.Collidable;
 import com.mygdx.game.model.CollidableVisitor;
 import com.mygdx.game.model.GameObject;
+import com.mygdx.game.util.Config;
 
 /**
  * The PowerUp class represents a powerUp in the game.
@@ -14,8 +15,8 @@ import com.mygdx.game.model.GameObject;
  * It accepts a visitor of type CollidableVisitor to detect and handle collisions.
  */
 public abstract class PowerUp extends GameObject implements Collidable {
-    private static final int WIDTH = 30;
-    private static final int HEIGHT = 30;
+    private static final float WIDTH = 30 * Config.PowerUpRelativeSize;
+    private static final float HEIGHT = 30 * Config.PowerUpRelativeSize;
     //A powerUp has a powerUpType which is an enum that represents the type of powerUp we are colliding
     //The constructor for the powerUp class
     protected PowerUp(Rectangle hitbox){

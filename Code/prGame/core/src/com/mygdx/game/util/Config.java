@@ -13,9 +13,9 @@ public class Config {
 
     public static boolean muted = false;
     public static float BoatRelativeSize = 0.025f * Config.WIDTH;
-    public static float StoneRelativeSize = 0.03f * Config.WIDTH;
-    public static float LogRelativeSize = 0.015f * Config.WIDTH;
-    public static float DuckRelativeSize = 0.02f * Config.WIDTH;
+    public static float StoneRelativeSize = 0.025f * Config.WIDTH;
+    public static float LogRelativeSize = 0.03f * Config.WIDTH;
+    public static float DuckRelativeSize = 0.01f * Config.WIDTH;
     public static float PowerUpRelativeSize = 1.5f * Config.WIDTH;
 
     public static int getWidth() {

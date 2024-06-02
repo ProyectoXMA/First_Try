@@ -3,6 +3,7 @@ package com.mygdx.game.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.game.util.Config;
 import com.mygdx.game.util.KeyBindings;
 
 import javax.swing.event.DocumentEvent;
@@ -16,7 +17,7 @@ public class InputManager implements InputProcessor {
     private final KeyBindings keyBindings;
     public InputManager(){
         this.listeners = new HashSet<>();
-        this.keyBindings = new KeyBindings();
+        this.keyBindings = Config.keyBinds;
     }
 
     /**
