@@ -61,16 +61,16 @@ public class PauseViewScreen implements Screen{
 
     @Override
     public void resume() {
-        throw new UnsupportedOperationException("Unimplemented method 'resume'");
+        
     }
 
     @Override
     public void hide() {
-        stage.dispose();
     }
 
     @Override
     public void dispose() {
-        throw new UnsupportedOperationException("Unimplemented method 'dispose'");
+        stage.dispose();
+        pause.dispose();
     }
 }
