@@ -162,7 +162,7 @@ public class MenuController implements Screen{
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new MinigameScreen(game, null));
+                game.setScreen(new LegController(game));
             }
         });
 

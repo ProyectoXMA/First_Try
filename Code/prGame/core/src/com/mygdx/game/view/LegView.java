@@ -29,13 +29,14 @@ public class LegView {
     OrthographicCamera camera;
     private static final Texture boatResistanceImage = new Texture("boats/resistanceBoat.png");
     private static final Texture boatSpeedImage = new Texture("boats/speedBoat.png");
+    private static final Texture boatClassicImage = new Texture("boats/classicBoat.png");
     private static final Texture duckImage = new Texture("obstacles/duck.png");
     private static final Texture logImage = new Texture("obstacles/logHorizontal.png");
     private static final Texture stoneImage = new Texture("obstacles/stone.png");
     private static final Texture invincibilityImage = new Texture("powerUps/shield.png");
     private static final Texture healthBoostImage = new Texture("powerUps/health.png");
     private static final Texture speedBoostImage = new Texture("powerUps/speed.png");
-    private static final Texture backgroundImage = new Texture("dragon.jpeg");
+    private static final Texture backgroundImage = new Texture("background.png");
     private static final Texture laneLimitImage = stoneImage;
 
     public LegView(final MyGdxGame game, Leg leg) {
@@ -147,7 +148,7 @@ public class LegView {
                     game.batch.draw(boatResistanceImage, boat.getX(), boat.getY());
                     break;
                 case CLASSIC:
-                    game.batch.draw(duckImage, boat.getX(), boat.getY());
+                    game.batch.draw(boatClassicImage, boat.getX(), boat.getY());
                     break;
                 default:
                     throw new IllegalArgumentException("Not a valid boat type" + boat.getType());
