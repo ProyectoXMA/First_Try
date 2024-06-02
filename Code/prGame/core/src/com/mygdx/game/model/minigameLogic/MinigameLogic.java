@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.mygdx.game.GameState;
+import com.mygdx.game.util.Config;
 
 public class MinigameLogic {
 
@@ -34,9 +35,9 @@ public class MinigameLogic {
         failCounter = 0;
         typedWord = "";
         timeLimit = 5000;
-        incorrectSound = Gdx.audio.newSound(Gdx.files.internal("incorrectSound.mp3"));
-        savedSound = Gdx.audio.newSound(Gdx.files.internal("respawnSound.mp3"));
-        typeSound = Gdx.audio.newSound(Gdx.files.internal("typeSound.mp3"));
+        if(!Config.muted)incorrectSound = Gdx.audio.newSound(Gdx.files.internal("incorrectSound.mp3"));
+        if(!Config.muted)savedSound = Gdx.audio.newSound(Gdx.files.internal("respawnSound.mp3"));
+        if(!Config.muted)typeSound = Gdx.audio.newSound(Gdx.files.internal("typeSound.mp3"));
     }
 
     public double getRemainingTime() {
