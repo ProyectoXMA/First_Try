@@ -18,14 +18,14 @@ public class SpeedBoostTest {
     public void testApplySpeedBoost() {
         Rectangle boatHitbox = new Rectangle(0, 0, 50, 50);
         Boat boat = Boat.createBoat(BoatType.FAST, boatHitbox);
-        boat.setSpeed(100);
-        int initialSpeed = boat.getSpeed();
+        boat.setSpeed(100); //Set the FAST boat speed to 100
+        int initialSpeed = boat.getSpeed(); //initialSpeed = 100
 
         Rectangle powerUpHitbox = new Rectangle(10, 10, 10, 10);
         SpeedBoost speedBoost = new SpeedBoost(powerUpHitbox);
 
         speedBoost.applyPowerUp(boat);
-        assertEquals(initialSpeed + 100, boat.getSpeed());
+        assertEquals(initialSpeed + 100, boat.getSpeed()); //+100 speed after grabbing the powerUp
     }
 }
 
