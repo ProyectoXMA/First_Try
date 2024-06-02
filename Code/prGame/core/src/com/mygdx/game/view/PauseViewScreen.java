@@ -3,7 +3,7 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,22 +11,24 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.controller.MenuController;
+import com.mygdx.game.controller.PauseController;
 import com.mygdx.game.util.Config;
 
-public class minigameTutorial implements Screen{
-     // attributes for the screen
+public class PauseViewScreen implements Screen{
+    // attributes for the screen
     private Stage stage;
     private Viewport viewport;
     OrthographicCamera camera;
-// attributes for the screen
+    //attributes for the screen
     private final MyGdxGame game;
     private Texture backgroundImage;
-    public minigameTutorial(final MyGdxGame game){
+    private PauseController pause;
+    public PauseViewScreen(final MyGdxGame game){
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false,Config.getWidth(),Config.getHeight());
-        backgroundImage = new Texture(Gdx.files.internal("firstPhase.png"));
+        backgroundImage = new Texture(Gdx.files.internal("menu_background.jpeg"));
+        pause = new PauseController(game,this);
     }
 
     @Override
@@ -42,11 +44,9 @@ public class minigameTutorial implements Screen{
         game.batch.setProjectionMatrix(camera.combined);
         stage.act();
         stage.draw();
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-            game.setScreen(new minigameTutorial2(game));
-        }
         game.batch.begin();
         game.batch.draw(backgroundImage,-10,0,Config.getWidth()+10,Config.getHeight());
+        pause.show();
         game.batch.end();
     }
     @Override
@@ -56,6 +56,7 @@ public class minigameTutorial implements Screen{
 
     @Override
     public void pause() {
+        throw new UnsupportedOperationException("Unimplemented method 'pause'");
     }
 
     @Override
@@ -73,4 +74,3 @@ public class minigameTutorial implements Screen{
         throw new UnsupportedOperationException("Unimplemented method 'dispose'");
     }
 }
-
