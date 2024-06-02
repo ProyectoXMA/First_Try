@@ -59,7 +59,7 @@ public class MinigameScreen implements Screen {
 
         epicMusic = Gdx.audio.newMusic(Gdx.files.internal("countdownMusic.mp3"));
         epicMusic.setLooping(true);
-        epicMusic.setVolume((float)0.1);
+        if(!Config.muted) epicMusic.setVolume((float)0.1);
         
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Config.getWidth(), Config.getHeight());
