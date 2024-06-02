@@ -131,7 +131,11 @@ public class MenuController implements Screen{
         stage.addActor(tutorialTable);
 
         //tutorial text
-        Label tutorialLabel = new Label("This is the Tutorial", skin);
+        Label tutorialLabel = new Label("You will handle a boat\n" +
+                "Avoid obstacles and collect PowerUps\n" +
+                "The first time you die you will have an \n" +
+                "AFTERLIFE mission to return to life once more\n" +
+                "DONT WASTE IT!! GOOD LUCK!!", skin);
         tutorialLabel.setStyle(skin.get("creditsLabel", Label.LabelStyle.class));
         tutorialLabel.setAlignment(Align.center);
         tutorialLabel.setFontScale(textSize);

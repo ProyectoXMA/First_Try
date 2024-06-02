@@ -15,6 +15,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.model.Leg;
 import com.mygdx.game.view.LegView;
+import com.mygdx.game.view.PauseViewScreen;
+
 public class LegController implements Screen {
     final MyGdxGame game;
     LegView view;
@@ -101,7 +103,7 @@ public class LegController implements Screen {
     @Override
     public void render(float delta) {//This render is updating the model, by means of update, and the view.
         if(Gdx.input.isKeyJustPressed(Keys.ESCAPE))
-            Gdx.app.exit();
+            game.setScreen(new PauseViewScreen(game));
         //update(delta);
         //view.render(bucket, raindrops, dropsGathered);
         leg.update(delta);

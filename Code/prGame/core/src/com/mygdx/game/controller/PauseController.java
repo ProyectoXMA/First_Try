@@ -99,7 +99,7 @@ public class PauseController implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 pauseScreen.dispose();
-                game.setScreen(new MinigameScreen(game, null));
+                game.setScreen(new LegController(game));
             }
         });
 
