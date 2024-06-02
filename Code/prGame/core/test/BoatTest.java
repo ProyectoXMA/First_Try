@@ -10,7 +10,6 @@ public class BoatTest {
     private Boat fastBoat;
     private Boat strongBoat;
     private Boat classicBoat;
-    private Boat boat;
 
     @BeforeEach
     public void setUp() {
