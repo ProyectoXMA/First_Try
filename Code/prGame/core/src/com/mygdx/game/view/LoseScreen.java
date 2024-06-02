@@ -30,7 +30,7 @@ public class LoseScreen implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false,Config.getWidth(),Config.getHeight());
-        backgroundImage = new Texture(Gdx.files.internal("GameOverScreen.png"));
+        backgroundImage = new Texture(Gdx.files.internal("losingScreen.png"));
         losingMusic = Gdx.audio.newMusic(Gdx.files.internal("LosingSound.mp3"));
         losingMusic.setLooping(true);
     }
