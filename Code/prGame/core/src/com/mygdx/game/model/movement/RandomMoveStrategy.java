@@ -1,5 +1,6 @@
 package com.mygdx.game.model.movement;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.model.Lane;
 import com.mygdx.game.model.Leg;
@@ -31,7 +32,7 @@ public class RandomMoveStrategy implements MovementStrategy {
         float movableRightLimit = movable.getHitbox().x + movable.getHitbox().width;
         float movableBottomLimit = movable.getHitbox().y;
         float movableTopLimit = movable.getHitbox().y + movable.getHitbox().height;
-        int speed = movable.getSpeed();
+        float speed = movable.getSpeed();
 
         // Update movement timer
         movementTimer += delta;
@@ -53,7 +54,9 @@ public class RandomMoveStrategy implements MovementStrategy {
         if (isMoving) {
             // Calculate movement deltas with speed factor
             float dx = MathUtils.cos(angle) * speed * delta * SPEED_FACTOR;
+            Gdx.app.log("RandomMoveStrategy", "angle: " + angle + " speed: " + speed + " delta: " + delta + " SPEED_FACTOR: " + SPEED_FACTOR);
             float dy = MathUtils.sin(angle) * speed * delta * SPEED_FACTOR;
+            Gdx.app.log("RandomMoveStrategy", "dx: " + dx + ", dy: " + dy);
 
             // Check and adjust horizontal movement
             if (movableLeftLimit + dx <= leftLIMIT) {

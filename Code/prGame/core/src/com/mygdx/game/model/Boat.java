@@ -19,12 +19,12 @@ public class Boat extends GameObject implements Movable{
     private final int baseHealth;
     private final int baseResistance;
     private final int baseHandling;
-    private final int baseSpeed;
+    private final float baseSpeed;
     private final int baseAcceleration;
     //Current attributes for the boat, they can be changed by the power ups and collisions
     private int currentHealth;
     private int currentResistance;
-    private int currentSpeed;
+    private float currentSpeed;
     private int currenAcceleration;
 
     private boolean isInvencible;
@@ -38,7 +38,7 @@ public class Boat extends GameObject implements Movable{
      * @param speed vertical movement speed
      * @param acceleration acceleration of the boat
      */
-    private Boat (BoatType type, int health, int resistance, int handling, int speed, int acceleration, Rectangle hitBox){
+    private Boat (BoatType type, int health, int resistance, int handling, float speed, int acceleration, Rectangle hitBox){
         super(hitBox);
         this.type = type;
         this.baseHealth = health;
@@ -49,7 +49,7 @@ public class Boat extends GameObject implements Movable{
         currentHealth = baseHealth;
         currenAcceleration = baseAcceleration;
         currentResistance = baseResistance;
-        currentSpeed = baseSpeed;
+        currentSpeed = 0;
         isInvencible = false; //not invencible at the beginning, just when it is hit by an invencible power up
     }
 
@@ -65,13 +65,13 @@ public class Boat extends GameObject implements Movable{
         Boat newBoat;
         switch (type) {
             case FAST:
-                newBoat = new Boat(type,100, 10, 200, 70, 10, new Rectangle(x, y, 0.6f * Config.BoatRelativeSize, 1.0f * Config.BoatRelativeSize)); //Adjusted to percentage of the images
+                newBoat = new Boat(type,100, 10, 150, 100, 10, new Rectangle(x, y, 0.6f * Config.BoatRelativeSize, 1.0f * Config.BoatRelativeSize)); //Adjusted to percentage of the images
                 break;
             case STRONG:
-                newBoat = new Boat(type,200, 5, 70, 40, 5, new Rectangle(x, y, 0.5f * Config.BoatRelativeSize, 1.0f * Config.BoatRelativeSize)); //Adjusted to percentage of the images
+                newBoat = new Boat(type,200, 5, 70, 60, 10, new Rectangle(x, y, 0.5f * Config.BoatRelativeSize, 1.0f * Config.BoatRelativeSize)); //Adjusted to percentage of the images
                 break;
             case CLASSIC:
-                newBoat=  new Boat(type,150, 7, 100, 50, 7, new Rectangle(x, y, 0.9f * Config.BoatRelativeSize, 1.0f * Config.BoatRelativeSize)); //Adjusted to percentage of the images
+                newBoat=  new Boat(type,150, 7, 100, 80, 18, new Rectangle(x, y, 0.9f * Config.BoatRelativeSize, 1.0f * Config.BoatRelativeSize)); //Adjusted to percentage of the images
                 break;
             default:
                 throw new IllegalArgumentException("Not a valid boat type");
@@ -88,7 +88,7 @@ public class Boat extends GameObject implements Movable{
         return createBoat(type, 0, 0);
     }
 
-    //Getters for the atributes of the boat
+    //Getters for the attributes of the boat
     public BoatType getType(){
         return type; //get the type of the boat
     }
@@ -101,7 +101,7 @@ public class Boat extends GameObject implements Movable{
     public int getHandling(){
         return baseHandling; //get the current resistance
     }
-    public int getSpeed(){
+    public float getSpeed(){
         return currentSpeed; //get the current speed
     }
     public int getAcceleration(){
@@ -113,7 +113,7 @@ public class Boat extends GameObject implements Movable{
     public void setResistance(int resistance) {
         this.currentResistance = resistance; //set the current resistance
     }
-    public void setSpeed(int speed) {
+    public void setSpeed(float speed) {
         this.currentSpeed = speed;
     }//set the current speed
     public void setAcceleration(int acceleration) {
@@ -133,14 +133,16 @@ public class Boat extends GameObject implements Movable{
     //Modify(increment or decrement) the atributes of the boat
     public void adjustHealth(int healthDelta) {
         this.currentHealth += healthDelta; //increase the current health
+        currentHealth = Math.max(currentHealth, 0); //if the current health is less than 0, set the current health to 0
         currentHealth = Math.min(currentHealth, baseHealth); //if the current health is greater than the base health, set the current health to the base health
     }
     public void adjustResistance(int resistanceDelta) {
         this.currentResistance += resistanceDelta; //increase the current resistance
         currentResistance = Math.min(currentResistance, baseResistance); //if the current resistance is greater than the base resistance, set the current resistance to the base resistance
     }
-    public void adjustSpeed(int speedDelta) {
+    public void adjustSpeed(float speedDelta) {
         this.currentSpeed += speedDelta; //increase the current speed
+        currentSpeed = Math.max(currentSpeed, 0); //if the current speed is less than 0, set the current speed to 0
         currentSpeed = Math.min(currentSpeed, baseSpeed); //if the current speed is greater than the base speed, set the current speed to the base speed
     }
     public void adjustAcceleration(int accelerationDelta) {
@@ -173,6 +175,7 @@ public class Boat extends GameObject implements Movable{
     @Override
     public void move(float delta) {
         movementStrategy.move(this, delta);
+        adjustSpeed(getAcceleration()*delta);
     }
 
     @Override

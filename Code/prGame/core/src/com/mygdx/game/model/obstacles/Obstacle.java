@@ -12,16 +12,17 @@ import com.mygdx.game.model.GameObject;
  */
 public abstract class Obstacle extends GameObject implements Collidable {
     private int damage;
+    private int speedModifier;
 
     /**
      * Constructs an Obstacle with the specified damage and hitbox.
      * @param damage the damage value of the obstacle
      * @param hitbox the hitbox of the obstacle
      */
-    protected Obstacle(int damage, Rectangle hitbox){
+    protected Obstacle(int damage, int speedModifier, Rectangle hitbox){
         super(hitbox);
         this.damage = damage;
-
+        this.speedModifier = speedModifier;
     }
 
     /**
@@ -58,6 +59,11 @@ public abstract class Obstacle extends GameObject implements Collidable {
         Gdx.app.log("Obstacle", "Obstacle destroyed");
         //throw new UnsupportedOperationException("Unimplemented method 'destroy'");
     }
-
+    public void setSpeedModifier(int speedModifier) {
+        this.speedModifier = speedModifier;
+    }
+    public int getSpeedModifier() {
+        return speedModifier;
+    }
 }
 
