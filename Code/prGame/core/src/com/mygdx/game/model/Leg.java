@@ -24,7 +24,7 @@ import java.util.stream.Stream;
  * It should handle a pool of obstacles, power-ups and boats to share among all lanes, that store their specific objects.
  */
 public class Leg {
-    private static final int NUMBER_OF_LANES = 4;
+    public static final int NUMBER_OF_LANES = 4;
     public static final int PLAYER_LANE = 1;
 
     private int level;

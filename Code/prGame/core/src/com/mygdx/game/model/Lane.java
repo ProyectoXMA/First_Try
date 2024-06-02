@@ -28,7 +28,7 @@ public class Lane {
     private static final Random RND = new Random();
     public static final int WIDTH = Config.getWidth()/4;
     public static final int HEIGHT = Config.getHeight()*3;
-    public static final int NUMBER_OBSTACLES = 10;
+    public static final int NUMBER_OBSTACLES = 40;
     public static final int NUMBER_POWERUPS = 5;
 
     private final int laneId;
@@ -51,15 +51,15 @@ public class Lane {
         this.partiallyOutBounds = new HashSet<>();
     }
     public static Lane createLane(int laneId, Set<Obstacle> obstacles, Set<PowerUp> powerUps, Boat boat) {
-        obstacles.forEach(Lane::setRandomPosition);
-        powerUps.forEach(Lane::setRandomPosition);
+        obstacles.forEach(obstacle -> setRandomPosition(obstacle, laneId));
+        powerUps.forEach(powerUp -> setRandomPosition(powerUp, laneId));
         return new Lane(laneId, obstacles, powerUps, boat);
     }
     private void setCentralPosition(GameObject object){
         object.setPosition(lanePosition + (float) WIDTH / 2 - boat.getWidth() / 2, 0);
     }
-    private static void setRandomPosition(GameObject object){
-        object.setPosition(RND.nextInt(Lane.WIDTH), RND.nextInt(Lane.HEIGHT));
+    private static void setRandomPosition(GameObject object, int laneId){
+        object.setPosition(Lane.WIDTH * laneId + RND.nextInt(Lane.WIDTH), RND.nextInt(Lane.HEIGHT));
     }
 
     public int getLaneId() {

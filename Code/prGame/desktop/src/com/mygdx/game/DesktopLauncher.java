@@ -1,9 +1,7 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Graphics;
 import com.mygdx.game.util.Config;
 
 /**
@@ -11,9 +9,6 @@ import com.mygdx.game.util.Config;
 * the game.
 */
 public class DesktopLauncher {
-
-	//The frames per second at which the game will run.
-	public static final int FRAMES_PER_SECOND = 30; //NFR002
 	//Title of the game.
 	public static final String GAME_TITLE = "Dragon Boat Racing";
 
@@ -26,7 +21,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 
 		// Set the foreground frames per second for the application
-		config.setForegroundFPS(FRAMES_PER_SECOND);
+		config.setForegroundFPS(Config.FPS);
 
 		// Set the title of the application window
 		config.setTitle(GAME_TITLE);
