@@ -17,7 +17,6 @@ public class BoatTest {
         fastBoat = Boat.createBoat(BoatType.FAST, 0, 0);
         strongBoat = Boat.createBoat(BoatType.STRONG, 0, 0);
         classicBoat = Boat.createBoat(BoatType.CLASSIC, 0, 0);
-        boat = Boat.createBoat(BoatType.CLASSIC, 0, 0);
     }
 
     @Test
@@ -35,18 +34,20 @@ public class BoatTest {
     void testSetAttributes() {
         fastBoat.setHealth(200);
         fastBoat.setResistance(250);
+        fastBoat.setSpeed(150);
         assertEquals(200, fastBoat.getHealth());
         assertEquals(250, fastBoat.getResistance());
+        assertEquals(150,fastBoat.getSpeed());
     }
 
     @Test
     void testAdjustAttributes() {
-        boat.setHealth(100);
-        boat.setResistance(5);
-        boat.adjustHealth(50);
-        boat.adjustResistance(1);
-        assertEquals(150, boat.getHealth());
-        assertEquals(6, boat.getResistance());
+        classicBoat.setHealth(100);
+        classicBoat.setResistance(5);
+        classicBoat.adjustHealth(50);
+        classicBoat.adjustResistance(1);
+        assertEquals(150, classicBoat.getHealth());
+        assertEquals(6, classicBoat.getResistance());
     }
 
     @Test
@@ -82,5 +83,7 @@ public class BoatTest {
     @Test
     public void testDestroy() {
         assertThrows(UnsupportedOperationException.class, () -> fastBoat.destroy());
+        assertThrows(UnsupportedOperationException.class,  () -> strongBoat.destroy());
+        assertThrows(UnsupportedOperationException.class,  () -> classicBoat.destroy());
     }
 }
