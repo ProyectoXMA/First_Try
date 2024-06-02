@@ -22,9 +22,9 @@ public class Lane {
     public static final float WIDTH = Config.LaneRelativeWidth;
     public static final float HEIGHT = Config.LaneRelativeHeight;
     public static final int NUMBER_OBSTACLES = 40;
-    public static final int NUMBER_POWERUPS = 5;
-    private static final int HEALTH_PENALTY = 1;
-    private static final int SPEED_PENALTY = 1;
+    public static final int NUMBER_POWERUPS = 10;
+    private static final int HEALTH_PENALTY = 30;
+    private static final int SPEED_PENALTY = 30;
 
     private final int laneId;
     private final float lanePosition; //Horizontal position of the lane from the left side of the screen to the left side of the lane
@@ -157,13 +157,12 @@ public class Lane {
                 });
         boats.stream().filter(Boat::getWasHit).forEach(boat -> System.out.println("Removing boat: " + boat));//After the handler has checked all the boats, we remove the ones that were hit
         boats.removeIf(Boat::getWasHit);
-        penalizeInvaders();
     }
-    private void penalizeInvaders() {
+    public void penalizeInvaders(float delta) {
         for (Boat boat : boats) {
             if (!boat.equals(this.boat)) {
-                boat.adjustHealth(-HEALTH_PENALTY);
-                boat.adjustSpeed(-SPEED_PENALTY);
+                boat.adjustHealth((int) -(HEALTH_PENALTY * delta));
+                boat.adjustSpeed(-SPEED_PENALTY * delta);
             }
         }
     }

@@ -111,6 +111,7 @@ public class Leg {
         for (Lane lane : lanes) {
             lane.applyCollisions();
             handleLaneTransitions(lane);
+            lane.penalizeInvaders(delta);
         }
     }
 
