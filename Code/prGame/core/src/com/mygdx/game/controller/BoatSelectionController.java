@@ -1,7 +1,6 @@
 package com.mygdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -13,22 +12,22 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.model.Boat;
+import com.mygdx.game.model.BoatType;
+import com.mygdx.game.model.Player;
 import com.mygdx.game.util.Config;
-import com.mygdx.game.util.UserAction;
 import com.mygdx.game.view.BoatSelectionView;
 
 public class BoatSelectionController implements Screen{
 
     private final MyGdxGame game;
     private final BoatSelectionView view;
+    private final Player player = new Player();
     private final Stage stage;
     private final int BUTTON_WIDTH = Config.getWidth()/3;
     private final int BUTTON_HEIGHT = Config.getHeight()/8;
     private final float imageSize = (float) ((float) Config.getWidth() * 0.31);
     private final float textSize = (float) BUTTON_HEIGHT / 135;
-    private final Texture classicBoat = new Texture(Gdx.files.internal("boats/ClassicBoat_large.png"));
-    private final Texture resistanceBoat = new Texture(Gdx.files.internal("boats/resistanceBoat_large.png"));
-    private final Texture speedBoat = new Texture(Gdx.files.internal("boats/speedBoat_large.png"));
 
     //Lists for cycling
     private final Texture[] boatList = new Texture[3];
@@ -37,11 +36,12 @@ public class BoatSelectionController implements Screen{
     //integer to know what is the list item being seen
     private int i = 0;
 
+    //for dynamic text
+    TextButton select;
+
     //changing menu
     Label boatName;
     Image boat;
-    Image boat1;
-    Image boat2;
 
     public BoatSelectionController(MyGdxGame game){
         this.game = game;
@@ -54,8 +54,11 @@ public class BoatSelectionController implements Screen{
         view = new BoatSelectionView(stage);
 
         // creates the lists
+        Texture classicBoat = new Texture(Gdx.files.internal("boats/ClassicBoat_large.png"));
         boatList[0] = classicBoat;
+        Texture resistanceBoat = new Texture(Gdx.files.internal("boats/resistanceBoat_large.png"));
         boatList[1] = resistanceBoat;
+        Texture speedBoat = new Texture(Gdx.files.internal("boats/speedBoat_large.png"));
         boatList[2] = speedBoat;
         boatNameList[0] = "Classic Boat";
         boatNameList[1] = "Resistance Boat";
@@ -86,6 +89,9 @@ public class BoatSelectionController implements Screen{
         TextButton back = new TextButton("BACK", skin);
         back.getLabel().setFontScale(textSize);
 
+        select = new TextButton("SELECT", skin);
+        select.getLabel().setFontScale(textSize);
+
         //create Boat Image
         boat = new Image(boatList[0]);
 
@@ -100,6 +106,8 @@ public class BoatSelectionController implements Screen{
         table.add(changeLeft).center().size((float) BUTTON_WIDTH /3, BUTTON_HEIGHT);
         table.add(boat).size(imageSize);
         table.add(changeRight).center().size((float) BUTTON_WIDTH /3, BUTTON_HEIGHT);
+        table.row().pad(0, 0, 10, 0);
+        table.add(select).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).colspan(3);
         table.row().pad(0, 0, 10, 0);
         table.add(back).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).colspan(3);
 
@@ -116,7 +124,6 @@ public class BoatSelectionController implements Screen{
         changeLeft.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO
                 i=i-1;
                 if(i <= -1) {
                     i = 2;
@@ -128,17 +135,39 @@ public class BoatSelectionController implements Screen{
         changeRight.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO
                 i=(i+1)%3;
                 changeTable();
             }
         });
 
+        select.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                boatSelect();
+            }
+        });
+
+    }
+
+    private void boatSelect() {
+        if(i == 2) {
+            player.setBoat(Boat.createBoat(BoatType.FAST));
+            System.out.println("fast selected");
+        } else if(i == 1) {
+            player.setBoat(Boat.createBoat(BoatType.STRONG));
+            System.out.println("strong selected");
+        } else {
+            player.setBoat(Boat.createBoat(BoatType.CLASSIC));
+            System.out.println("classic selected");
+        }
+
+        select.setText("SELECTED");
     }
 
     private void changeTable() {
         boatName.setText(boatNameList[i]);
         boat.setDrawable(new SpriteDrawable(new Sprite(boatList[i])));
+        select.setText("SELECT");
     }
 
     @Override
