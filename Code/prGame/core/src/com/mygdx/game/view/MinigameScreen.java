@@ -167,12 +167,7 @@ public class MinigameScreen implements Screen {
             String timeLeft = "Remaining attempts: " + (3-minigameLogic.getFailCounter());
             glyphLayout.setText(font, timeLeft);
             game.font.draw(game.batch,timeLeft,(Config.getWidth()/2)-80,(Config.getHeight()/17));
-    
-        }if(Gdx.input.isButtonPressed(Keys.Q)){
-           pause();
-           game.setScreen(new PauseController(game,new PauseViewScreen(game)));
         }
-        
         game.batch.end();
     }
 
