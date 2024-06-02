@@ -205,12 +205,25 @@ public class SettingController implements Screen{
 
         for(int i = 0; i < Input.Keys.MAX_KEYCODE; i++){
             if (Gdx.input.isKeyJustPressed(i)) {
+                if(awaitingLeftKeyChange) {
+                    if(i != keyBinds.getKeyForAction(UserAction.MOVE_RIGHT)) {
+                        keyBinds.setKeyBinding(action, i); //Sets new key as action
+                        awaitingLeftKeyChange = false;
+                    } else {
+                        awaitingLeftKeyChange = true;
+                    }
+                }
 
-                keyBinds.setKeyBinding(action, i); //Sets new key as action
-                //When the new assignment of the key is done stop showing message for change it.
-                awaitingLeftKeyChange = false;
-                awaitingRightKeyChange = false;
+                if(awaitingRightKeyChange) {
+                    if(i != keyBinds.getKeyForAction(UserAction.MOVE_LEFT)) {
+                        keyBinds.setKeyBinding(action, i); //Sets new key as action
+                        awaitingRightKeyChange = false;
+                    } else {
+                        awaitingRightKeyChange = true;
+                    }
+                }
 
+                //When the new assignment of the key is done stop showing message for changing it.
             } if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 if(action == UserAction.MOVE_RIGHT) {
                     keyBinds.setKeyBinding(action, keyBinds.getKeyForAction(UserAction.MOVE_RIGHT));
