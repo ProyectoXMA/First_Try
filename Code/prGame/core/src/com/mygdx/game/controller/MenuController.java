@@ -18,7 +18,6 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.util.Config;
 import com.mygdx.game.view.MenuView;
 import com.mygdx.game.view.MinigameScreen;
-import com.mygdx.game.view.minigameTutorial;
 
 public class MenuController implements Screen{
 
