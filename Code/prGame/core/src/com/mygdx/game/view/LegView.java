@@ -104,15 +104,9 @@ public class LegView {
         Gdx.app.debug("LegView", "Camara position: " + camera.position.x + " " + camera.position.y);
     }
     private void drawLane(Lane lane) {
-        drawLimits(lane.getLanePosition(), lane.getWidth());
         drawObstacles(lane.getObstacles());
         drawPowerUps(lane.getPowerUps());
         drawBoat(lane.getBoats());
-    }
-    private void drawLimits(float lanePosition, float laneWidth) {
-        //TODO: Revise this and the image Limits
-        game.batch.draw(laneLimitImage, lanePosition, 10);
-        game.batch.draw(laneLimitImage, lanePosition + laneWidth, 10);
     }
     private void drawObstacles(Set<Obstacle> obstacles) {
         //TODO: Revise this, switch should be better. But how?

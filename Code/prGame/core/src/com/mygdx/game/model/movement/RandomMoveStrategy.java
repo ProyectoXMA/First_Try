@@ -10,8 +10,8 @@ public class RandomMoveStrategy implements MovementStrategy {
     private static final float STOP_PROBABILITY = 0.05f; // Probability of stopping randomly
     private static final float leftLIMIT = Lane.WIDTH * Leg.NUMBER_OF_LANES * 0.01f;
     private static final float rightLIMIT = Lane.WIDTH * Leg.NUMBER_OF_LANES * 0.99f;
-    private static final int bottomLIMIT = 0;
-    private static final int topLIMIT = Lane.HEIGHT;
+    private static final float bottomLIMIT = 0;
+    private static final float topLIMIT = Lane.HEIGHT;
     private static final float SPEED_FACTOR = 0.5f; // Factor to reduce speed, adjust as needed
 
     private boolean isMoving; // Whether the object is currently moving

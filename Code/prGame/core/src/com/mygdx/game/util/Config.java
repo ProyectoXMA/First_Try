@@ -18,6 +18,10 @@ public class Config {
     public static float DuckRelativeSize = 0.01f * Config.WIDTH;
     public static float PowerUpRelativeSize = 1.5f * Config.WIDTH;
 
+    public static float LegBorderRelativeWidth = 0.173f * Config.WIDTH;
+    public static float LaneRelativeWidth = 0.163f * Config.WIDTH;
+    public static float LaneRelativeHeight = 4f * Config.HEIGHT;
+
     public static int getWidth() {
         return WIDTH;
     }
