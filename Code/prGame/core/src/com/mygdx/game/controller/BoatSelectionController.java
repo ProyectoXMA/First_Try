@@ -55,11 +55,11 @@ public class BoatSelectionController implements Screen{
         view = new BoatSelectionView(stage);
 
         // creates the lists
-        Texture classicBoat = new Texture(Gdx.files.internal("boats/classicBoat_large.png"));
+        Texture classicBoat = new Texture(Gdx.files.internal("boats/classicBoat.png"));
         boatList[0] = classicBoat;
-        Texture resistanceBoat = new Texture(Gdx.files.internal("boats/resistanceBoat_large.png"));
+        Texture resistanceBoat = new Texture(Gdx.files.internal("boats/resistanceBoat.png"));
         boatList[1] = resistanceBoat;
-        Texture speedBoat = new Texture(Gdx.files.internal("boats/speedBoat_large.png"));
+        Texture speedBoat = new Texture(Gdx.files.internal("boats/speedBoat.png"));
         boatList[2] = speedBoat;
         boatNameList[0] = "Classic Boat";
         boatNameList[1] = "Resistance Boat";

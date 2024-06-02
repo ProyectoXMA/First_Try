@@ -89,15 +89,10 @@ public class MenuController implements Screen{
         TextButton quit = new TextButton("QUIT", skin);
         quit.getLabel().setFontScale(textSize);
 
-        //create game Title
-        Label gameTitle = new Label("", skin);
-        gameTitle.setStyle(skin.get("gameTitle", Label.LabelStyle.class));
-
         // add buttons to table
-        menuTable.add(gameTitle).size((float) (BUTTON_WIDTH*3.5), BUTTON_HEIGHT).colspan(2).pad(0,0,100,0);
-        menuTable.row().pad(0,0,20,0);
-        menuTable.add(play).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,0,0).align(Align.right);
-        menuTable.add(tutorial).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,0,0).align(Align.left);
+        menuTable.row().pad(0,0,0,0);
+        menuTable.add(play).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(Config.getHeight()*0.46f,0,0,0).align(Align.right);
+        menuTable.add(tutorial).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(Config.getHeight()*0.46f,0,0,0).align(Align.left);
         menuTable.row().pad(0,0,20,0);
         menuTable.add(boats).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,0,0).align(Align.right);
         menuTable.add(settings).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,0,0).align(Align.left);
