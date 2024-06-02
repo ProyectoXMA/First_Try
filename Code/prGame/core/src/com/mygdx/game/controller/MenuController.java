@@ -58,7 +58,8 @@ public class MenuController implements Screen{
         // skin loading
         skin = new Skin(Gdx.files.internal("skins/glassy-ui.json"));
         // text to be shown in credits
-        creditsText = "1\n2\n3\n4\n5\n6\n7\n8\n9";
+        creditsText = "Allitt Lopez Ricardo Juan\nBarrios Moreno Manuel\nBayon Pazos Angel\nEscano Lopez Angel Nicolas" +
+                "\nHormigo Jimenez Pablo\nJorda Garay Francisco Javier\nSicre Cortizo Diego\nSultan Muhammad Abdullah\nTorres Gomez Juan";
     }
 
     /**
