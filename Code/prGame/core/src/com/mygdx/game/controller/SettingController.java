@@ -33,12 +33,10 @@ public class SettingController implements Screen{
     Label moveRightText;
 
     //Key binds class
-    KeyBindings keyBinds;
+    KeyBindings keyBinds = Config.keyBinds;
 
     public SettingController(MyGdxGame game){
         this.game = game;
-        //Creates a keybindings instance to be able to change keys
-        keyBinds = new KeyBindings();
 
         // create stage and set it as input processor
         stage = new Stage(new ScreenViewport());

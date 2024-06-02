@@ -8,6 +8,8 @@ public class Config {
 
     //The frames per second at which the game will run.
     public static final int FPS = 30; //NFR002
+
+    public static KeyBindings keyBinds;
     /**
      * The WIDTH constant is set to the current width of the application window at the time of class loading.
      */
@@ -19,6 +21,7 @@ public class Config {
     private static int HEIGHT = 600;
 
     public static boolean muted = false;
+
 
     public static int getWidth() {
         return WIDTH;
