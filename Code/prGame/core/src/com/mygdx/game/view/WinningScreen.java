@@ -33,6 +33,8 @@ public class WinningScreen implements Screen {
         backgroundImage = new Texture(Gdx.files.internal("winningScreen.png"));
         winningMusic = Gdx.audio.newMusic(Gdx.files.internal("winningTheme.mp3"));
         winningMusic.setLooping(true);
+        if(!Config.muted) winningMusic.setVolume((float)0.1);
+        else winningMusic.setVolume((float)0);
     }
 
     @Override
@@ -40,7 +42,6 @@ public class WinningScreen implements Screen {
         viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
         winningMusic.play();
-        winningMusic.setVolume((float)0.1);
     }
 
     @Override

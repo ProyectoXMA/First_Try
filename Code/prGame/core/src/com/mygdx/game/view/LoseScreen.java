@@ -33,6 +33,9 @@ public class LoseScreen implements Screen {
         backgroundImage = new Texture(Gdx.files.internal("losingScreen.png"));
         losingMusic = Gdx.audio.newMusic(Gdx.files.internal("LosingSound.mp3"));
         losingMusic.setLooping(true);
+        if(!Config.muted) losingMusic.setVolume((float)0.1);
+        else losingMusic.setVolume((float)0);
+
     }
 
     @Override
@@ -40,7 +43,6 @@ public class LoseScreen implements Screen {
         viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
         losingMusic.play();
-        losingMusic.setVolume((float)0.1);
     }
 
     @Override
