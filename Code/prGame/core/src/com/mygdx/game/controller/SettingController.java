@@ -147,6 +147,12 @@ public class SettingController implements Screen{
                 //TODO
                 Config.muted = !Config.muted;
                 System.out.println("muted: " + Config.muted);
+
+                if(Config.muted) {
+                    mute.setText("UNMUTE");
+                } else {
+                    mute.setText("MUTE");
+                }
             }
         });
 
