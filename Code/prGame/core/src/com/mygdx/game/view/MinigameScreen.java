@@ -2,6 +2,7 @@ package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,6 +18,7 @@ import com.mygdx.game.GameState;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controller.LegController;
 import com.mygdx.game.controller.MinigameController;
+import com.mygdx.game.controller.PauseController;
 import com.mygdx.game.model.minigameLogic.MinigameLogic;
 import com.mygdx.game.util.Config;
 
@@ -26,13 +28,12 @@ public class MinigameScreen implements Screen {
     private Stage stage;
     private Viewport viewport;
     private OrthographicCamera camera;
-
+    private PauseController pause;
 // Attributes for the minigame
     private final MyGdxGame game;
     private final GameState gameState;
     private final MinigameLogic minigameLogic;
     private final MinigameController minigameController;
-
 // Dimensions of assets
     //private final int panelHeight = 400;
     //private final int panelWidth = 350;
@@ -80,6 +81,7 @@ public class MinigameScreen implements Screen {
         font = new BitmapFont();
         font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
         font.getData().setScale(10,10); 
+        pause = new PauseController(game,new PauseViewScreen(game));
     }
 
 
@@ -148,8 +150,8 @@ public class MinigameScreen implements Screen {
         if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
             String timer = String.format("[%.2f]", minigameLogic.getRemainingTime());
             glyphLayout.setText(font, timer);           
-            game.batch.draw(timerIcon, Config.getWidth()-70, Config.getHeight()-25, timerWidth, timerHeight);
-            game.font.draw(game.batch,timer, Config.getWidth()-40, Config.getHeight()-10);
+            game.batch.draw(timerIcon, Config.getWidth()-70, Config.getHeight()-45, timerWidth, timerHeight);
+            game.font.draw(game.batch,timer, Config.getWidth()-40, Config.getHeight()-30);
         }else{
             String timer = String.format("[%.2f]", minigameLogic.getRemainingTime());
             glyphLayout.setText(font, timer);           
@@ -166,6 +168,9 @@ public class MinigameScreen implements Screen {
             glyphLayout.setText(font, timeLeft);
             game.font.draw(game.batch,timeLeft,(Config.getWidth()/2)-80,(Config.getHeight()/17));
     
+        }if(Gdx.input.isButtonPressed(Keys.Q)){
+           pause();
+           game.setScreen(new PauseController(game,new PauseViewScreen(game)));
         }
         
         game.batch.end();
@@ -183,14 +188,10 @@ public class MinigameScreen implements Screen {
 
     @Override
     public void pause() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pause'");
     }
 
     @Override
     public void resume() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'resume'");
     }
 
     @Override

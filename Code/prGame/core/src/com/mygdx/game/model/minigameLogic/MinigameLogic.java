@@ -160,9 +160,9 @@ public class MinigameLogic {
             //gameState.getMyBoat().adjustHealth(gameState.getBaseHealth());
             typeSound.dispose();
             incorrectSound.dispose();
+            savedSound.play();
             savedSound.dispose();
             state = successCounter;
-            savedSound.play();
         }else if(failCounter == 3){
             typeSound.dispose();
             incorrectSound.dispose();
