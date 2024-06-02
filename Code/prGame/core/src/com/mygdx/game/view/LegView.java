@@ -87,7 +87,7 @@ public class LegView {
     }
 
     private void drawBackground() {
-        game.batch.draw(backgroundImage, 0, 0, Config.getWidth(), Config.getHeight());
+        game.batch.draw(backgroundImage, 0, 0, Config.getWidth(), Config.LaneRelativeHeight);
     }
     private void drawLeg() {
         followPlayer();

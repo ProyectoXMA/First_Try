@@ -158,15 +158,15 @@ public class Lane {
         boats.stream().filter(Boat::getWasHit).forEach(boat -> System.out.println("Removing boat: " + boat));//After the handler has checked all the boats, we remove the ones that were hit
         boats.removeIf(Boat::getWasHit);
 
-        //penalizeInvaders();
+        penalizeInvaders();
     }
     private void penalizeInvaders() {
-        boats.stream()
-                .filter(boat -> !boat.equals(this.boat)) //Filter the boats that are not the assigned boat
-                .forEach(boat -> {
-                    boat.adjustHealth(HEALTH_PENALTY);
-                    boat.adjustSpeed(SPEED_PENALTY);
-                }); //Subtract health to the invaders
+        for (Boat boat : boats) {
+            if (!boat.equals(this.boat)) {
+                boat.adjustHealth(-HEALTH_PENALTY);
+                boat.adjustSpeed(-SPEED_PENALTY);
+            }
+        }
     }
 
     /**

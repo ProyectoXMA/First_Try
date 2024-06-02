@@ -24,11 +24,11 @@ public abstract class PowerUp extends GameObject implements Collidable {
     public static PowerUp createPowerUp(PowerUpType powerUpType, float x, float y){
         switch (powerUpType){
             case SPEED:
-                return new SpeedBoost(new Rectangle(x, y, 0.6f * Config.PowerUpRelativeSize, 1.0f*Config.PowerUpRelativeSize));
+                return new SpeedBoost(new Rectangle(x, y, 0.93f * Config.PowerUpRelativeSize, 1.0f*Config.PowerUpRelativeSize));
             case INVINCIBILITY:
-                return new Invincibility(new Rectangle(x, y,1.0f*Config.PowerUpRelativeSize, 1.0f*Config.PowerUpRelativeSize));
+                return new Invincibility(new Rectangle(x, y,0.69f*Config.PowerUpRelativeSize, 1.0f*Config.PowerUpRelativeSize));
             case HEALTH:
-                return new HealthBoost(new Rectangle(x, y,1.0f*Config.PowerUpRelativeSize, 1.0f*Config.PowerUpRelativeSize));
+                return new HealthBoost(new Rectangle(x, y,0.93f*Config.PowerUpRelativeSize, 1.0f*Config.PowerUpRelativeSize));
             default:
                 throw new IllegalArgumentException("Invalid powerUpType");
         }
