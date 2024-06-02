@@ -157,7 +157,6 @@ public class Lane {
                 });
         boats.stream().filter(Boat::getWasHit).forEach(boat -> System.out.println("Removing boat: " + boat));//After the handler has checked all the boats, we remove the ones that were hit
         boats.removeIf(Boat::getWasHit);
-
         penalizeInvaders();
     }
     private void penalizeInvaders() {

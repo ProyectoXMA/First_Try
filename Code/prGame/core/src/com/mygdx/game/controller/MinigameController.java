@@ -11,7 +11,6 @@ public class MinigameController {
     private final MyGdxGame game;
     private final MinigameLogic minigameLogic;
     private final MinigameScreen MinigameScreen;
-
     public MinigameController(MyGdxGame game, MinigameLogic minigameLogic,MinigameScreen minigameScreen) {
         this.game = game;
         this.minigameLogic = minigameLogic;
@@ -23,7 +22,7 @@ public class MinigameController {
         int res = minigameLogic.checkGameState();
         if (res == 1) {
             this.MinigameScreen.dispose();
-            game.setScreen(new WinningScreen(game));
+            game.setScreen(new LegController(game));
         } else if (res == 3) {
             this.MinigameScreen.dispose();
             game.setScreen(new LoseScreen(game));

@@ -16,6 +16,7 @@ import com.mygdx.game.model.Leg;
 import com.mygdx.game.util.Config;
 import com.mygdx.game.view.LegView;
 import com.mygdx.game.view.PauseViewScreen;
+import com.mygdx.game.view.minigameTutorial;
 
 public class LegController implements Screen {
     final MyGdxGame game;
@@ -113,6 +114,11 @@ public class LegController implements Screen {
         }
         //update(delta);
         //view.render(bucket, raindrops, dropsGathered);
+        if(leg.getLanes().get(1).getBoat().dead()){
+            raceMusic.stop();
+            raceMusic.dispose();
+            game.setScreen(new minigameTutorial(game));
+        }
         leg.update(delta);
         view.render();
     }
