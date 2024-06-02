@@ -3192,7 +3192,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: font
+						value: font-big
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color

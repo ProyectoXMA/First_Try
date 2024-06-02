@@ -183,7 +183,8 @@ public class MenuController implements Screen{
         boats.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO
+                dispose();
+                game.setScreen(new BoatSelectionController(game));
             }
         });
 
