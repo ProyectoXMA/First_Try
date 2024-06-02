@@ -7,13 +7,13 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g3d.particles.ParticleShader.Config;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.model.Leg;
+import com.mygdx.game.util.Config;
 import com.mygdx.game.view.LegView;
 import com.mygdx.game.view.PauseViewScreen;
 
@@ -29,7 +29,7 @@ public class LegController implements Screen {
     Array<Rectangle> raindrops;
     long lastDropTime;
     int dropsGathered;
-
+    private Music raceMusic;
     public LegController(final MyGdxGame game){
         Gdx.app.log("Input","LegScreen created");
         this.game = game;
@@ -41,7 +41,11 @@ public class LegController implements Screen {
         // Load the drop sound effect and the rain background "music"
         dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
         rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-        //rainMusic.setLooping(true);
+        raceMusic = Gdx.audio.newMusic(Gdx.files.internal("raceSound.mp3"));
+        if(!Config.muted) raceMusic.setVolume((float)0.1);
+        else raceMusic.setVolume(0);
+        raceMusic.setLooping(true);
+        raceMusic.play();
 
         // Create a Rectangle to logically represent the bucket
         bucket = new Rectangle();
@@ -102,8 +106,11 @@ public class LegController implements Screen {
 
     @Override
     public void render(float delta) {//This render is updating the model, by means of update, and the view.
-        if(Gdx.input.isKeyJustPressed(Keys.ESCAPE))
+        if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+            raceMusic.stop();
+            raceMusic.dispose();
             game.setScreen(new PauseViewScreen(game));
+        }
         //update(delta);
         //view.render(bucket, raindrops, dropsGathered);
         leg.update(delta);

@@ -1,6 +1,7 @@
 package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -38,13 +39,13 @@ public class LegView {
     private static final Texture speedBoostImage = new Texture("powerUps/speed.png");
     private static final Texture backgroundImage = new Texture("background3.png");
     private static final Texture laneLimitImage = stoneImage;
-
     public LegView(final MyGdxGame game, Leg leg) {
         this.game = game;
         this.leg = leg;
         // Create the camera and the SpriteBatch
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Config.getWidth(),  Config.getHeight());
+
     }
     public Camera getCamera() {
         return camera;
