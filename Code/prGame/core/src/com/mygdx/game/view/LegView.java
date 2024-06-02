@@ -29,13 +29,14 @@ public class LegView {
     OrthographicCamera camera;
     private static final Texture boatResistanceImage = new Texture("boats/resistanceBoat.png");
     private static final Texture boatSpeedImage = new Texture("boats/speedBoat.png");
+    private static final Texture boatClassicImage = new Texture("boats/classicBoat.png");
     private static final Texture duckImage = new Texture("obstacles/duck.png");
     private static final Texture logImage = new Texture("obstacles/logHorizontal.png");
     private static final Texture stoneImage = new Texture("obstacles/stone.png");
     private static final Texture invincibilityImage = new Texture("powerUps/shield.png");
     private static final Texture healthBoostImage = new Texture("powerUps/health.png");
     private static final Texture speedBoostImage = new Texture("powerUps/speed.png");
-    private static final Texture backgroundImage = new Texture("dragon.jpeg");
+    private static final Texture backgroundImage = new Texture("background2.png");
     private static final Texture laneLimitImage = stoneImage;
 
     public LegView(final MyGdxGame game, Leg leg) {
@@ -103,36 +104,30 @@ public class LegView {
         Gdx.app.debug("LegView", "Camara position: " + camera.position.x + " " + camera.position.y);
     }
     private void drawLane(Lane lane) {
-        drawLimits(lane.getLanePosition(), lane.getWidth());
         drawObstacles(lane.getObstacles());
         drawPowerUps(lane.getPowerUps());
         drawBoat(lane.getBoats());
-    }
-    private void drawLimits(float lanePosition, float laneWidth) {
-        //TODO: Revise this and the image Limits
-        game.batch.draw(laneLimitImage, lanePosition, 10);
-        game.batch.draw(laneLimitImage, lanePosition + laneWidth, 10);
     }
     private void drawObstacles(Set<Obstacle> obstacles) {
         //TODO: Revise this, switch should be better. But how?
         for (Obstacle obstacle : obstacles) {
             if (obstacle instanceof Duck) {
-                game.batch.draw(duckImage, obstacle.getX(), obstacle.getY());
+                game.batch.draw(duckImage, obstacle.getX(), obstacle.getY(), obstacle.getWidth(), obstacle.getHeight());
             } else if (obstacle instanceof Log) {
-                game.batch.draw(logImage, obstacle.getX(), obstacle.getY());
+                game.batch.draw(logImage, obstacle.getX(), obstacle.getY(), obstacle.getWidth(), obstacle.getHeight());
             } else if (obstacle instanceof Stone) {
-                game.batch.draw(stoneImage, obstacle.getX(), obstacle.getY());
+                game.batch.draw(stoneImage, obstacle.getX(), obstacle.getY(), obstacle.getWidth(), obstacle.getHeight());
             }
         }
     }
     private void drawPowerUps(Set<PowerUp> powerUps) {
         for(PowerUp powerUp : powerUps) {
             if(powerUp instanceof Invincibility) {
-                game.batch.draw(invincibilityImage, powerUp.getX(), powerUp.getY());
+                game.batch.draw(invincibilityImage, powerUp.getX(), powerUp.getY(), powerUp.getWidth(), powerUp.getHeight());
             } else if (powerUp instanceof HealthBoost) {
-                game.batch.draw(healthBoostImage, powerUp.getX(), powerUp.getY());
+                game.batch.draw(healthBoostImage, powerUp.getX(), powerUp.getY(), powerUp.getWidth(), powerUp.getHeight());
             } else if (powerUp instanceof SpeedBoost) {
-                game.batch.draw(speedBoostImage, powerUp.getX(), powerUp.getY());
+                game.batch.draw(speedBoostImage, powerUp.getX(), powerUp.getY(), powerUp.getWidth(), powerUp.getHeight());
             }
         }
     }
@@ -141,13 +136,13 @@ public class LegView {
             switch (boat.getType()) {
                 //TODO: Change the boatImage to the actual types images
                 case FAST:
-                    game.batch.draw(boatSpeedImage, boat.getX(), boat.getY());
+                    game.batch.draw(boatSpeedImage, boat.getX(), boat.getY(), boat.getWidth(), boat.getHeight());
                     break;
                 case STRONG:
-                    game.batch.draw(boatResistanceImage, boat.getX(), boat.getY());
+                    game.batch.draw(boatResistanceImage, boat.getX(), boat.getY(), boat.getWidth(), boat.getHeight());
                     break;
                 case CLASSIC:
-                    game.batch.draw(duckImage, boat.getX(), boat.getY());
+                    game.batch.draw(boatClassicImage, boat.getX(), boat.getY(), boat.getWidth(), boat.getHeight());
                     break;
                 default:
                     throw new IllegalArgumentException("Not a valid boat type" + boat.getType());

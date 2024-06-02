@@ -19,8 +19,8 @@ import java.util.*;
 public class Lane {
 
     private static final Random RND = new Random();
-    public static final int WIDTH = Config.getWidth()/4;
-    public static final int HEIGHT = Config.getHeight()*3;
+    public static final float WIDTH = Config.LaneRelativeWidth;
+    public static final float HEIGHT = Config.LaneRelativeHeight;
     public static final int NUMBER_OBSTACLES = 40;
     public static final int NUMBER_POWERUPS = 5;
 
@@ -35,7 +35,7 @@ public class Lane {
 
     public Lane(int laneId, Set<Obstacle> obstacles, Set<PowerUp> powerUps, Boat boat) {
         this.laneId = laneId;
-        this.lanePosition = laneId * WIDTH;
+        this.lanePosition = Leg.BORDER_WIDTH + laneId * WIDTH;
         this.obstacles = obstacles;
         this.powerUps = powerUps;
         this.boat = boat;
@@ -46,15 +46,16 @@ public class Lane {
     }
 
     public static Lane createLane(int laneId, Set<Obstacle> obstacles, Set<PowerUp> powerUps, Boat boat) {
-        obstacles.forEach(obstacle -> setRandomPosition(obstacle, laneId));
-        powerUps.forEach(powerUp -> setRandomPosition(powerUp, laneId));
+        float lanePosition = Leg.BORDER_WIDTH + laneId * WIDTH;
+        obstacles.forEach(obstacle -> setRandomPosition(obstacle, lanePosition));
+        powerUps.forEach(powerUp -> setRandomPosition(powerUp, lanePosition));
         return new Lane(laneId, obstacles, powerUps, boat);
     }
     private void setCentralPosition(GameObject object){
-        object.setPosition(lanePosition + (float) WIDTH / 2 - boat.getWidth() / 2, 0);
+        object.setPosition(lanePosition + WIDTH / 2 - boat.getWidth() / 2, 0);
     }
-    private static void setRandomPosition(GameObject object, int laneId){
-        object.setPosition(Lane.WIDTH * laneId + RND.nextInt(Lane.WIDTH), RND.nextInt(Lane.HEIGHT));
+    private static void setRandomPosition(GameObject object, float lanePosition){
+        object.setPosition(RND.nextFloat(lanePosition, lanePosition + WIDTH), RND.nextFloat(0, HEIGHT));
     }
 
     public int getLaneId() {
@@ -145,11 +146,6 @@ public class Lane {
      */
     public void applyCollisions() {
         CollisionHandler handler = new CollisionHandler();
-        /*for (Boat boat : boats) {
-            handler.setBoat(boat); //Assigns to handler a specific boat
-            if(boat.getWasHit()) continue;
-            searchCollisions(handler);
-        }*/
         boats.stream()
                 .filter(boat -> !boat.getWasHit()) //If the boat was hit (by another boat), we don't need to check for collisions as it will be destroyed.
                 //Java streams use lazy evaluation, so the filter of an element will be evaluated just after the previous element is processed.
@@ -221,20 +217,6 @@ public class Lane {
      * @return a set with all the new objects that are partially out of bounds
      */
     public Set<GameObject> getNewPartiallyOutBounds() {
-        //Add all partially out of bounds objects (even the ones that were already partially out of bounds)
-        /*Set<GameObject> newOutBounds = new HashSet<>();
-        for(Obstacle obstacle : obstacles) {
-            partiallyOutBounds(obstacle, newOutBounds);
-        }
-        for(PowerUp powerUp : powerUps) {
-            partiallyOutBounds(powerUp, newOutBounds);
-        }
-        for(Boat boat : boats) {
-            partiallyOutBounds(boat, newOutBounds);
-        }
-        //This is not very efficient(not the worse either), think of another way
-        //Remove the objects that were already partially out of bounds
-        newOutBounds.removeAll(partiallyOutBounds);*/
         return Stream.of(
                 obstacles   .stream(),
                 powerUps    .stream(),

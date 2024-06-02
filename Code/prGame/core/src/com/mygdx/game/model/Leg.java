@@ -6,6 +6,7 @@ import com.mygdx.game.model.movement.MoveObstacleVisitor;
 import com.mygdx.game.model.obstacles.*;
 import com.mygdx.game.model.powerUps.PowerUp;
 import com.mygdx.game.model.powerUps.PowerUpType;
+import com.mygdx.game.util.Config;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,6 +21,8 @@ import java.util.stream.Collectors;
 public class Leg {
     public static final int NUMBER_OF_LANES = 4;
     public static final int PLAYER_LANE = 1;
+
+    public static float BORDER_WIDTH = Config.LegBorderRelativeWidth;
 
     private int level;
     private List<Lane> lanes;

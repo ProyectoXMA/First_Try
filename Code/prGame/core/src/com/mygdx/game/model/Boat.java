@@ -12,10 +12,6 @@ import com.mygdx.game.util.Config;
  * It delegates the movement (as all Movable objects) to a MovementStrategy.
  */
 public class Boat extends GameObject implements Movable{
-    public static final int WIDTH = Config.getWidth()/40;
-    public static final int HEIGHT = Config.getHeight()/20;
-
-
     private MovementStrategy movementStrategy;
 
     private final BoatType type;
@@ -69,13 +65,13 @@ public class Boat extends GameObject implements Movable{
         Boat newBoat;
         switch (type) {
             case FAST:
-                newBoat = new Boat(type,100, 10, 200, 70, 10, new Rectangle(x, y, WIDTH, HEIGHT));
+                newBoat = new Boat(type,100, 10, 200, 70, 10, new Rectangle(x, y, 0.6f * Config.BoatRelativeSize, 1.0f * Config.BoatRelativeSize)); //Adjusted to percentage of the images
                 break;
             case STRONG:
-                newBoat = new Boat(type,200, 5, 70, 40, 5, new Rectangle(x, y, WIDTH, HEIGHT));
+                newBoat = new Boat(type,200, 5, 70, 40, 5, new Rectangle(x, y, 0.5f * Config.BoatRelativeSize, 1.0f * Config.BoatRelativeSize)); //Adjusted to percentage of the images
                 break;
             case CLASSIC:
-                newBoat=  new Boat(type,150, 7, 100, 50, 7, new Rectangle(x, y, WIDTH, HEIGHT));
+                newBoat=  new Boat(type,150, 7, 100, 50, 7, new Rectangle(x, y, 0.9f * Config.BoatRelativeSize, 1.0f * Config.BoatRelativeSize)); //Adjusted to percentage of the images
                 break;
             default:
                 throw new IllegalArgumentException("Not a valid boat type");

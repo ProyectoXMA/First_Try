@@ -5,11 +5,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.movement.Movable;
 import com.mygdx.game.model.movement.MovementStrategy;
 import com.mygdx.game.model.movement.RandomMoveStrategy;
+import com.mygdx.game.util.Config;
 
 public class Duck extends Obstacle implements Movable {
     private static final int DAMAGE = 40;
-    private static final int WIDTH = 30;
-    private static final int HEIGHT = 30;
+    private static final float WIDTH = 1.0f*Config.DuckRelativeSize;
+    private static final float HEIGHT = 0.82f*Config.DuckRelativeSize;
     private static final int SPEED = 100;
     //MovementStrategy is not implemented here, just the pattern
     MovementStrategy movementStrategy;
