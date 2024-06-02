@@ -36,7 +36,7 @@ public class LegView {
     private static final Texture invincibilityImage = new Texture("powerUps/shield.png");
     private static final Texture healthBoostImage = new Texture("powerUps/health.png");
     private static final Texture speedBoostImage = new Texture("powerUps/speed.png");
-    private static final Texture backgroundImage = new Texture("background2.png");
+    private static final Texture backgroundImage = new Texture("background3.png");
     private static final Texture laneLimitImage = stoneImage;
 
     public LegView(final MyGdxGame game, Leg leg) {
