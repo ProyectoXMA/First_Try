@@ -17,11 +17,10 @@ import java.util.*;
  * It also stores a reference to the assigned boat, and a List of all boats present in the lane, used to subtract health to invaders boats.
  */
 public class Lane {
-
     private static final Random RND = new Random();
     public static final float WIDTH = Config.LaneRelativeWidth;
     public static final float HEIGHT = Config.LaneRelativeHeight;
-    public static final int NUMBER_OBSTACLES = 40;
+    public static final int NUMBER_OBSTACLES = 30;
     public static final int NUMBER_POWERUPS = 10;
     private static final int HEALTH_PENALTY = 30;
     private static final int SPEED_PENALTY = 30;

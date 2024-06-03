@@ -45,8 +45,8 @@ public class Leg {
     public Leg(int level, Player player){
         this.level = level;
         this.lanes = new ArrayList<>(NUMBER_OF_LANES);
-        this.allObstacles = createObstacles(Lane.NUMBER_OBSTACLES * NUMBER_OF_LANES);
-        this.allPowerUps = createPowerUps(Lane.NUMBER_POWERUPS * NUMBER_OF_LANES);
+        this.allObstacles = createObstacles(Lane.NUMBER_OBSTACLES * NUMBER_OF_LANES * level);
+        this.allPowerUps = createPowerUps(Lane.NUMBER_POWERUPS * NUMBER_OF_LANES * level);
         this.allBoats = new HashSet<>();
         this.player = player;
         for (int i = 0; i < NUMBER_OF_LANES; i++) {
@@ -55,16 +55,16 @@ public class Leg {
             Gdx.app.debug("Leg", "Boats created: " + allBoats.size());
             Lane newLane = Lane.createLane(i,
                     allObstacles.stream()
-                            .skip(i * Lane.NUMBER_OBSTACLES) //Skip the obstacles of the previous lanes
-                            .limit(Lane.NUMBER_OBSTACLES) //Get the number of needed obstacles for this lane
+                            .skip(i * Lane.NUMBER_OBSTACLES * level) //Skip the obstacles of the previous lanes
+                            .limit(Lane.NUMBER_OBSTACLES * level) //Get the number of needed obstacles for this lane
                             .collect(Collectors.toSet()), //Convert the stream into a set
                     allPowerUps.stream()
-                            .skip(i * Lane.NUMBER_POWERUPS) //Skip the powerUps of the previous lanes
-                            .limit(Lane.NUMBER_POWERUPS) //Get the number of needed powerUps for this lane
+                            .skip(i * Lane.NUMBER_POWERUPS* level) //Skip the powerUps of the previous lanes
+                            .limit(Lane.NUMBER_POWERUPS * level) //Get the number of needed powerUps for this lane
                             .collect(Collectors.toSet()), //Convert the stream into a set
                     laneBoat);
             lanes.add(newLane);
-            if(i != PLAYER_LANE) laneBoat.setMovementStrategy(new AIControlledStrategy(newLane));
+            if(i != PLAYER_LANE) laneBoat.setMovementStrategy(new AIControlledStrategy(newLane, level));
             //If the lane is the player's lane, its movement strategy has been assigned by the Player class
         }
     }

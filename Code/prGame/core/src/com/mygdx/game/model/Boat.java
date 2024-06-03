@@ -87,6 +87,13 @@ public class Boat extends GameObject implements Movable{
     public static Boat createBoat(BoatType type) {
         return createBoat(type, 0, 0);
     }
+    public void resetCharacteristics() {
+        currentHealth = baseHealth;
+        currenAcceleration = baseAcceleration;
+        currentResistance = baseResistance;
+        currentSpeed = 0;
+        isInvencible = false;
+    }
 
     //Getters for the attributes of the boat
     public BoatType getType(){

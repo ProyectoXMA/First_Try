@@ -2,6 +2,7 @@ package com.mygdx.game.model.movement;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.model.Boat;
 import com.mygdx.game.model.Lane;
 import com.mygdx.game.model.Leg;
 import com.mygdx.game.model.obstacles.Obstacle;
@@ -9,22 +10,25 @@ import com.mygdx.game.model.powerUps.PowerUp;
 import com.mygdx.game.util.Config;
 
 public class AIControlledStrategy implements MovementStrategy {
-    private static final float DEFAULT_EVASION = 0.99f; // Default evasion chance
+    private static final float BASE_EVASION = 0.4f; // Default evasion chance
     private static final float REACTION_DISTANCE = 50.0f; // Distance at which the AI starts to react to obstacles, boats, and power-ups
-    private static final float SPEED_FACTOR = 1.5f;
     private static final float leftLIMIT = Leg.BORDER_WIDTH;
     private static final float rightLIMIT = Config.getWidth() - Leg.BORDER_WIDTH;
+    private final float evasionChance;
+    private final float reactionDistance;
+    float horizontalSpeed;
     private Lane visibleLane;
-    private float evasionChance; // Chance of evading an obstacle or boat
 
-    public AIControlledStrategy(Lane currentLane, float evasionChance) {
+    public AIControlledStrategy(Lane currentLane, int level) {
         this.visibleLane = currentLane;
-        this.evasionChance = evasionChance; // Must be between 0 and 1
+        this.evasionChance = 0.5f + level * 0.30f; // Must be between 0 and 1
+        this.reactionDistance = 30.0f + REACTION_DISTANCE * level * 0.33f;
     }
 
     public AIControlledStrategy(Lane currentLane) {
         this.visibleLane = currentLane;
-        this.evasionChance = DEFAULT_EVASION; // Must be between 0 and 1
+        this.evasionChance = BASE_EVASION; // Must be between 0 and 1
+        this.reactionDistance = REACTION_DISTANCE;
     }
 
     @Override
@@ -34,7 +38,7 @@ public class AIControlledStrategy implements MovementStrategy {
         float movableLeftLimit = movable.getHitbox().x;
         float movableRightLimit = movable.getHitbox().x + movable.getHitbox().width;
         float speed = movable.getSpeed();
-
+        horizontalSpeed = movable instanceof Boat ? ((Boat) movable).getHandling() : movable.getSpeed();
         // Fixed vertical movement
         movable.adjustY(speed * delta);
 
@@ -57,12 +61,12 @@ public class AIControlledStrategy implements MovementStrategy {
 
     private float adjustForObstacles(Movable movable, float dx, float delta, float laneLeftLimit, float laneRightLimit) {
         for (Obstacle obstacle : visibleLane.getObstacles()) {
-            if (isNear(movable.getHitbox(), obstacle.getHitbox(), REACTION_DISTANCE)) {
+            if (isNear(movable.getHitbox(), obstacle.getHitbox(), reactionDistance)) {
                 if (MathUtils.random() < evasionChance) {
                     if (movable.getHitbox().x < obstacle.getHitbox().x) {
-                        dx -= movable.getSpeed() * delta * SPEED_FACTOR; // Move left to evade
+                        dx -=  horizontalSpeed * delta; // Move left to evade
                     } else {
-                        dx += movable.getSpeed() * delta * SPEED_FACTOR; // Move right to evade
+                        dx += horizontalSpeed * delta; // Move right to evade
                     }
                 }
             }
@@ -72,11 +76,11 @@ public class AIControlledStrategy implements MovementStrategy {
 
     private float adjustForPowerUps(Movable movable, float dx, float delta, float laneLeftLimit, float laneRightLimit) {
         for (PowerUp powerUp : visibleLane.getPowerUps()) {
-            if (isNear(movable.getHitbox(), powerUp.getHitbox(), REACTION_DISTANCE)) {
+            if (isNear(movable.getHitbox(), powerUp.getHitbox(), reactionDistance)) {
                 if (movable.getHitbox().x < powerUp.getHitbox().x) {
-                    dx += movable.getSpeed() * delta * SPEED_FACTOR; // Move right to collect
+                    dx += horizontalSpeed * delta; // Move right to collect
                 } else {
-                    dx -= movable.getSpeed() * delta * SPEED_FACTOR; // Move left to collect
+                    dx -= horizontalSpeed * delta; // Move left to collect
                 }
             }
         }

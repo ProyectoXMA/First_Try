@@ -62,7 +62,7 @@ public class LegController implements Screen {
                 generalController.showLoseScreen();
             else {
                 pause = true;
-                playerBoat.adjustHealth(playerBoat.getBaseHealth());
+                playerBoat.resetCharacteristics();
                 generalController.showMinigameTutorial();
             }
         } else if (leg.hasReachedGoal()) {
