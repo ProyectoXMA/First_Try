@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.model.Boat;
 import com.mygdx.game.model.Leg;
@@ -18,13 +19,17 @@ public class LegController implements Screen {
     InputManager inputManager;
     private Boat playerBoat;
     private boolean pause = false;
-    private Music raceMusic = Gdx.audio.newMusic(Gdx.files.internal("raceSound.mp3"));
+    private Music raceMusicLevel1 = Gdx.audio.newMusic(Gdx.files.internal("musicLevel1.mp3"));
+    private Music raceMusicLevel2 = Gdx.audio.newMusic(Gdx.files.internal("musicLevel2.mp3"));
+    private Music raceMusicLevel3 = Gdx.audio.newMusic(Gdx.files.internal("musicLevel3.mp3"));
+    private Music raceMusic;
     private int LEVEL = 1;
 
     public LegController(final MyGdxGame game){
         Gdx.app.log("Input","LegScreen created");
         this.game = game;
         this.generalController = GeneralController.getInstance(game);
+
     }
     @Override
     public void show() {
@@ -35,6 +40,17 @@ public class LegController implements Screen {
             this.view = new LegView(game, leg);
         }
         pause = false;
+        switch (LEVEL){
+            case 1:
+                raceMusic = raceMusicLevel1;
+                break;
+            case 2:
+                raceMusic = raceMusicLevel2;
+                break;
+            case 3:
+                raceMusic = raceMusicLevel3;
+                break;
+        }
         // Start the playback of the background music when the screen is shown
         if(!Config.muted) raceMusic.setVolume((float)0.1);
         else raceMusic.setVolume(0);
@@ -48,6 +64,7 @@ public class LegController implements Screen {
     public void render(float delta) {//This render is updating the model, by means of update, and the view.
         if(LEVEL > 3) {
             generalController.showMainMenu();
+            raceMusic.stop();
         }
         if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
             raceMusic.stop();
