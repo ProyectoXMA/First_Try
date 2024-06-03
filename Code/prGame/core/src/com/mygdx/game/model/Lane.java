@@ -110,7 +110,6 @@ public class Lane {
         } else if(gameObject instanceof PowerUp) {
             removePowerUp((PowerUp) gameObject);
         } else if(gameObject instanceof Boat) {
-            boat.destroy();
             removeBoat((Boat) gameObject);
         }
     }

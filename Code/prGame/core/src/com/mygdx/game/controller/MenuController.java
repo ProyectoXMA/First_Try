@@ -55,6 +55,7 @@ public class MenuController implements Screen{
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        game.getPlayer().reset();
         // Create a menu table that fills the screen. Everything menu related will go inside this table.
         menuTable = new Table();
         menuTable.setVisible(true);

@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.controller.GeneralController;
 import com.mygdx.game.controller.MinigameController;
 import com.mygdx.game.controller.PauseController;
 import com.mygdx.game.model.minigameLogic.MinigameLogic;
@@ -31,6 +32,7 @@ public class MinigameView {
 // Attributes for the minigame
     private final MyGdxGame game;
     private final MinigameLogic minigameLogic;
+    private GeneralController generalController;
 // Dimensions of assets
     //private final int panelHeight = 400;
     //private final int panelWidth = 350;
@@ -76,6 +78,7 @@ public class MinigameView {
         font = new BitmapFont();
         font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
         font.getData().setScale(10,10);
+        this.generalController = GeneralController.getInstance(game);
     }
 
 
@@ -88,6 +91,8 @@ public class MinigameView {
     public void show() {
         viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
+        batch = new SpriteBatch();
+        font = new BitmapFont();
         epicMusic.play();
     }
 
@@ -135,7 +140,7 @@ public class MinigameView {
         // Displays timer countdown        
         if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
             String timer = String.format("[%.2f]", minigameLogic.getRemainingTime());
-            glyphLayout.setText(font, timer);           
+            glyphLayout.setText(font, timer);
             batch.draw(timerIcon, Config.getWidth()-70, Config.getHeight()-45, timerWidth, timerHeight);
             font.draw(batch,timer, Config.getWidth()-40, Config.getHeight()-30);
         }else{
@@ -156,7 +161,7 @@ public class MinigameView {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             epicMusic.stop();
-            game.setScreen(new PauseController(game));
+            generalController.showPauseScreen();
         }
         batch.end();
     }
@@ -164,9 +169,6 @@ public class MinigameView {
         epicMusic.stop();
         epicMusic.dispose();
         backgroundImage.dispose();
-        stage.dispose();
-        font.dispose();
-        batch.dispose();
     }
     
 }

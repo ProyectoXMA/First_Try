@@ -10,7 +10,7 @@ import com.mygdx.game.util.UserAction;
  * this class will be notified by the corresponding inputManager when the user sends and input. The player will then notify its objects.
  */
 public class Player implements InputSubscribed {
-    private static final BoatType DEFAULT_BOAT_TYPE = BoatType.CLASSIC;
+    public static final BoatType DEFAULT_BOAT_TYPE = BoatType.CLASSIC;
     private Boat boat;
     public Player(BoatType boatType) {
         boat = Boat.createBoat(boatType);
@@ -18,6 +18,11 @@ public class Player implements InputSubscribed {
     }
     public Player(){
         this(DEFAULT_BOAT_TYPE);
+    }
+    public void reset(){
+        BoatType type = boat.getType();
+        boat = Boat.createBoat(type);
+        setBoat(boat);
     }
 
     /**

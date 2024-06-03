@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.view.LoseScreen;
 import com.mygdx.game.view.minigameTutorial;
+import com.mygdx.game.view.minigameTutorial2;
 
 public class GeneralController {
     public static GeneralController instance;
@@ -16,6 +17,7 @@ public class GeneralController {
     private SettingsController settingsController;
     private LoseScreen loseScreen;
     private minigameTutorial mTutorial;
+    private minigameTutorial2 mTutorial2;
     private BoatSelectionController boatSelectionController;
     private Screen previousScreen;
 
@@ -30,6 +32,7 @@ public class GeneralController {
         settingsController = new SettingsController(game);
         loseScreen = new LoseScreen(game);
         mTutorial = new minigameTutorial(game);
+        mTutorial2 = new minigameTutorial2(game);
         boatSelectionController = new BoatSelectionController(game);
     }
     /**
@@ -52,6 +55,9 @@ public class GeneralController {
     }
     public void resetLeg(){
         legController = new LegController(game);
+        minigameController = new MinigameController(game);
+        mTutorial = new minigameTutorial(game);
+        mTutorial2 = new minigameTutorial2(game);
     }
     public void showMinigameScreen(){
         game.setScreen(minigameController);
@@ -67,6 +73,9 @@ public class GeneralController {
     }
     public void showLoseScreen(){
         game.setScreen(loseScreen);
+    }
+    public void showMiniGameTutorial2(){
+        game.setScreen(mTutorial2);
     }
     public void quitGame(){
         Gdx.app.exit();

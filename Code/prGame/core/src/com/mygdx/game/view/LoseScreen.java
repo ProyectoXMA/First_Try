@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.controller.GeneralController;
 import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.util.Config;
 
@@ -25,6 +26,7 @@ public class LoseScreen implements Screen {
     private SpriteBatch batch;
     private Music losingMusic;
     OrthographicCamera camera;
+    private GeneralController generalController;
 // attributes for the screen
     private final MyGdxGame game;
     private Texture backgroundImage;
@@ -36,6 +38,7 @@ public class LoseScreen implements Screen {
         backgroundImage = new Texture(Gdx.files.internal("losingScreen.png"));
         losingMusic = Gdx.audio.newMusic(Gdx.files.internal("LosingSound.mp3"));
         losingMusic.setLooping(true);
+        generalController = GeneralController.getInstance(game);
         if(!Config.muted) losingMusic.setVolume((float)0.1);
         else losingMusic.setVolume((float)0);
 
@@ -57,7 +60,7 @@ public class LoseScreen implements Screen {
         stage.draw();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             losingMusic.stop();
-            game.setScreen(new MenuController(game));
+            generalController.showMainMenu();
         }
         batch.begin();
         batch.draw(backgroundImage,0,0,Config.getWidth(),Config.getHeight());
@@ -80,12 +83,11 @@ public class LoseScreen implements Screen {
 
     @Override
     public void hide() {
-        dispose();
+        generalController.resetLeg();
     }
 
     @Override
     public void dispose() {
-        stage.dispose();
-        losingMusic.dispose();
+
     }
 }

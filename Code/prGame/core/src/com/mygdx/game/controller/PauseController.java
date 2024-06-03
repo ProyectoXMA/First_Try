@@ -85,6 +85,7 @@ public class PauseController implements Screen{
         quit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                generalController.resetLeg();
                 generalController.showMainMenu();
             }
         });

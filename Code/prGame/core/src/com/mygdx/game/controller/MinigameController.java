@@ -61,6 +61,6 @@ public class MinigameController implements Screen {
 
     @Override
     public void dispose() {
-        minigameView.dispose();
+
     }
 }

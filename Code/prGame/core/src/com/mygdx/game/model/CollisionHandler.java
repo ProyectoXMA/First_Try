@@ -23,8 +23,8 @@ public class CollisionHandler{
             if(boat.getHitbox().overlaps(obstacle.getHitbox())){ //In case of collision
                 Gdx.app.log("CollisionHandler", "Obstacle collision detected! :" + obstacle.getClass() + " and " + this.boat.getType());
                 obstacle.setWasHit(true); //We activate the flag to eliminate it, and to ensure no other lane applies the effects
-                if(boat.isInvencible()) return; //If the boat is invencible, it doesn´t take damage
                 boat.adjustSpeed(-obstacle.getSpeedModifier()); //We apply the effect of the obstacle to the boat
+                if(boat.isInvencible()) return; //If the boat is invencible, it doesn´t take damage
                 boat.adjustHealth(-obstacle.getDamage()); //Once we apply the effect to the boat and obstacles it is applied to all the lanes, as the object is passed by reference
             }
 
@@ -39,6 +39,8 @@ public class CollisionHandler{
                 Gdx.app.debug("CollisionHandler", "Position of boats: " + boat.getHitbox() + " and " + this.boat.getHitbox());
                 //First lane to detect the collision sets both objets wasHit to true
                 this.boat.setWasHit(true);
+                boat.destroy();
+                this.boat.destroy();
                 boat.setWasHit(true);
             }
         }

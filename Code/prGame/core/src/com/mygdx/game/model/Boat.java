@@ -28,6 +28,7 @@ public class Boat extends GameObject implements Movable{
     private int currenAcceleration;
     private boolean returnToLife = false;
     private boolean isInvencible = false;
+    private boolean destroyed = false;
 
     /**
      * Private constructor of class Boat, the only way to create a boat is using the factory method createBoat
@@ -123,7 +124,7 @@ public class Boat extends GameObject implements Movable{
     }
 
     public boolean hasReturnToLife() {
-        if(!returnToLife) {
+        if(!returnToLife && !destroyed) {
             returnToLife = true;
             return false;
         }
@@ -198,7 +199,8 @@ public class Boat extends GameObject implements Movable{
     }
     @Override
     public void destroy() {
-        //TODO: Is this necesary?
+        currentHealth = 0;
+        destroyed = true;
         Gdx.app.log("Boat", "Boat " + getType() + "destroyed");
         //throw new UnsupportedOperationException("Unimplemented method 'destroy'");
     }

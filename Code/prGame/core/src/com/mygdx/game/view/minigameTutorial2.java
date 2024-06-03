@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.controller.GeneralController;
 import com.mygdx.game.controller.MinigameController;
 import com.mygdx.game.util.Config;
 
@@ -20,6 +21,7 @@ public class minigameTutorial2 implements Screen{
     private Viewport viewport;
     OrthographicCamera camera;
     private SpriteBatch batch;
+    GeneralController generalController;
 // attributes for the screen
     private final MyGdxGame game;
     private Texture backgroundImage;
@@ -27,6 +29,7 @@ public class minigameTutorial2 implements Screen{
         this.game = game;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
+        generalController = GeneralController.getInstance(game);
         camera.setToOrtho(false,Config.getWidth(),Config.getHeight());
         backgroundImage = new Texture(Gdx.files.internal("secondPhase.png"));
     }
@@ -35,6 +38,7 @@ public class minigameTutorial2 implements Screen{
     public void show() {
         viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
+        batch = new SpriteBatch();
     }
 
     @Override
@@ -45,7 +49,7 @@ public class minigameTutorial2 implements Screen{
         stage.act();
         stage.draw();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-            game.setScreen(new MinigameController(game));
+            generalController.showMinigameScreen();
         }
         batch.begin();
         batch.draw(backgroundImage,0,0,Config.getWidth(),Config.getHeight());
@@ -68,8 +72,6 @@ public class minigameTutorial2 implements Screen{
 
     @Override
     public void hide() {
-        stage.dispose();
-        batch.dispose();
     }
 
     @Override
