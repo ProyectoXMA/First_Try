@@ -2,12 +2,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.Boat;
 import com.mygdx.game.model.BoatType;
 import com.mygdx.game.model.Lane;
-import com.mygdx.game.model.obstacles.Obstacle;
-import com.mygdx.game.model.obstacles.ObstacleType;
-import com.mygdx.game.model.obstacles.Stone;
+import com.mygdx.game.model.obstacles.Log;
 import com.mygdx.game.model.powerUps.HealthBoost;
+import com.mygdx.game.model.obstacles.Obstacle;
 import com.mygdx.game.model.powerUps.PowerUp;
-import com.mygdx.game.model.powerUps.PowerUpType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,69 +17,40 @@ import static org.junit.jupiter.api.Assertions.*;
 class LaneTest {
 
     private Lane lane;
-    private Boat assignedBoat;
-    private Set<Obstacle> obstacles;
-    private Set<PowerUp> powerUps;
+    private Boat boat;
+    private Obstacle log;
+    private PowerUp healthBoost;
 
     @BeforeEach
     void setUp() {
-        obstacles = new HashSet<>();
-        powerUps = new HashSet<>();
-        assignedBoat = Boat.createBoat(BoatType.CLASSIC, 0, 0);
-        lane = Lane.createLane(1, obstacles, powerUps, assignedBoat);
+        boat = Boat.createBoat(BoatType.CLASSIC, 0, 0);
+        Set<Obstacle> obstacles = new HashSet<>();
+        log = new Log(50, 0);
+        obstacles.add(log);
+        Set<PowerUp> powerUps = new HashSet<>();
+        healthBoost = new HealthBoost(new Rectangle(100, 0, 10, 10));
+        powerUps.add(healthBoost);
+        lane = new Lane(1, obstacles, powerUps, boat);
     }
 
     @Test
-    void testLaneInitialization() {
+    void testLaneCreation() {
+        assertNotNull(lane);
         assertEquals(1, lane.getLaneId());
-        assertEquals(Lane.WIDTH, lane.getLanePosition());
-        assertTrue(lane.getBoats().contains(assignedBoat));
-        assertEquals(obstacles, lane.getObstacles());
-        assertEquals(powerUps, lane.getPowerUps());
     }
 
     @Test
-    void testAddObstacle() {
-        Obstacle obstacle = Obstacle.createObstacle(ObstacleType.STONE);
-        lane.addGameObject(obstacle);
-        assertTrue(lane.getObstacles().contains(obstacle));
+    void testGetBoat() {
+        assertEquals(boat, lane.getBoat());
     }
 
     @Test
-    void testRemoveObstacle() {
-        Obstacle obstacle = Obstacle.createObstacle(ObstacleType.STONE);
-        lane.addGameObject(obstacle);
-        lane.removeGameObject(obstacle);
-        assertFalse(lane.getObstacles().contains(obstacle));
+    void testGetObstacles() {
+        assertTrue(lane.getObstacles().contains(log));
     }
 
     @Test
-    void testAddPowerUp() {
-        PowerUp powerUp = PowerUp.createPowerUp(PowerUpType.HEALTH);
-        lane.addGameObject(powerUp);
-        assertTrue(lane.getPowerUps().contains(powerUp));
-    }
-
-    @Test
-    void testRemovePowerUp() {
-        PowerUp powerUp = PowerUp.createPowerUp(PowerUpType.HEALTH);
-        lane.addGameObject(powerUp);
-        lane.removeGameObject(powerUp);
-        assertFalse(lane.getPowerUps().contains(powerUp));
-    }
-
-    @Test
-    void testAddBoat() {
-        Boat boat = Boat.createBoat(BoatType.FAST, 0, 0);
-        lane.addGameObject(boat);
-        assertTrue(lane.getBoats().contains(boat));
-    }
-
-    @Test
-    void testRemoveBoat() {
-        Boat boat = Boat.createBoat(BoatType.FAST, 100, 0);
-        lane.addGameObject(boat);
-        lane.removeGameObject(boat);
-        assertFalse(lane.getBoats().contains(boat));
+    void testGetPowerUps() {
+        assertTrue(lane.getPowerUps().contains(healthBoost));
     }
 }

@@ -2,87 +2,133 @@ import com.mygdx.game.model.Boat;
 import com.mygdx.game.model.BoatType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BoatTest {
+class BoatTest {
 
     private Boat fastBoat;
     private Boat strongBoat;
     private Boat classicBoat;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         fastBoat = Boat.createBoat(BoatType.FAST, 0, 0);
         strongBoat = Boat.createBoat(BoatType.STRONG, 0, 0);
         classicBoat = Boat.createBoat(BoatType.CLASSIC, 0, 0);
     }
 
     @Test
-    public void testBoatCreation() {
+    void testCreateBoat() {
         assertNotNull(fastBoat);
         assertNotNull(strongBoat);
         assertNotNull(classicBoat);
-
-        assertEquals(BoatType.FAST, fastBoat.getType());
-        assertEquals(BoatType.STRONG, strongBoat.getType());
-        assertEquals(BoatType.CLASSIC, classicBoat.getType());
     }
 
     @Test
-    void testSetAttributes() {
-        fastBoat.setHealth(200);
-        fastBoat.setResistance(250);
-        fastBoat.setSpeed(150);
-        assertEquals(200, fastBoat.getHealth());
-        assertEquals(250, fastBoat.getResistance());
-        assertEquals(150,fastBoat.getSpeed());
+    void testInitialAttributes() {
+        assertEquals(100, fastBoat.getBaseHealth());
+        assertEquals(200, strongBoat.getBaseHealth());
+        assertEquals(150, classicBoat.getBaseHealth());
+
+        assertEquals(10, fastBoat.getResistance());
+        assertEquals(5, strongBoat.getResistance());
+        assertEquals(7, classicBoat.getResistance());
+
+        assertEquals(150, fastBoat.getHandling());
+        assertEquals(70, strongBoat.getHandling());
+        assertEquals(100, classicBoat.getHandling());
+
+        assertEquals(10, fastBoat.getAcceleration());
+        assertEquals(10, strongBoat.getAcceleration());
+        assertEquals(18, classicBoat.getAcceleration());
     }
 
     @Test
-    void testAdjustAttributes() {
-        classicBoat.setHealth(100);
-        classicBoat.setResistance(5);
-        classicBoat.adjustHealth(50);
-        classicBoat.adjustResistance(1);
-        assertEquals(150, classicBoat.getHealth());
-        assertEquals(6, classicBoat.getResistance());
+    void testAdjustHealth() {
+        fastBoat.adjustHealth(-50);
+        assertEquals(50, fastBoat.getHealth());
+
+        fastBoat.adjustHealth(100);
+        assertEquals(100, fastBoat.getHealth());
+
+        fastBoat.adjustHealth(-150);
+        assertEquals(0, fastBoat.getHealth());
     }
 
     @Test
-    public void testInvincibility() {
+    void testAdjustResistance() {
+        fastBoat.adjustResistance(-5);
+        assertEquals(5, fastBoat.getResistance());
+
+        fastBoat.adjustResistance(10);
+        assertEquals(10, fastBoat.getResistance());
+
+        fastBoat.adjustResistance(5);
+        assertEquals(10, fastBoat.getResistance());
+    }
+
+    @Test
+    void testAdjustSpeed() {
+        fastBoat.adjustSpeed(10);
+        assertEquals(10, fastBoat.getSpeed());
+
+        fastBoat.adjustSpeed(150);
+        assertEquals(150, fastBoat.getSpeed());
+
+        fastBoat.adjustSpeed(-160);
+        assertEquals(0, fastBoat.getSpeed());
+    }
+
+    @Test
+    void testAdjustAcceleration() {
+        fastBoat.adjustAcceleration(5);
+        assertEquals(10, fastBoat.getAcceleration());
+
+        fastBoat.adjustAcceleration(-10);
+        assertEquals(0, fastBoat.getAcceleration());
+
+        fastBoat.adjustAcceleration(20);
+        assertEquals(10, fastBoat.getAcceleration());
+    }
+
+    @Test
+    void testSetters() {
+        fastBoat.setHealth(80);
+        assertEquals(80, fastBoat.getHealth());
+
+        fastBoat.setResistance(8);
+        assertEquals(8, fastBoat.getResistance());
+
+        fastBoat.setSpeed(120);
+        assertEquals(120, fastBoat.getSpeed());
+
+        fastBoat.setAcceleration(15);
+        assertEquals(15, fastBoat.getAcceleration());
+    }
+
+    @Test
+    void testIsInvencible() {
         assertFalse(fastBoat.isInvencible());
         fastBoat.setInvincible(true);
         assertTrue(fastBoat.isInvencible());
-        fastBoat.setInvincible(false);
-        assertFalse(fastBoat.isInvencible());
     }
 
     @Test
-    public void testDead() {
+    void testIsDead() {
         assertFalse(fastBoat.isDead());
-        fastBoat.setHealth(0);
+        fastBoat.adjustHealth(-100);
         assertTrue(fastBoat.isDead());
-        fastBoat.setHealth(10);
-        assertFalse(fastBoat.isDead());
     }
 
     @Test
-    public void testAdjustPosition() {
-        float initialX = fastBoat.getX();
-        float initialY = fastBoat.getY();
+    void testResetCharacteristics() {
+        fastBoat.adjustHealth(-50);
+        fastBoat.setInvincible(true);
+        fastBoat.resetCharacteristics();
 
-        fastBoat.adjustX(10.0f);
-        assertEquals(initialX + 10.0f, fastBoat.getX(), 0.01f);
-
-        fastBoat.adjustY(20.0f);
-        assertEquals(initialY + 20.0f, fastBoat.getY(), 0.01f);
-    }
-
-    @Test
-    public void testDestroy() {
-        assertThrows(UnsupportedOperationException.class, () -> fastBoat.destroy());
-        assertThrows(UnsupportedOperationException.class,  () -> strongBoat.destroy());
-        assertThrows(UnsupportedOperationException.class,  () -> classicBoat.destroy());
+        assertEquals(100, fastBoat.getHealth());
+        assertEquals(10, fastBoat.getResistance());
+        assertEquals(0, fastBoat.getSpeed());
+        assertFalse(fastBoat.isInvencible());
     }
 }

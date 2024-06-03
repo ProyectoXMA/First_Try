@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class KeyBindingsTest {
+class KeyBindingsTest {
+
     private KeyBindings keyBindings;
 
     @BeforeEach
@@ -15,7 +16,7 @@ public class KeyBindingsTest {
     }
 
     @Test
-    void testDefaultKeyBindings() {
+    void testDefaultBindings() {
         assertEquals(Input.Keys.LEFT, keyBindings.getKeyForAction(UserAction.MOVE_LEFT));
         assertEquals(Input.Keys.RIGHT, keyBindings.getKeyForAction(UserAction.MOVE_RIGHT));
         assertEquals(Input.Keys.UP, keyBindings.getKeyForAction(UserAction.MOVE_UP));
@@ -28,8 +29,16 @@ public class KeyBindingsTest {
     void testSetKeyBinding() {
         keyBindings.setKeyBinding(UserAction.MOVE_LEFT, Input.Keys.A);
         assertEquals(Input.Keys.A, keyBindings.getKeyForAction(UserAction.MOVE_LEFT));
+    }
 
-        keyBindings.setKeyBinding(UserAction.MOVE_RIGHT, Input.Keys.D);
-        assertEquals(Input.Keys.D, keyBindings.getKeyForAction(UserAction.MOVE_RIGHT));
+    @Test
+    void testGetKeyForAction() {
+        assertEquals(Input.Keys.LEFT, keyBindings.getKeyForAction(UserAction.MOVE_LEFT));
+    }
+
+    @Test
+    void testGetActionForKey() {
+        assertEquals(UserAction.MOVE_LEFT, keyBindings.getActionForKey(Input.Keys.LEFT));
+        assertNull(keyBindings.getActionForKey(Input.Keys.A)); // Assuming A is not set by default
     }
 }
