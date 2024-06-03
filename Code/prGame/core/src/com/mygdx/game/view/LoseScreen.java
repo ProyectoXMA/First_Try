@@ -9,58 +9,66 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.controller.GeneralController;
+import com.mygdx.game.controller.MenuController;
+import com.mygdx.game.util.Config;
 
 public class LoseScreen implements Screen {
     // attributes for the screen
     private Stage stage;
     private Viewport viewport;
+    private SpriteBatch batch;
     private Music losingMusic;
     OrthographicCamera camera;
+    private GeneralController generalController;
 // attributes for the screen
     private final MyGdxGame game;
     private Texture backgroundImage;
     public LoseScreen(final MyGdxGame game){
         this.game = game;
+        batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false,800,480);
-        backgroundImage = new Texture(Gdx.files.internal("LosingScreen.jpg"));
+        camera.setToOrtho(false,Config.getWidth(),Config.getHeight());
+        backgroundImage = new Texture(Gdx.files.internal("losingScreen.png"));
         losingMusic = Gdx.audio.newMusic(Gdx.files.internal("LosingSound.mp3"));
         losingMusic.setLooping(true);
+        generalController = GeneralController.getInstance(game);
+        if(!Config.muted) losingMusic.setVolume((float)0.1);
+        else losingMusic.setVolume((float)0);
 
     }
 
     @Override
     public void show() {
-        viewport = new ExtendViewport(800, 480);
+        viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
         losingMusic.play();
-        losingMusic.setVolume((float)0.1);
     }
 
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(camera.combined);
         stage.act();
         stage.draw();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             losingMusic.stop();
-            game.setScreen(new MainMenuView(game));
+            generalController.showMainMenu();
         }
-        game.batch.begin();
-        game.batch.draw(backgroundImage,0,50,800,480);
-        game.font.draw(game.batch, "Press ENTER to go to MAIN MENU", 300,30);
-        game.batch.end();
+        batch.begin();
+        batch.draw(backgroundImage,0,0,Config.getWidth(),Config.getHeight());
+        batch.end();
     }
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true);
+
     }
 
     @Override
@@ -75,11 +83,11 @@ public class LoseScreen implements Screen {
 
     @Override
     public void hide() {
-        stage.dispose();
+        generalController.resetLeg();
     }
 
     @Override
     public void dispose() {
-        throw new UnsupportedOperationException("Unimplemented method 'dispose'");
+
     }
 }

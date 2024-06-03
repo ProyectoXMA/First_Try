@@ -7,11 +7,10 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.audio.Sound;
-import com.mygdx.game.GameState;
+import com.mygdx.game.util.Config;
 
 public class MinigameLogic {
 
-    private GameState gameState;
     private List<String> words;
     private String currentWord;
     private String typedWord;
@@ -25,15 +24,12 @@ public class MinigameLogic {
     private Sound incorrectSound;
     private Sound savedSound;
     private Sound typeSound;
-
-    public MinigameLogic(GameState gameState) {
-        this.gameState = gameState;
-        this.words = Arrays.asList("Dragon", "Boat", "Racing", "Duck", "Ancient", "Ritualistic", "China", "Competition", "River", "Tradition");
-        
+    public MinigameLogic() {
+        this.words = Arrays.asList("Dragon", "Boat", "Racing", "Duck", "Ancient", "China","River","Log","Stone");
         successCounter = 0;
         failCounter = 0;
         typedWord = "";
-        timeLimit = 10000;
+        timeLimit = 5000;
         incorrectSound = Gdx.audio.newSound(Gdx.files.internal("incorrectSound.mp3"));
         savedSound = Gdx.audio.newSound(Gdx.files.internal("respawnSound.mp3"));
         typeSound = Gdx.audio.newSound(Gdx.files.internal("typeSound.mp3"));
@@ -59,9 +55,7 @@ public class MinigameLogic {
         return typedWord;
     }
 
-    public GameState getGameState() {
-        return gameState;
-    }
+    public int getSuccessCounter() {return successCounter;}
 
     /**
      * @return word  that will currently be displayed up to currentCharIndex
@@ -110,7 +104,7 @@ public class MinigameLogic {
      * typedWord is reseted on every function call
      */
     public void generateNewWord(){
-        r = new Random().nextInt(10); // bound to number n of words in List<String> words
+        r = new Random().nextInt(9); // bound to number n of words in List<String> words
         currentWord = words.get(r);
         typedWord = "";
     }
@@ -119,7 +113,7 @@ public class MinigameLogic {
       * Method to verify typed words read from Player input
       */
       public void checkPartialWord(){
-        typeSound.play();
+        if(!Config.muted)typeSound.play();
 
         // First we declare what we expect to be typed in each interation
         String expectedSubstring = getCurrentWord();
@@ -140,7 +134,7 @@ public class MinigameLogic {
                     successCounter++;
                 }
             } else {
-                incorrectSound.play();
+                if(!Config.muted)incorrectSound.play();
                 currentCharIndex = 0; // On incorrect typing, reset word index to the firt character
                 failCounter++;
                 checkGameState();
@@ -151,25 +145,23 @@ public class MinigameLogic {
     }
 
     /**
-      * Method to check and return the result of the minigame
+      * Method to check and return the result of the minigame.
+     * @return 1 if the player has successfully completed the minigame, -1 if the player has failed the minigame, 0 if the game is still ongoing
       */
     public int checkGameState(){
-        int state = 0;
         if(successCounter == 1){
-            //gameState.setMinigamePlaysLeft(0);
-            //gameState.getMyBoat().adjustHealth(gameState.getBaseHealth());
             typeSound.dispose();
             incorrectSound.dispose();
+            if(!Config.muted)savedSound.play();
             savedSound.dispose();
-            state = successCounter;
-            savedSound.play();
+           return 1;
         }else if(failCounter == 3){
             typeSound.dispose();
             incorrectSound.dispose();
             savedSound.dispose();
-            state = failCounter;
+            return -1;
         }
-        return state;
+        return 0;
     }
 
     /**

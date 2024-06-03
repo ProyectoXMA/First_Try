@@ -1,5 +1,6 @@
 package com.mygdx.game.model.obstacles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.Collidable;
 import com.mygdx.game.model.CollidableVisitor;
@@ -11,20 +12,37 @@ import com.mygdx.game.model.GameObject;
  */
 public abstract class Obstacle extends GameObject implements Collidable {
     private int damage;
-    private boolean wasHit = false;
+    private int speedModifier;
 
     /**
      * Constructs an Obstacle with the specified damage and hitbox.
      * @param damage the damage value of the obstacle
      * @param hitbox the hitbox of the obstacle
      */
-    public Obstacle(int damage, Rectangle hitbox){
+    protected Obstacle(int damage, int speedModifier, Rectangle hitbox){
         super(hitbox);
         this.damage = damage;
+        this.speedModifier = speedModifier;
     }
-    public boolean getWasHit(){
-        return wasHit;
+
+    /**
+     * Factory method to create an obstacle given its type.
+     * @param type the type of obstacle to create
+     * @return the created obstacle
+     */
+    public static Obstacle createObstacle(ObstacleType type) {
+        switch (type) {
+            case LOG:
+                return new Log();
+            case DUCK:
+                return new Duck();
+            case STONE:
+                return new Stone();
+            default:
+                throw new IllegalArgumentException("Invalid obstacle type");
+        }
     }
+
     public int getDamage(){
         return damage;
     }
@@ -34,14 +52,18 @@ public abstract class Obstacle extends GameObject implements Collidable {
      * The specific behavior of this method is determined by the implementing class.
      * @param visitor the visitor to accept
      */
+    //Maybe we should delete it
     public abstract void accept(ObstacleVisitor visitor);
-
-    /**
-     * Accepts a visitor of type CollidableVisitor and calls its visitObstacle method.
-     * @param visitor the visitor to accept
-     */
-    public void accept(CollidableVisitor visitor){
-        visitor.visitObstacle(this);
+    @Override
+    public void destroy() {
+        Gdx.app.log("Obstacle", "Obstacle destroyed");
+        //throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+    }
+    public void setSpeedModifier(int speedModifier) {
+        this.speedModifier = speedModifier;
+    }
+    public int getSpeedModifier() {
+        return speedModifier;
     }
 }
 

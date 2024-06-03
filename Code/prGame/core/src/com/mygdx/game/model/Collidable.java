@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
  * needed for the visitor pattern in collision handling.
  */
 public interface Collidable {
+
+    public boolean getWasHit();
+    public void setWasHit(boolean hit); //When a b
     public Rectangle getHitbox();
-    public void accept(CollidableVisitor visitor);
 }
