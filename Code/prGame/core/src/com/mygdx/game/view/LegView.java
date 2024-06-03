@@ -43,7 +43,7 @@ public class LegView {
     private static final Texture invincibilityImage = new Texture("powerUps/shield.png");
     private static final Texture healthBoostImage = new Texture("powerUps/health.png");
     private static final Texture speedBoostImage = new Texture("powerUps/speed.png");
-    private static final Texture backgroundImage = new Texture("background3.png");
+    private static Texture backgroundImage;
     private static final Texture laneLimitImage = stoneImage;
     private static final Texture timerIcon = new Texture("sandWatch.png");
     private static final Texture heartIcon = new Texture("heartHp.png");
@@ -60,6 +60,17 @@ public class LegView {
         // Create the camera and the SpriteBatch
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Config.getWidth(),  Config.getHeight());
+        switch (leg.getLevel()){
+            case 1:
+                backgroundImage = new Texture("background1.png");
+                break;
+            case 2:
+                backgroundImage = new Texture("background2.png");
+                break;
+            case 3:
+                backgroundImage = new Texture("background3.png");
+                break;
+        }
 
 
     }

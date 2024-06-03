@@ -183,4 +183,8 @@ public class Leg {
     public boolean hasReachedGoal() {
         return player.getBoat().getY() + player.getBoat().getHeight() >= Lane.HEIGHT;
     }
+
+    public int getLevel() {
+        return level;
+    }
 }
