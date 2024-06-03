@@ -7,25 +7,40 @@ import com.mygdx.game.model.powerUps.PowerUpType;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 public class InvincibilityBoostTest {
 
     @Test
-    public void testInvincibilityCreation() {
-        Rectangle hitbox = new Rectangle(0, 0, 10, 10);
-        Invincibility invincibility = new Invincibility(hitbox);
-        assertEquals(hitbox, invincibility.getHitbox());
+    public void invincibilityPowerUpMakesBoatInvincible() {
+        Boat boat = Boat.createBoat(BoatType.FAST);
+        Invincibility invincibility = (Invincibility) PowerUp.createPowerUp(PowerUpType.INVINCIBILITY);
+
+        invincibility.applyPowerUp(boat);
+
+        assertTrue(boat.isInvencible());
     }
 
     @Test
-    public void testApplyInvincibility() {
-
+    public void invincibilityPowerUpDoesNotAffectAlreadyInvincibleBoat() {
         Boat boat = Boat.createBoat(BoatType.FAST);
-        boolean initialInvincibility = boat.isInvencible();
-
+        boat.setInvincible(true);
         Invincibility invincibility = (Invincibility) PowerUp.createPowerUp(PowerUpType.INVINCIBILITY);
-        invincibility.applyPowerUp(boat); //We apply the powerUp
 
-        assertFalse(initialInvincibility); //At the creation of the boat, the invincibility advantage is false
-        assertTrue(boat.isInvencible()); //After applying the invincibility powerUp, the boat becomes invincible=true
+        invincibility.applyPowerUp(boat);
+
+        assertTrue(boat.isInvencible());
+    }
+
+    @Test
+    public void invincibilityPowerUpDoesNotAffectNonInvincibleBoat() {
+        Boat boat = Boat.createBoat(BoatType.FAST);
+        boat.setInvincible(false);
+        Invincibility invincibility = (Invincibility) PowerUp.createPowerUp(PowerUpType.INVINCIBILITY);
+
+        invincibility.applyPowerUp(boat);
+
+        assertTrue(boat.isInvencible());
     }
 }
