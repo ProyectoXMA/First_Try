@@ -3,6 +3,7 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.model.Boat;
 import com.mygdx.game.model.Lane;
@@ -33,6 +35,10 @@ public class LegView {
     OrthographicCamera camera;
     private SpriteBatch batch;
     private BitmapFont font;
+
+
+
+    private float timer;
     private static final Texture boatResistanceImage = new Texture("boats/resistanceBoat.png");
     private static final Texture boatSpeedImage = new Texture("boats/speedBoat.png");
     private static final Texture boatClassicImage = new Texture("boats/classicBoat.png");
@@ -44,19 +50,27 @@ public class LegView {
     private static final Texture speedBoostImage = new Texture("powerUps/speed.png");
     private static final Texture backgroundImage = new Texture("background3.png");
     private static final Texture laneLimitImage = stoneImage;
+    private static final Texture timerIcon = new Texture(Gdx.files.internal("minigameBackground.png"));
+    // The countdown timer
+
     public LegView(final MyGdxGame game, Leg leg) {
         this.game = game;
         this.leg = leg;
+        this.font = new BitmapFont();
+        this.font.setColor(Color.BLACK);
+        this.timer = 0.0f; // Initialize the timer to 0 seconds
         batch = new SpriteBatch();
         font = new BitmapFont();
         // Create the camera and the SpriteBatch
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Config.getWidth(),  Config.getHeight());
+
+
     }
     public Camera getCamera() {
         return camera;
     }
-    public void render() {
+    public void render(float delta) {
         // Clear the screen with a dark blue color
         ScreenUtils.clear(0, 0, 0.2f, 1);
         // Tell the camera to update its matrices
@@ -69,6 +83,9 @@ public class LegView {
         drawLeg();
         drawUI();
         drawHealth();
+        font.draw(batch, "" + (int)timer, (camera.position.x + ((float)Config.getWidth() / 2)) - 100, (camera.position.y + ((float)Config.getHeight() / 2)) - 10);
+        batch.draw(timerIcon, Config.getWidth()-60, Config.getHeight()-25, camera.position.x + ((float)Config.getWidth() / 2) - 150, (camera.position.y + ((float)Config.getHeight() / 2)) - 60);
+        timer += delta;
         batch.end();
     }
     private void drawBackground() {

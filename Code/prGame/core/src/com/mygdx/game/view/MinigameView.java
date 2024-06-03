@@ -49,6 +49,7 @@ public class MinigameView {
     GlyphLayout glyphLayout;
 
 
+
 // Constructor
     public MinigameView(final MyGdxGame game, MinigameLogic minigameLogic) {
         this.game = game;

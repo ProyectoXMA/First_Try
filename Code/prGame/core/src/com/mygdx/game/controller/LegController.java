@@ -65,7 +65,7 @@ public class LegController implements Screen {
             generalController.showWinningScreen();
         }
         leg.update(delta);
-        view.render();
+        view.render(delta);
     }
     @Override
     public void resize(int width, int height) {
