@@ -26,8 +26,8 @@ public class Boat extends GameObject implements Movable{
     private int currentResistance;
     private float currentSpeed;
     private int currenAcceleration;
-    private boolean returnToLifeExceeded;
-    private boolean isInvencible;
+    private boolean returnToLife = false;
+    private boolean isInvencible = false;
 
     /**
      * Private constructor of class Boat, the only way to create a boat is using the factory method createBoat
@@ -50,8 +50,6 @@ public class Boat extends GameObject implements Movable{
         currenAcceleration = baseAcceleration;
         currentResistance = baseResistance;
         currentSpeed = 0;
-        isInvencible = false; //not invencible at the beginning, just when it is hit by an invencible power up
-        returnToLifeExceeded = false;
     }
 
     /**
@@ -124,12 +122,12 @@ public class Boat extends GameObject implements Movable{
         return baseHealth;
     }
 
-    public boolean isReturnToLifeExceeded() {
-        return returnToLifeExceeded;
-    }
-    public void setReturnToLifeExceeded(boolean returnToLifeExceeded) {this.returnToLifeExceeded = returnToLifeExceeded;}
-    public boolean hasReturnToLifeExceeded() {
-        return returnToLifeExceeded;
+    public boolean hasReturnToLife() {
+        if(!returnToLife) {
+            returnToLife = true;
+            return false;
+        }
+        return true;
     }
     //Check that the boat is invencible just to make sure
     //that when colliding with an obstacle the boat is not decreesing its health
@@ -137,7 +135,7 @@ public class Boat extends GameObject implements Movable{
         return this.isInvencible;
     }
     //Verify if the boat is dead, no more health left
-    public boolean dead(){
+    public boolean isDead(){
         return this.currentHealth <= 0;
     }
     //When the boat is hit by an obstacle, it decreases its health if it has hit it and if it is not invencible

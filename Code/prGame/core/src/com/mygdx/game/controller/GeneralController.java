@@ -16,6 +16,7 @@ public class GeneralController {
     private SettingsController settingsController;
     private LoseScreen loseScreen;
     private minigameTutorial mTutorial;
+    private BoatSelectionController boatSelectionController;
     private Screen previousScreen;
 
     private GeneralController(MyGdxGame game){
@@ -29,6 +30,7 @@ public class GeneralController {
         settingsController = new SettingsController(game);
         loseScreen = new LoseScreen(game);
         mTutorial = new minigameTutorial(game);
+        boatSelectionController = new BoatSelectionController(game);
     }
     /**
      * Singleton pattern to ensure there is only one instance of the GeneralController that is accessible for all classes.
@@ -43,13 +45,16 @@ public class GeneralController {
         return instance;
     }
     public void showMainMenu(){
-        game.setScreen(new MenuController(game));
+        game.setScreen(menuController);
     }
     public void showLegScreen(){
         game.setScreen(legController);
     }
     public void showMinigameScreen(){
         game.setScreen(minigameController);
+    }
+    public void showBoatSelectionScreen(){
+        game.setScreen(boatSelectionController);
     }
     public void showPauseScreen(){
         game.getScreen().pause();
@@ -71,6 +76,9 @@ public class GeneralController {
         minigameController.dispose();
         pauseController.dispose();
         settingsController.dispose();
+        loseScreen.dispose();
+        mTutorial.dispose();
+        boatSelectionController.dispose();
     }
 
     public void reset(){

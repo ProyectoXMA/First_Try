@@ -23,6 +23,7 @@ public class MenuController implements Screen{
     private final MyGdxGame game;
     private final MenuView view;
     private final Stage stage;
+    private final GeneralController generalController;
     private final int BUTTON_WIDTH = Config.getWidth()/4;
     private final int BUTTON_HEIGHT = Config.getHeight()/8;
     private final float textSize = (float) BUTTON_HEIGHT / 135;
@@ -44,6 +45,7 @@ public class MenuController implements Screen{
         view = new MenuView(stage);
         // skin loading
         skin = new Skin(Gdx.files.internal("skins/glassy-ui.json"));
+        this.generalController = GeneralController.getInstance(game);
     }
 
     /**
@@ -146,7 +148,7 @@ public class MenuController implements Screen{
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new LegController(game));
+                generalController.showLegScreen();
             }
         });
 
@@ -154,7 +156,7 @@ public class MenuController implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
-                game.setScreen(new SettingsController(game));
+                generalController.showSettingsScreen();
             }
         });
 
@@ -169,7 +171,7 @@ public class MenuController implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
-                game.setScreen(new BoatSelectionController(game));
+                generalController.showBoatSelectionScreen();
             }
         });
 

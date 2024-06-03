@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.model.Boat;
 import com.mygdx.game.model.Leg;
 import com.mygdx.game.util.Config;
 import com.mygdx.game.view.LegView;
@@ -15,7 +16,8 @@ public class LegController implements Screen {
     LegView view;
     Leg leg;
     InputManager inputManager;
-    private boolean paused = false;
+    private Boat playerBoat;
+    private boolean first = true;
     private Music raceMusic = Gdx.audio.newMusic(Gdx.files.internal("raceSound.mp3"));
 
     public LegController(final MyGdxGame game){
@@ -27,7 +29,8 @@ public class LegController implements Screen {
     }
     @Override
     public void show() {
-        if(!paused) {
+        if(first) {
+            first = false;
             this.inputManager = new InputManager();
             this.inputManager.addSubscriber(game.getPlayer());
         }
@@ -36,8 +39,9 @@ public class LegController implements Screen {
         else raceMusic.setVolume(0);
         raceMusic.setLooping(true);
         raceMusic.play();
-        paused = false;
+
         Gdx.input.setInputProcessor(this.inputManager);
+        playerBoat = game.getPlayer().getBoat();
     }
     @Override
     public void render(float delta) {//This render is updating the model, by means of update, and the view.
@@ -46,13 +50,13 @@ public class LegController implements Screen {
             raceMusic.dispose();
             generalController.showPauseScreen();
         }
-        if(leg.getLanes().get(1).getBoat().dead()){
-            raceMusic.stop();
-            raceMusic.dispose();
-            leg.getLanes().get(1).getBoat().setHealth(leg.getLanes().get(1).getBoat().getBaseHealth());
-            if(leg.getLanes().get(1).getBoat().hasReturnToLifeExceeded()) generalController.showLoseScreen();
-            generalController.showMinigameTutorial();
-        }
+        if(game.getPlayer().getBoat().isDead())
+            if(game.getPlayer().getBoat().hasReturnToLife())
+                generalController.showLoseScreen();
+            else {
+                playerBoat.adjustHealth(playerBoat.getBaseHealth());
+                generalController.showMinigameTutorial();
+            }
         leg.update(delta);
         view.render();
     }
