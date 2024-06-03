@@ -21,9 +21,10 @@ import com.mygdx.game.view.BoatSelectionView;
 public class BoatSelectionController implements Screen{
 
     private final MyGdxGame game;
-    private final BoatSelectionView view;
+    private BoatSelectionView view;
     private final Player player;
-    private final Stage stage;
+    private Stage stage;
+    private GeneralController generalController;
     private final int BUTTON_WIDTH = Config.getWidth()/3;
     private final int BUTTON_HEIGHT = Config.getHeight()/8;
     private final float imageWidth = ((float) Config.getWidth()) * 0.18f;
@@ -46,14 +47,8 @@ public class BoatSelectionController implements Screen{
 
     public BoatSelectionController(MyGdxGame game){
         this.game = game;
-
         // create stage and set it as input processor
-        stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
-
-        // create a view for the election menu
-        view = new BoatSelectionView(stage);
-
+        generalController = GeneralController.getInstance(game);
         //defines the player
         player = game.getPlayer();
 
@@ -71,6 +66,10 @@ public class BoatSelectionController implements Screen{
 
     @Override
     public void show() {
+        stage = new Stage(new ScreenViewport());
+        view = new BoatSelectionView(stage);
+        // create a view for the election menu
+        Gdx.input.setInputProcessor(stage);
         // Create a table that fills the screen. Everything else will go inside this table.
         Table table = new Table();
         table.setFillParent(true);
@@ -115,13 +114,12 @@ public class BoatSelectionController implements Screen{
         table.row().pad(0, 0, 10, 0);
         table.add(back).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).colspan(3);
 
-
+        Screen screen = this;
         // create button listeners
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                dispose();
-                game.setScreen(new MenuController(game));
+                generalController.showMainMenu();
             }
         });
 
@@ -177,7 +175,6 @@ public class BoatSelectionController implements Screen{
     @Override
     public void render(float delta) {
         view.update();
-
     }
 
     /**
@@ -187,11 +184,6 @@ public class BoatSelectionController implements Screen{
      */
     @Override
     public void resize(int width, int height) {
-        // change the stage's viewport when the screen size is changed
-        stage.getViewport().update(width, height, true);
-        Config.setHeight(height);
-        Config.setWidth(width);
-        Gdx.graphics.setWindowedMode(Config.getWidth(), Config.getHeight());
     }
 
     @Override
@@ -209,7 +201,7 @@ public class BoatSelectionController implements Screen{
     @Override
     public void hide() {
         // TODO Auto-generated method stub
-
+        if(stage != null) stage.clear();
     }
 
     /**
@@ -217,8 +209,6 @@ public class BoatSelectionController implements Screen{
      */
     @Override
     public void dispose() {
-        // dispose of assets when not needed anymore
-        stage.dispose();
     }
 
 }

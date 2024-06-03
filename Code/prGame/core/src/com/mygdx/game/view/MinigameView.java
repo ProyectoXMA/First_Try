@@ -7,8 +7,10 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -23,9 +25,9 @@ import com.mygdx.game.util.Config;
 public class MinigameView {
 // Attributes for the screen
     private Stage stage;
+    private SpriteBatch batch;
     private Viewport viewport;
     private OrthographicCamera camera;
-    private PauseController pause;
 // Attributes for the minigame
     private final MyGdxGame game;
     private final MinigameLogic minigameLogic;
@@ -49,6 +51,8 @@ public class MinigameView {
     public MinigameView(final MyGdxGame game, MinigameLogic minigameLogic) {
         this.game = game;
         this.minigameLogic = minigameLogic;
+        stage = new Stage();
+        batch = new SpriteBatch();
 
         epicMusic = Gdx.audio.newMusic(Gdx.files.internal("countdownMusic.mp3"));
         epicMusic.setLooping(true);
@@ -71,8 +75,7 @@ public class MinigameView {
         glyphLayout = new GlyphLayout();
         font = new BitmapFont();
         font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-        font.getData().setScale(10,10); 
-        pause = new PauseController(game);
+        font.getData().setScale(10,10);
     }
 
 
@@ -91,21 +94,21 @@ public class MinigameView {
     public void update() {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(camera.combined);
 
         stage.act();
         stage.draw();
 
-        game.batch.begin();
-        game.batch.draw(backgroundImage,0,0, Config.getWidth(), Config.getHeight());
+        batch.begin();
+        batch.draw(backgroundImage,0,0, Config.getWidth(), Config.getHeight());
         if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
             String text = "MEMORIZE-TYPE!!";
             glyphLayout.setText(font, text);                                                  
-            game.font.draw(game.batch,text,(Config.getWidth()/2)-70,Config.getHeight()-70); 
+            font.draw(batch,text,(Config.getWidth()/2)-70,Config.getHeight()-70);
         }else{
             String text = "MEMORIZE-TYPE!!";
             glyphLayout.setText(font, text);                                                  
-            game.font.draw(game.batch,text,(Config.getWidth()/2)-70,Config.getHeight()-50);
+            font.draw(batch,text,(Config.getWidth()/2)-70,Config.getHeight()-50);
         }
         // Background sceneary
 
@@ -113,54 +116,57 @@ public class MinigameView {
         if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
             String character = minigameLogic.getShowedString();
             glyphLayout.setText(font, character);
-            game.font.draw(game.batch, character,(Config.getWidth()/2)-10,Config.getHeight()-120);
+            font.draw(batch, character,(Config.getWidth()/2)-10,Config.getHeight()-120);
         }else{
             String character = minigameLogic.getShowedString();
             glyphLayout.setText(font, character);
-            game.font.draw(game.batch, character,(Config.getWidth()/2)-10,Config.getHeight()-90);
+            font.draw(batch, character,(Config.getWidth()/2)-10,Config.getHeight()-90);
         }
         // Displays on real time user input
         if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
             String reply = "Reply: " + minigameLogic.getTypedWord();
             glyphLayout.setText(font, reply);
-            game.font.draw(game.batch,reply, (Config.getWidth()/2)-80,(Config.getHeight()/17)+100);
+            font.draw(batch,reply, (Config.getWidth()/2)-80,(Config.getHeight()/17)+100);
         }else{
             String reply = "Reply: " + minigameLogic.getTypedWord();
             glyphLayout.setText(font, reply);
-            game.font.draw(game.batch,reply, (Config.getWidth()/2)-80,(Config.getHeight()/17)+60);
+            font.draw(batch,reply, (Config.getWidth()/2)-80,(Config.getHeight()/17)+60);
         }
         // Displays timer countdown        
         if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
             String timer = String.format("[%.2f]", minigameLogic.getRemainingTime());
             glyphLayout.setText(font, timer);           
-            game.batch.draw(timerIcon, Config.getWidth()-70, Config.getHeight()-45, timerWidth, timerHeight);
-            game.font.draw(game.batch,timer, Config.getWidth()-40, Config.getHeight()-30);
+            batch.draw(timerIcon, Config.getWidth()-70, Config.getHeight()-45, timerWidth, timerHeight);
+            font.draw(batch,timer, Config.getWidth()-40, Config.getHeight()-30);
         }else{
             String timer = String.format("[%.2f]", minigameLogic.getRemainingTime());
             glyphLayout.setText(font, timer);           
-            game.batch.draw(timerIcon, Config.getWidth()-60, Config.getHeight()-25, timerWidth, timerHeight);
-            game.font.draw(game.batch,timer, Config.getWidth()-40, Config.getHeight()-10);
+            batch.draw(timerIcon, Config.getWidth()-60, Config.getHeight()-25, timerWidth, timerHeight);
+            font.draw(batch,timer, Config.getWidth()-40, Config.getHeight()-10);
         }
         // Displays to the user the attempts left to try to complete the minigame before Game Over        
         if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
             String timeLeft = "Remaining attempts: " + (3-minigameLogic.getFailCounter());
             glyphLayout.setText(font, timeLeft);
-            game.font.draw(game.batch,timeLeft,(Config.getWidth()/2)-80,(Config.getHeight()/17));
+            font.draw(batch,timeLeft,(Config.getWidth()/2)-80,(Config.getHeight()/17));
         }else{
             String timeLeft = "Remaining attempts: " + (3-minigameLogic.getFailCounter());
             glyphLayout.setText(font, timeLeft);
-            game.font.draw(game.batch,timeLeft,(Config.getWidth()/2)-80,(Config.getHeight()/17));
+            font.draw(batch,timeLeft,(Config.getWidth()/2)-80,(Config.getHeight()/17));
         }
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             epicMusic.stop();
             game.setScreen(new PauseController(game));
         }
-        game.batch.end();
+        batch.end();
     }
     public void dispose() {
         epicMusic.stop();
         epicMusic.dispose();
         backgroundImage.dispose();
+        stage.dispose();
+        font.dispose();
+        batch.dispose();
     }
     
 }

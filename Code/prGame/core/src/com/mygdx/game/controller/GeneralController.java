@@ -50,6 +50,9 @@ public class GeneralController {
     public void showLegScreen(){
         game.setScreen(legController);
     }
+    public void resetLeg(){
+        legController = new LegController(game);
+    }
     public void showMinigameScreen(){
         game.setScreen(minigameController);
     }
@@ -57,7 +60,6 @@ public class GeneralController {
         game.setScreen(boatSelectionController);
     }
     public void showPauseScreen(){
-        game.getScreen().pause();
         game.setScreen(pauseController);
     }
     public void showSettingsScreen(){
@@ -67,22 +69,10 @@ public class GeneralController {
         game.setScreen(loseScreen);
     }
     public void quitGame(){
-        game.dispose();
         Gdx.app.exit();
-    }
-    public void dispose(){
-        legController.dispose();
-        menuController.dispose();
-        minigameController.dispose();
-        pauseController.dispose();
-        settingsController.dispose();
-        loseScreen.dispose();
-        mTutorial.dispose();
-        boatSelectionController.dispose();
     }
 
     public void reset(){
-        dispose();
         instance = null;
     }
 

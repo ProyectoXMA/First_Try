@@ -40,7 +40,7 @@ public class MenuController implements Screen{
     public MenuController(MyGdxGame game){
         this.game = game;
         // create stage and set it as input processor
-        stage = new Stage(new ScreenViewport());
+        this.stage = new Stage();
         // create a view for the settings
         view = new MenuView(stage);
         // skin loading
@@ -141,14 +141,16 @@ public class MenuController implements Screen{
         quit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
+                dispose();
+                generalController.quitGame();
             }
         });
 
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                generalController.showLegScreen();
+                dispose();
+                generalController.resetLeg(); generalController.showLegScreen();
             }
         });
 
@@ -259,8 +261,6 @@ public class MenuController implements Screen{
 
     @Override
     public void resize(int width, int height) {
-        // change the stage's viewport when the screen size is changed
-        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -278,7 +278,7 @@ public class MenuController implements Screen{
     @Override
     public void hide() {
         // TODO Auto-generated method stub
-
+        if(stage!= null) stage.clear();
     }
 
     /**
@@ -287,8 +287,6 @@ public class MenuController implements Screen{
      */
     @Override
     public void dispose() {
-        // dispose of assets when not needed anymore
-        stage.dispose();
     }
 
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.controller.GeneralController;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.controller.MenuController;
@@ -20,26 +21,13 @@ public class MyGdxGame extends Game {
 	}
 
 	/**
-	 * The SpriteBatch object is used to draw 2D images.
-	 */
-	public SpriteBatch batch;
-
-	/**
-	 * The BitmapFont object is used to draw text.
-	 */
-	public BitmapFont font;
-
-	/**
 	 * The create method is called when the application is first created.
 	 * It initializes the SpriteBatch and BitmapFont objects and sets the initial screen to MainMenuScreen.
 	 */
 	public void create() {
 		player = new Player();
-		batch = new SpriteBatch();
-		font = new BitmapFont(); // Default Arial font
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		GeneralController.getInstance(this).showMainMenu();
-
 	}
 
 	/**
@@ -54,7 +42,5 @@ public class MyGdxGame extends Game {
 	 * It releases all the resources used by the SpriteBatch and BitmapFont objects.
 	 */
 	public void dispose() {
-		batch.dispose();
-		font.dispose();
 	}
 }

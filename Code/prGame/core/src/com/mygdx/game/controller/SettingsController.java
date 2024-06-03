@@ -40,17 +40,15 @@ public class SettingsController implements Screen{
     public SettingsController(MyGdxGame game){
         this.game = game;
         generalController = GeneralController.getInstance(game);
-
         // create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
-
         // create a view for the settings
         view = new SettingView(stage);
     }
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
         // Create a table that fills the screen. Everything else will go inside this table.
         Table table = new Table();
         table.setFillParent(true);
@@ -232,7 +230,6 @@ public class SettingsController implements Screen{
     @Override
     public void render(float delta) {
         view.update();
-
         //Check if controls have to be changed, if so put ... as label text
         if(awaitingLeftKeyChange) {
             changeControls(UserAction.MOVE_LEFT);
@@ -253,11 +250,6 @@ public class SettingsController implements Screen{
      */
     @Override
     public void resize(int width, int height) {
-        // change the stage's viewport when the screen size is changed
-        stage.getViewport().update(width, height, true);
-        Config.setHeight(height);
-        Config.setWidth(width);
-        Gdx.graphics.setWindowedMode(Config.getWidth(), Config.getHeight());
     }
 
     @Override
@@ -275,7 +267,7 @@ public class SettingsController implements Screen{
     @Override
     public void hide() {
         // TODO Auto-generated method stub
-
+        if(stage != null) stage.clear();
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.mygdx.game.view;
 
+import java.security.BasicPermission;
 import java.security.Key;
 
 import com.badlogic.gdx.Gdx;
@@ -9,6 +10,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -21,6 +24,7 @@ public class WinningScreen implements Screen {
     // attributes for the screen
     private Stage stage;
     private Viewport viewport;
+    private SpriteBatch batch;
     private Music winningMusic;
     OrthographicCamera camera;
 // attributes for the screen
@@ -29,6 +33,7 @@ public class WinningScreen implements Screen {
     public WinningScreen(final MyGdxGame game){
         this.game = game;
         camera = new OrthographicCamera();
+        batch = new SpriteBatch();
         camera.setToOrtho(false,Config.getWidth(),Config.getHeight());
         backgroundImage = new Texture(Gdx.files.internal("winningScreen.png"));
         winningMusic = Gdx.audio.newMusic(Gdx.files.internal("winningTheme.mp3"));
@@ -48,16 +53,16 @@ public class WinningScreen implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(camera.combined);
         stage.act();
         stage.draw();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             winningMusic.stop();
             game.setScreen(new MenuController(game));
         }
-        game.batch.begin();
-        game.batch.draw(backgroundImage,0,0,Config.getWidth(),Config.getHeight());
-        game.batch.end();
+        batch.begin();
+        batch.draw(backgroundImage,0,0,Config.getWidth(),Config.getHeight());
+        batch.end();
     }
     @Override
     public void resize(int width, int height) {
@@ -77,10 +82,13 @@ public class WinningScreen implements Screen {
     @Override
     public void hide() {
         stage.dispose();
+        batch.dispose();
     }
 
     @Override
     public void dispose() {
-        throw new UnsupportedOperationException("Unimplemented method 'dispose'");
+        stage.dispose();
+        batch.dispose();
+        winningMusic.dispose();
     }
 }

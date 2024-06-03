@@ -2,6 +2,7 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -23,6 +24,7 @@ public class PauseController implements Screen{
     private GeneralController generalController;
 
     private final Stage stage;
+    private SpriteBatch batch;
     private final int BUTTON_WIDTH = Config.getWidth()/4;
     private final int BUTTON_HEIGHT = Config.getHeight()/8;
     private final float textSize = (float) BUTTON_HEIGHT / 135;
@@ -37,11 +39,9 @@ public class PauseController implements Screen{
         this.pauseView = new PauseView(game, this);
         // create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
-
         // skin loading
         skin = new Skin(Gdx.files.internal("skins/glassy-ui.json"));
-
+        batch = new SpriteBatch();
         generalController = GeneralController.getInstance(game);
     }
 
@@ -51,7 +51,9 @@ public class PauseController implements Screen{
      */
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
         // Create a menu table that fills the screen. Everything menu related will go inside this table.
+        batch = new SpriteBatch();
         menuPause = new Table();
         menuPause.setVisible(true);
         menuPause.setFillParent(true);
@@ -76,9 +78,9 @@ public class PauseController implements Screen{
         menuPause.row().pad(0,0,0,0);
         menuPause.add(quit).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,80,0).align(Align.center);
         menuPause.row().pad(0,0,0,0);
-        game.batch.begin();
-        menuPause.draw(game.batch, BUTTON_HEIGHT);
-        game.batch.end();
+        batch.begin();
+        menuPause.draw(batch, BUTTON_HEIGHT);
+        batch.end();
         // create button mouse listeners
         quit.addListener(new ChangeListener() {
             @Override
@@ -127,8 +129,8 @@ public class PauseController implements Screen{
 
     @Override
     public void hide() {
-        // TODO Auto-generated method stub
-
+        if (stage != null) stage.clear();
+        if (batch != null) batch.dispose();
     }
 
     /**
@@ -139,6 +141,8 @@ public class PauseController implements Screen{
     public void dispose() {
         // dispose of assets when not needed anymore
         stage.dispose();
+        skin.dispose();
+        batch.dispose();
     }
 
 }
