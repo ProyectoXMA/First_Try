@@ -1,18 +1,15 @@
 package com.mygdx.game.view;
 
+import java.util.Set;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.model.Boat;
 import com.mygdx.game.model.Lane;
@@ -26,8 +23,6 @@ import com.mygdx.game.model.powerUps.Invincibility;
 import com.mygdx.game.model.powerUps.PowerUp;
 import com.mygdx.game.model.powerUps.SpeedBoost;
 import com.mygdx.game.util.Config;
-
-import java.util.Set;
 
 public class LegView {
     final MyGdxGame game;
@@ -50,7 +45,8 @@ public class LegView {
     private static final Texture speedBoostImage = new Texture("powerUps/speed.png");
     private static final Texture backgroundImage = new Texture("background3.png");
     private static final Texture laneLimitImage = stoneImage;
-    private static final Texture timerIcon = new Texture("timerIcon.png");
+    private static final Texture timerIcon = new Texture("sandWatch.png");
+    private static final Texture heartIcon = new Texture("heartHp.png");
     // The countdown timer
 
     public LegView(final MyGdxGame game, Leg leg) {
@@ -83,8 +79,7 @@ public class LegView {
         drawLeg();
         drawUI();
         drawHealth();
-        font.draw(batch, "" + (int)timer, (camera.position.x + ((float)Config.getWidth() / 2)) - 100, (camera.position.y + ((float)Config.getHeight() / 2)) - 10);
-        batch.draw(timerIcon, camera.position.x + ((float)Config.getWidth() / 2) - 150, (camera.position.y + ((float)Config.getHeight() / 2)) - 60, Config.getWidth() / 96, Config.getHeight()/ 54);
+        drawTimer();
         timer += delta;
         batch.end();
     }
@@ -161,12 +156,14 @@ public class LegView {
         //...
     }
     private void drawTimer() {
-        //TODO
+        font.draw(batch, "" + (int)timer, (camera.position.x + ((float)Config.getWidth() / 2)) - 100, (camera.position.y + ((float)Config.getHeight() / 2)) - 10);
+        batch.draw(timerIcon, camera.position.x + ((float)Config.getWidth() / 2) - 150, (camera.position.y + ((float)Config.getHeight() / 2)) - 60, Config.getWidth() / 96, Config.getHeight()/ 54);
     }
     private void drawHealth() {
         int health = leg.getLanes().get(1).getBoat().getHealth();
         String s = Integer.toString(health);
-        font.draw(batch,s,0,100);
+        font.draw(batch,s,camera.position.x + ((float)Config.getWidth()/100),camera.position.y + ((float)Config.getHeight()/100));
+        batch.draw(heartIcon,camera.position.x + (((float)Config.getWidth()/100) + 50),camera.position.y + ((float)Config.getHeight()/100));
     }
     private void drawScore() {
         //TODO

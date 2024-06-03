@@ -2,12 +2,10 @@ package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,8 +15,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controller.GeneralController;
-import com.mygdx.game.controller.MinigameController;
-import com.mygdx.game.controller.PauseController;
 import com.mygdx.game.model.minigameLogic.MinigameLogic;
 import com.mygdx.game.util.Config;
 
@@ -65,7 +61,7 @@ public class MinigameView {
         camera.setToOrtho(false, Config.getWidth(), Config.getHeight());
 
         backgroundImage = new Texture(Gdx.files.internal("minigameBackground.png"));
-        timerIcon = new Texture(Gdx.files.internal("timerIcon.png"));
+        timerIcon = new Texture(Gdx.files.internal("sandWatch.png"));
         /**
          * Text formatting for the minigame
          * 
