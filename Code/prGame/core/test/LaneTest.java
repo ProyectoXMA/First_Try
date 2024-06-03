@@ -3,9 +3,11 @@ import com.mygdx.game.model.Boat;
 import com.mygdx.game.model.BoatType;
 import com.mygdx.game.model.Lane;
 import com.mygdx.game.model.obstacles.Obstacle;
+import com.mygdx.game.model.obstacles.ObstacleType;
 import com.mygdx.game.model.obstacles.Stone;
 import com.mygdx.game.model.powerUps.HealthBoost;
 import com.mygdx.game.model.powerUps.PowerUp;
+import com.mygdx.game.model.powerUps.PowerUpType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +28,7 @@ class LaneTest {
         obstacles = new HashSet<>();
         powerUps = new HashSet<>();
         assignedBoat = Boat.createBoat(BoatType.CLASSIC, 0, 0);
-        lane = new Lane(1, obstacles, powerUps, assignedBoat);
+        lane = Lane.createLane(1, obstacles, powerUps, assignedBoat);
     }
 
     @Test
@@ -40,14 +42,14 @@ class LaneTest {
 
     @Test
     void testAddObstacle() {
-        Obstacle obstacle = new Stone(10, new Rectangle(100, 0, 50, 50));
+        Obstacle obstacle = Obstacle.createObstacle(ObstacleType.STONE);
         lane.addGameObject(obstacle);
         assertTrue(lane.getObstacles().contains(obstacle));
     }
 
     @Test
     void testRemoveObstacle() {
-        Obstacle obstacle = new Stone(10, new Rectangle(100, 0, 50, 50));
+        Obstacle obstacle = Obstacle.createObstacle(ObstacleType.STONE);
         lane.addGameObject(obstacle);
         lane.removeGameObject(obstacle);
         assertFalse(lane.getObstacles().contains(obstacle));
@@ -55,14 +57,14 @@ class LaneTest {
 
     @Test
     void testAddPowerUp() {
-        PowerUp powerUp = new HealthBoost(new Rectangle(100, 0, 50, 50));
+        PowerUp powerUp = PowerUp.createPowerUp(PowerUpType.HEALTH);
         lane.addGameObject(powerUp);
         assertTrue(lane.getPowerUps().contains(powerUp));
     }
 
     @Test
     void testRemovePowerUp() {
-        PowerUp powerUp = new HealthBoost(new Rectangle(100, 0, 50, 50));
+        PowerUp powerUp = PowerUp.createPowerUp(PowerUpType.HEALTH);
         lane.addGameObject(powerUp);
         lane.removeGameObject(powerUp);
         assertFalse(lane.getPowerUps().contains(powerUp));
@@ -70,7 +72,7 @@ class LaneTest {
 
     @Test
     void testAddBoat() {
-        Boat boat = Boat.createBoat(BoatType.FAST, 100, 0);
+        Boat boat = Boat.createBoat(BoatType.FAST, 0, 0);
         lane.addGameObject(boat);
         assertTrue(lane.getBoats().contains(boat));
     }

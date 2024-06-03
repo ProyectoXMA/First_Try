@@ -60,11 +60,11 @@ public class BoatTest {
 
     @Test
     public void testDead() {
-        assertFalse(fastBoat.dead());
+        assertFalse(fastBoat.isDead());
         fastBoat.setHealth(0);
-        assertTrue(fastBoat.dead());
+        assertTrue(fastBoat.isDead());
         fastBoat.setHealth(10);
-        assertFalse(fastBoat.dead());
+        assertFalse(fastBoat.isDead());
     }
 
     @Test
