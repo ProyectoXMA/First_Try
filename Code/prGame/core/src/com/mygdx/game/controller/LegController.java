@@ -51,6 +51,8 @@ public class LegController implements Screen {
             generalController.showPauseScreen();
         }
         if(game.getPlayer().getBoat().isDead())
+            raceMusic.stop();
+            raceMusic.dispose();
             if(game.getPlayer().getBoat().hasReturnToLife())
                 generalController.showLoseScreen();
             else {
