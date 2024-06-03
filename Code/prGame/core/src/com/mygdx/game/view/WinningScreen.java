@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.controller.GeneralController;
 import com.mygdx.game.controller.MenuController;
 import com.mygdx.game.util.Config;
 
@@ -27,6 +28,7 @@ public class WinningScreen implements Screen {
     private SpriteBatch batch;
     private Music winningMusic;
     OrthographicCamera camera;
+    GeneralController generalController;
 // attributes for the screen
     private final MyGdxGame game;
     private Texture backgroundImage;
@@ -34,6 +36,7 @@ public class WinningScreen implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
+        generalController = GeneralController.getInstance(game);
         camera.setToOrtho(false,Config.getWidth(),Config.getHeight());
         backgroundImage = new Texture(Gdx.files.internal("winningScreen.png"));
         winningMusic = Gdx.audio.newMusic(Gdx.files.internal("winningTheme.mp3"));
@@ -46,6 +49,7 @@ public class WinningScreen implements Screen {
     public void show() {
         viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
+        batch = new SpriteBatch();
         winningMusic.play();
     }
 
@@ -58,7 +62,7 @@ public class WinningScreen implements Screen {
         stage.draw();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             winningMusic.stop();
-            game.setScreen(new MenuController(game));
+            generalController.showMainMenu();
         }
         batch.begin();
         batch.draw(backgroundImage,0,0,Config.getWidth(),Config.getHeight());
@@ -81,14 +85,12 @@ public class WinningScreen implements Screen {
 
     @Override
     public void hide() {
-        stage.dispose();
-        batch.dispose();
     }
 
     @Override
     public void dispose() {
-        stage.dispose();
         batch.dispose();
+        stage.dispose();
         winningMusic.dispose();
     }
 }

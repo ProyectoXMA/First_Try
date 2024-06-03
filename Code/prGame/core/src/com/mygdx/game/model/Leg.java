@@ -23,6 +23,7 @@ public class Leg {
     public static final int PLAYER_LANE = 1;
 
     public static float BORDER_WIDTH = Config.LegBorderRelativeWidth;
+    private Player player;
 
     private int level;
     private List<Lane> lanes;
@@ -47,7 +48,7 @@ public class Leg {
         this.allObstacles = createObstacles(Lane.NUMBER_OBSTACLES * NUMBER_OF_LANES);
         this.allPowerUps = createPowerUps(Lane.NUMBER_POWERUPS * NUMBER_OF_LANES);
         this.allBoats = new HashSet<>();
-
+        this.player = player;
         for (int i = 0; i < NUMBER_OF_LANES; i++) {
             Boat laneBoat = i == PLAYER_LANE ? player.getBoat() : Boat.createBoat(BoatType.getRandomType());
             allBoats.add(laneBoat);
@@ -177,5 +178,9 @@ public class Leg {
         else
             //Its the right lane. If we reach the end of the screen return null
             return previousLane.getLaneId() == NUMBER_OF_LANES - 1 ? null : lanes.get(previousLane.getLaneId() + 1);
+    }
+
+    public boolean hasReachedGoal() {
+        return player.getBoat().getY() + player.getBoat().getHeight() >= Lane.HEIGHT;
     }
 }

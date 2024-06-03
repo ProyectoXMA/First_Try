@@ -50,7 +50,6 @@ public class LegController implements Screen {
             raceMusic.dispose();
             generalController.showPauseScreen();
         }
-        //generalController.showMinigameTutorial();
         if(game.getPlayer().getBoat().isDead()) {
             raceMusic.stop();
             raceMusic.dispose();
@@ -60,6 +59,10 @@ public class LegController implements Screen {
                 playerBoat.adjustHealth(playerBoat.getBaseHealth());
                 generalController.showMinigameTutorial();
             }
+        } else if (leg.hasReachedGoal()) {
+            raceMusic.stop();
+            raceMusic.dispose();
+            generalController.showWinningScreen();
         }
         leg.update(delta);
         view.render();

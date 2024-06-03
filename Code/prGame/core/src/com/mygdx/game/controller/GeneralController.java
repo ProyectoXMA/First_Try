@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.view.LoseScreen;
+import com.mygdx.game.view.WinningScreen;
 import com.mygdx.game.view.minigameTutorial;
 import com.mygdx.game.view.minigameTutorial2;
 
@@ -19,7 +20,7 @@ public class GeneralController {
     private minigameTutorial mTutorial;
     private minigameTutorial2 mTutorial2;
     private BoatSelectionController boatSelectionController;
-    private Screen previousScreen;
+    private WinningScreen winScreen;
 
     private GeneralController(MyGdxGame game){
         this.game = game;
@@ -34,6 +35,7 @@ public class GeneralController {
         mTutorial = new minigameTutorial(game);
         mTutorial2 = new minigameTutorial2(game);
         boatSelectionController = new BoatSelectionController(game);
+        winScreen = new WinningScreen(game);
     }
     /**
      * Singleton pattern to ensure there is only one instance of the GeneralController that is accessible for all classes.
@@ -48,6 +50,7 @@ public class GeneralController {
         return instance;
     }
     public void showMainMenu(){
+        resetLeg();
         game.setScreen(menuController);
     }
     public void showLegScreen(){
@@ -87,5 +90,8 @@ public class GeneralController {
 
     public void showMinigameTutorial(){
         game.setScreen(mTutorial);
+    }
+    public void showWinningScreen(){
+        game.setScreen(winScreen);
     }
 }
