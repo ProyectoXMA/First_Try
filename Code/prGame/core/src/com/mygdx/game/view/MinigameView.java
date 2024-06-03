@@ -36,8 +36,8 @@ public class MinigameView {
 // Dimensions of assets
     //private final int panelHeight = 400;
     //private final int panelWidth = 350;
-    private final int timerHeight = 20;
-    private final int timerWidth = 20;
+    private final int timerHeight = Config.getHeight()/ 54 ;
+    private final int timerWidth = Config.getWidth() / 96;
 
 // Assets on screen
     private Texture backgroundImage;

@@ -50,7 +50,7 @@ public class LegView {
     private static final Texture speedBoostImage = new Texture("powerUps/speed.png");
     private static final Texture backgroundImage = new Texture("background3.png");
     private static final Texture laneLimitImage = stoneImage;
-    private static final Texture timerIcon = new Texture(Gdx.files.internal("minigameBackground.png"));
+    private static final Texture timerIcon = new Texture("timerIcon.png");
     // The countdown timer
 
     public LegView(final MyGdxGame game, Leg leg) {
@@ -84,7 +84,7 @@ public class LegView {
         drawUI();
         drawHealth();
         font.draw(batch, "" + (int)timer, (camera.position.x + ((float)Config.getWidth() / 2)) - 100, (camera.position.y + ((float)Config.getHeight() / 2)) - 10);
-        batch.draw(timerIcon, Config.getWidth()-60, Config.getHeight()-25, camera.position.x + ((float)Config.getWidth() / 2) - 150, (camera.position.y + ((float)Config.getHeight() / 2)) - 60);
+        batch.draw(timerIcon, camera.position.x + ((float)Config.getWidth() / 2) - 150, (camera.position.y + ((float)Config.getHeight() / 2)) - 60, Config.getWidth() / 96, Config.getHeight()/ 54);
         timer += delta;
         batch.end();
     }
