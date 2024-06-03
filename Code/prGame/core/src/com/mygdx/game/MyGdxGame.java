@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.controller.GeneralController;
 import com.mygdx.game.model.Player;
 import com.mygdx.game.controller.MenuController;
 
@@ -37,7 +38,8 @@ public class MyGdxGame extends Game {
 		batch = new SpriteBatch();
 		font = new BitmapFont(); // Default Arial font
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		this.setScreen(new MenuController(this));
+		GeneralController.getInstance(this).showMainMenu();
+
 	}
 
 	/**

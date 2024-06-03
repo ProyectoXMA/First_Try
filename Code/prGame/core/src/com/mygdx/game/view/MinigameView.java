@@ -3,9 +3,7 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -15,16 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.GameState;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.controller.LegController;
 import com.mygdx.game.controller.MinigameController;
 import com.mygdx.game.controller.PauseController;
 import com.mygdx.game.model.minigameLogic.MinigameLogic;
 import com.mygdx.game.util.Config;
 
 
-public class MinigameScreen implements Screen {
+public class MinigameView {
 // Attributes for the screen
     private Stage stage;
     private Viewport viewport;
@@ -32,9 +28,7 @@ public class MinigameScreen implements Screen {
     private PauseController pause;
 // Attributes for the minigame
     private final MyGdxGame game;
-    private final GameState gameState;
     private final MinigameLogic minigameLogic;
-    private final MinigameController minigameController;
 // Dimensions of assets
     //private final int panelHeight = 400;
     //private final int panelWidth = 350;
@@ -52,11 +46,9 @@ public class MinigameScreen implements Screen {
 
 
 // Constructor
-    public MinigameScreen(final MyGdxGame game, GameState gameState) {
+    public MinigameView(final MyGdxGame game, MinigameLogic minigameLogic) {
         this.game = game;
-        this.gameState = gameState;
-        this.minigameLogic = new MinigameLogic(gameState);
-        this.minigameController = new MinigameController(game, minigameLogic,this);
+        this.minigameLogic = minigameLogic;
 
         epicMusic = Gdx.audio.newMusic(Gdx.files.internal("countdownMusic.mp3"));
         epicMusic.setLooping(true);
@@ -66,8 +58,6 @@ public class MinigameScreen implements Screen {
         camera.setToOrtho(false, Config.getWidth(), Config.getHeight());
 
         backgroundImage = new Texture(Gdx.files.internal("minigameBackground.png"));
-        //textOutput = new Texture(Gdx.files.internal("woodenPlank2.png"));
-        //playerInput = new Texture(Gdx.files.internal("woodenPlank.png"));
         timerIcon = new Texture(Gdx.files.internal("timerIcon.png"));
         /**
          * Text formatting for the minigame
@@ -82,35 +72,29 @@ public class MinigameScreen implements Screen {
         font = new BitmapFont();
         font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
         font.getData().setScale(10,10); 
-        pause = new PauseController(game,new PauseViewScreen(game));
+        pause = new PauseController(game);
     }
 
 
 // Methods
-
-    @Override
+    /**
+     * This method is called by the controller when the screen is set
+     * Viewport is used to determine screen dimensions and has various methods to implement a responsive behavior
+     * stage displays all the actors involved in the screen (UI, buttons, labels, etc)
+     */
     public void show() {
-        /**
-         * viewport is used to determine screen dimensions and has various methods to implement a responsive behavior
-         * stage displays all the actors involved in the screen (UI, buttons, labels, etc)
-         */
         viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
-        minigameLogic.generateAdapter();
         epicMusic.play();
     }
 
-    @Override
-    public void render(float delta) {
+    public void update() {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
         stage.act();
         stage.draw();
-        
-        // Checks whether the player can return to the main race of end run on Game Over
-        minigameController.checkScreenTransition();
 
         game.batch.begin();
         game.batch.draw(backgroundImage,0,0, Config.getWidth(), Config.getHeight());
@@ -124,9 +108,7 @@ public class MinigameScreen implements Screen {
             game.font.draw(game.batch,text,(Config.getWidth()/2)-70,Config.getHeight()-50);
         }
         // Background sceneary
-        
-        // Shows on screen the panel with the word to type
-        //game.batch.draw(textOutput,(Config.getWidth()/2)-150, Config.getHeight()-250, panelWidth, panelHeight);
+
         // Calls the first word to display
         if(Config.getHeight() >= 800 && Config.getWidth() >= 1500){
             String character = minigameLogic.getShowedString();
@@ -171,32 +153,15 @@ public class MinigameScreen implements Screen {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             epicMusic.stop();
-            game.setScreen(new PauseViewScreen(game));
+            game.setScreen(new PauseController(game));
         }
         game.batch.end();
     }
-
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(Config.getWidth(),Config.getHeight(), true);
-    }
-
-    @Override
-    public void hide() {
-        stage.dispose();
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
     public void dispose() {
         epicMusic.stop();
+        epicMusic.dispose();
+        stage.dispose();
+        backgroundImage.dispose();
     }
     
 }

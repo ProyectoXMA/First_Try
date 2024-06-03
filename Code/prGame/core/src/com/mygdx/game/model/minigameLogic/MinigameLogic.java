@@ -7,13 +7,10 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.audio.Sound;
-import com.mygdx.game.GameState;
-import com.mygdx.game.model.Boat;
 import com.mygdx.game.util.Config;
 
 public class MinigameLogic {
 
-    private GameState gameState;
     private List<String> words;
     private String currentWord;
     private String typedWord;
@@ -27,8 +24,7 @@ public class MinigameLogic {
     private Sound incorrectSound;
     private Sound savedSound;
     private Sound typeSound;
-    public MinigameLogic(GameState gameState) {
-        this.gameState = gameState;
+    public MinigameLogic() {
         this.words = Arrays.asList("Dragon", "Boat", "Racing", "Duck", "Ancient", "China","River","Log","Stone");
         successCounter = 0;
         failCounter = 0;
@@ -57,10 +53,6 @@ public class MinigameLogic {
 
     public String getTypedWord() {
         return typedWord;
-    }
-
-    public GameState getGameState() {
-        return gameState;
     }
 
     public int getSuccessCounter() {return successCounter;}
@@ -153,25 +145,23 @@ public class MinigameLogic {
     }
 
     /**
-      * Method to check and return the result of the minigame
+      * Method to check and return the result of the minigame.
+     * @return 1 if the player has successfully completed the minigame, -1 if the player has failed the minigame, 0 if the game is still ongoing
       */
     public int checkGameState(){
-        int state = 0;
         if(successCounter == 1){
-            //gameState.setMinigamePlaysLeft(0);
-            //gameState.getMyBoat().adjustHealth(gameState.getBaseHealth());
             typeSound.dispose();
             incorrectSound.dispose();
             if(!Config.muted)savedSound.play();
             savedSound.dispose();
-            state = successCounter;
+           return 1;
         }else if(failCounter == 3){
             typeSound.dispose();
             incorrectSound.dispose();
             savedSound.dispose();
-            state = failCounter;
+            return -1;
         }
-        return state;
+        return 0;
     }
 
     /**

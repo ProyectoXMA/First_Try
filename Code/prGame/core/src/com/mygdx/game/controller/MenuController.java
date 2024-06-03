@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.util.Config;
 import com.mygdx.game.view.MenuView;
-import com.mygdx.game.view.MinigameScreen;
 
 public class MenuController implements Screen{
 
@@ -30,36 +29,21 @@ public class MenuController implements Screen{
 
     //initialise skin
     Skin skin;
-
     //Booleans to see credits and tutorial
-
-    //menu table
     Table menuTable;
-
-    //credits table
     Table creditsTable;
-
-    //tutorial table
     Table tutorialTable;
-
-    //credits text
-    String creditsText;
+    final String creditsText  = "Allitt Lopez Ricardo Juan\nBarrios Moreno Manuel\nBayon Pazos Angel\nEscano Lopez Angel Nicolas" +
+            "\nHormigo Jimenez Pablo\nJorda Garay Francisco Javier\nSicre Cortizo Diego\nSultan Muhammad Abdullah\nTorres Gomez Juan";;
 
     public MenuController(MyGdxGame game){
         this.game = game;
-
         // create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
-
         // create a view for the settings
         view = new MenuView(stage);
-
         // skin loading
         skin = new Skin(Gdx.files.internal("skins/glassy-ui.json"));
-        // text to be shown in credits
-        creditsText = "Allitt Lopez Ricardo Juan\nBarrios Moreno Manuel\nBayon Pazos Angel\nEscano Lopez Angel Nicolas" +
-                "\nHormigo Jimenez Pablo\nJorda Garay Francisco Javier\nSicre Cortizo Diego\nSultan Muhammad Abdullah\nTorres Gomez Juan";
     }
 
     /**
@@ -68,6 +52,7 @@ public class MenuController implements Screen{
      */
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
         // Create a menu table that fills the screen. Everything menu related will go inside this table.
         menuTable = new Table();
         menuTable.setVisible(true);
@@ -169,7 +154,7 @@ public class MenuController implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dispose();
-                game.setScreen(new SettingController(game));
+                game.setScreen(new SettingsController(game));
             }
         });
 

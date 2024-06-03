@@ -45,38 +45,15 @@ public class LegView {
         // Create the camera and the SpriteBatch
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Config.getWidth(),  Config.getHeight());
-
     }
     public Camera getCamera() {
         return camera;
     }
-
-    public void render(Rectangle bucket, Array<Rectangle> raindrops, int dropsGathered) {
-        // Clear the screen with a dark blue color
-        ScreenUtils.clear(0, 0, 0.2f, 1);
-
-        // Tell the camera to update its matrices
-        camera.update();
-
-        // Tell the SpriteBatch to render in the coordinate system specified by the camera
-        game.batch.setProjectionMatrix(camera.combined);
-
-        // Begin a new batch and draw the bucket and all drops
-        game.batch.begin();
-        game.font.draw(game.batch, "Some text here " + dropsGathered, 0, 480);
-        game.batch.draw(boatSpeedImage, bucket.x, bucket.y, bucket.width, bucket.height);
-        for (Rectangle raindrop : raindrops) {
-            game.batch.draw(duckImage, raindrop.x, raindrop.y);
-        }
-        game.batch.end();
-    }
     public void render() {
         // Clear the screen with a dark blue color
         ScreenUtils.clear(0, 0, 0.2f, 1);
-
         // Tell the camera to update its matrices
         camera.update();
-
         // Tell the SpriteBatch to render in the coordinate system specified by the camera
         game.batch.setProjectionMatrix(camera.combined);
         // Begin a new batch and draw the bucket and all drops
@@ -87,7 +64,6 @@ public class LegView {
         drawHealth();
         game.batch.end();
     }
-
     private void drawBackground() {
         game.batch.draw(backgroundImage, 0, 0, Config.getWidth(), Config.LaneRelativeHeight);
     }

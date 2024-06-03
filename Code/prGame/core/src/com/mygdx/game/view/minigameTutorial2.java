@@ -3,17 +3,14 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.GameState;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.controller.MenuController;
-import com.mygdx.game.model.Boat;
+import com.mygdx.game.controller.MinigameController;
 import com.mygdx.game.util.Config;
 
 public class minigameTutorial2 implements Screen{
@@ -45,7 +42,7 @@ public class minigameTutorial2 implements Screen{
         stage.act();
         stage.draw();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-            game.setScreen(new MinigameScreen(game,null));
+            game.setScreen(new MinigameController(game));
         }
         game.batch.begin();
         game.batch.draw(backgroundImage,0,0,Config.getWidth(),Config.getHeight());

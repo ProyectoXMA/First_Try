@@ -15,7 +15,7 @@ import com.mygdx.game.util.KeyBindings;
 import com.mygdx.game.util.UserAction;
 import com.mygdx.game.view.SettingView;
 
-public class SettingController implements Screen{
+public class SettingsController implements Screen{
 
     private final MyGdxGame game;
     private final SettingView view;
@@ -35,7 +35,7 @@ public class SettingController implements Screen{
     //Key binds class
     KeyBindings keyBinds = Config.keyBinds;
 
-    public SettingController(MyGdxGame game){
+    public SettingsController(MyGdxGame game){
         this.game = game;
 
         // create stage and set it as input processor
@@ -163,25 +163,25 @@ public class SettingController implements Screen{
                     case "1920x1080":
                         resize(1920, 1080);
                         //Resets settings UI to avoid resizing
-                        game.setScreen(new SettingController(game));
+                        game.setScreen(new SettingsController(game));
                         dispose();
                         break;
                     case "1280x720":
                         resize(1280, 720);
                         //Resets settings UI to avoid resizing
-                        game.setScreen(new SettingController(game));
+                        game.setScreen(new SettingsController(game));
                         dispose();
                         break;
                     case "1024x768":
                         resize(1024, 768);
                         //Resets settings UI to avoid resizing
-                        game.setScreen(new SettingController(game));
+                        game.setScreen(new SettingsController(game));
                         dispose();
                         break;
                     case "800x600":
                         resize(800, 600);
                         //Resets settings UI to avoid resizing
-                        game.setScreen(new SettingController(game));
+                        game.setScreen(new SettingsController(game));
                         dispose();
                         break;
                     default:
