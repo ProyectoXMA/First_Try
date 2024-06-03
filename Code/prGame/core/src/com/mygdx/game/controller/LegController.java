@@ -17,23 +17,24 @@ public class LegController implements Screen {
     Leg leg;
     InputManager inputManager;
     private Boat playerBoat;
-    private boolean first = true;
+    private boolean pause = false;
     private Music raceMusic = Gdx.audio.newMusic(Gdx.files.internal("raceSound.mp3"));
+    private int LEVEL = 1;
 
     public LegController(final MyGdxGame game){
         Gdx.app.log("Input","LegScreen created");
         this.game = game;
-        this.leg = new Leg(1, game.getPlayer());
-        this.view = new LegView(game, leg);
         this.generalController = GeneralController.getInstance(game);
     }
     @Override
     public void show() {
-        if(first) {
-            first = false;
+        if(!pause) {
             this.inputManager = new InputManager();
             this.inputManager.addSubscriber(game.getPlayer());
+            this.leg = new Leg(LEVEL, game.getPlayer());
+            this.view = new LegView(game, leg);
         }
+        pause = false;
         // Start the playback of the background music when the screen is shown
         if(!Config.muted) raceMusic.setVolume((float)0.1);
         else raceMusic.setVolume(0);
@@ -45,9 +46,13 @@ public class LegController implements Screen {
     }
     @Override
     public void render(float delta) {//This render is updating the model, by means of update, and the view.
+        if(LEVEL > 3) {
+            generalController.showMainMenu();
+        }
         if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
             raceMusic.stop();
             raceMusic.dispose();
+            pause = true;
             generalController.showPauseScreen();
         }
         if(game.getPlayer().getBoat().isDead()) {
@@ -56,10 +61,12 @@ public class LegController implements Screen {
             if (game.getPlayer().getBoat().hasReturnToLife())
                 generalController.showLoseScreen();
             else {
+                pause = true;
                 playerBoat.adjustHealth(playerBoat.getBaseHealth());
                 generalController.showMinigameTutorial();
             }
         } else if (leg.hasReachedGoal()) {
+            LEVEL++;
             raceMusic.stop();
             raceMusic.dispose();
             generalController.showWinningScreen();

@@ -62,7 +62,7 @@ public class WinningScreen implements Screen {
         stage.draw();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             winningMusic.stop();
-            generalController.showMainMenu();
+            generalController.showLegScreen();
         }
         batch.begin();
         batch.draw(backgroundImage,0,0,Config.getWidth(),Config.getHeight());
