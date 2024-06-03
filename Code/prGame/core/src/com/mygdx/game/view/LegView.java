@@ -156,14 +156,14 @@ public class LegView {
         //...
     }
     private void drawTimer() {
-        font.draw(batch, "" + (int)timer, (camera.position.x + ((float)Config.getWidth() / 2)) - 100, (camera.position.y + ((float)Config.getHeight() / 2)) - 10);
-        batch.draw(timerIcon, camera.position.x + ((float)Config.getWidth() / 2) - 150, (camera.position.y + ((float)Config.getHeight() / 2)) - 60, Config.getWidth() / 96, Config.getHeight()/ 54);
+        font.draw(batch, "" + (int)timer, (camera.position.x + ((float)Config.getWidth() / 2)) - 90, (camera.position.y + ((float)Config.getHeight() / 2)) - 10);
+        batch.draw(timerIcon, camera.position.x + ((float)Config.getWidth() / 2) - 125, (camera.position.y + ((float)Config.getHeight() / 2)) - 115, Config.getWidth()/13,Config.getHeight()/11);
     }
     private void drawHealth() {
         int health = leg.getLanes().get(1).getBoat().getHealth();
         String s = Integer.toString(health);
-        font.draw(batch,s,camera.position.x + ((float)Config.getWidth()/100),camera.position.y + ((float)Config.getHeight()/100));
-        batch.draw(heartIcon,camera.position.x + (((float)Config.getWidth()/100) + 50),camera.position.y + ((float)Config.getHeight()/100));
+        font.draw(batch,s,camera.position.x-Config.getWidth()/2 + 50,camera.position.y-Config.getHeight()/2+40);
+        batch.draw(heartIcon,camera.position.x-Config.getWidth()/2+ 125,camera.position.y-Config.getWidth()/2+150,Config.getWidth()/15,Config.getHeight()/13);
     }
     private void drawScore() {
         //TODO
