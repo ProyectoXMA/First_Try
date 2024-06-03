@@ -15,7 +15,7 @@ public class Config {
     public static float BoatRelativeSize = 0.025f * Config.WIDTH;
     public static float StoneRelativeSize = 0.025f * Config.WIDTH;
     public static float LogRelativeSize = 0.03f * Config.WIDTH;
-    public static float DuckRelativeSize = 0.01f * Config.WIDTH;
+    public static float DuckRelativeSize = 0.015f * Config.WIDTH;
     public static float PowerUpRelativeSize = 0.015f * Config.WIDTH;
 
     public static float LegBorderRelativeWidth = 0.173f * Config.WIDTH;

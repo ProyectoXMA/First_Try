@@ -1,9 +1,6 @@
 package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,7 +11,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controller.PauseController;
 import com.mygdx.game.util.Config;
 
-public class PauseViewScreen implements Screen{
+public class PauseView {
     // attributes for the screen
     private Stage stage;
     private Viewport viewport;
@@ -22,23 +19,21 @@ public class PauseViewScreen implements Screen{
     //attributes for the screen
     private final MyGdxGame game;
     private Texture backgroundImage;
-    private PauseController pause;
-    public PauseViewScreen(final MyGdxGame game){
+    private PauseController pauseController;
+    public PauseView(final MyGdxGame game, PauseController pauseController){
         this.game = game;
+        this.pauseController = pauseController;
         camera = new OrthographicCamera();
         camera.setToOrtho(false,Config.getWidth(),Config.getHeight());
         backgroundImage = new Texture(Gdx.files.internal("menu_background.jpeg"));
-        pause = new PauseController(game,this);
     }
 
-    @Override
     public void show() {
         viewport = new ExtendViewport(Config.getWidth(), Config.getHeight());
         stage = new Stage(viewport);
     }
 
-    @Override
-    public void render(float delta) {
+    public void update() {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
@@ -46,31 +41,10 @@ public class PauseViewScreen implements Screen{
         stage.draw();
         game.batch.begin();
         game.batch.draw(backgroundImage,-10,0,Config.getWidth()+10,Config.getHeight());
-        pause.show();
         game.batch.end();
+        pauseController.show();
     }
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(Config.getWidth(), Config.getHeight(), true);
-    }
-
-    @Override
-    public void pause() {
-        throw new UnsupportedOperationException("Unimplemented method 'pause'");
-    }
-
-    @Override
-    public void resume() {
-        
-    }
-
-    @Override
-    public void hide() {
-    }
-
-    @Override
     public void dispose() {
         stage.dispose();
-        pause.dispose();
     }
 }

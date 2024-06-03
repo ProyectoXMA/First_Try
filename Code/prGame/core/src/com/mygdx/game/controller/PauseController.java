@@ -2,11 +2,8 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -17,15 +14,13 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.util.Config;
 import com.mygdx.game.view.MenuView;
-import com.mygdx.game.view.MinigameScreen;
-import com.mygdx.game.view.PauseViewScreen;
-import com.mygdx.game.view.minigameTutorial;
+import com.mygdx.game.view.PauseView;
 
 public class PauseController implements Screen{
 
     private final MyGdxGame game;
-    private final MenuView view;
-    private PauseViewScreen pauseScreen;
+    private PauseView pauseView;
+    private GeneralController generalController;
 
     private final Stage stage;
     private final int BUTTON_WIDTH = Config.getWidth()/4;
@@ -34,25 +29,20 @@ public class PauseController implements Screen{
 
     //initialise skin
     Skin skin;
-
-    //Booleans to see credits and tutorial
-
     //menu table
     Table menuPause;
 
-    public PauseController(MyGdxGame game,PauseViewScreen pauseScreen){
+    public PauseController(MyGdxGame game){
         this.game = game;
-        this.pauseScreen = pauseScreen;
+        this.pauseView = new PauseView(game, this);
         // create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        // create a view for the settings
-        view = new MenuView(stage);
-
         // skin loading
         skin = new Skin(Gdx.files.internal("skins/glassy-ui.json"));
-        // text to be shown in credits
+
+        generalController = GeneralController.getInstance(game);
     }
 
     /**
@@ -86,22 +76,25 @@ public class PauseController implements Screen{
         menuPause.row().pad(0,0,0,0);
         menuPause.add(quit).center().size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0,0,80,0).align(Align.center);
         menuPause.row().pad(0,0,0,0);
+        game.batch.begin();
         menuPause.draw(game.batch, BUTTON_HEIGHT);
+        game.batch.end();
         // create button mouse listeners
         quit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new MenuController(game));
+                generalController.showMainMenu();
             }
         });
 
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                pauseScreen.dispose();
-                game.setScreen(new LegController(game));
+                pauseView.dispose();
+                generalController.showLegScreen();
             }
         });
+        pauseView.show();
 
     }
 
@@ -111,7 +104,7 @@ public class PauseController implements Screen{
      */
     @Override
     public void render(float delta) {
-        view.update();
+        pauseView.update();
     }
 
     @Override
