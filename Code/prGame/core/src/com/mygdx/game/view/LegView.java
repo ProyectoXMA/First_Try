@@ -62,13 +62,13 @@ public class LegView {
         camera.setToOrtho(false, Config.getWidth(),  Config.getHeight());
         switch (leg.getLevel()){
             case 1:
-                backgroundImage = new Texture("background1.png");
+                backgroundImage = new Texture("backgroundLevel1.png");
                 break;
             case 2:
-                backgroundImage = new Texture("background2.png");
+                backgroundImage = new Texture("backgroundLevel2.png");
                 break;
             case 3:
-                backgroundImage = new Texture("background3.png");
+                backgroundImage = new Texture("backgroundLevel3.png");
                 break;
         }
 
