@@ -160,7 +160,6 @@ public class MinigameView {
     public void dispose() {
         epicMusic.stop();
         epicMusic.dispose();
-        stage.dispose();
         backgroundImage.dispose();
     }
     

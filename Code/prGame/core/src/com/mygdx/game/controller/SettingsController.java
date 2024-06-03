@@ -14,12 +14,14 @@ import com.mygdx.game.util.Config;
 import com.mygdx.game.util.KeyBindings;
 import com.mygdx.game.util.UserAction;
 import com.mygdx.game.view.SettingView;
+import com.sun.tools.javac.jvm.Gen;
 
 public class SettingsController implements Screen{
 
     private final MyGdxGame game;
     private final SettingView view;
     private final Stage stage;
+    private GeneralController generalController;
     private final int BUTTON_WIDTH = Config.getWidth()/3;
     private final int BUTTON_HEIGHT = Config.getHeight()/8;
     private final float textSize = (float) BUTTON_HEIGHT / 135;
@@ -37,6 +39,7 @@ public class SettingsController implements Screen{
 
     public SettingsController(MyGdxGame game){
         this.game = game;
+        generalController = GeneralController.getInstance(game);
 
         // create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
@@ -118,8 +121,7 @@ public class SettingsController implements Screen{
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                dispose();
-                game.setScreen(new MenuController(game));
+                generalController.showMainMenu();
             }
         });
 
@@ -162,33 +164,24 @@ public class SettingsController implements Screen{
                 switch (selectedResolution) {
                     case "1920x1080":
                         resize(1920, 1080);
-                        //Resets settings UI to avoid resizing
-                        game.setScreen(new SettingsController(game));
-                        dispose();
                         break;
                     case "1280x720":
                         resize(1280, 720);
-                        //Resets settings UI to avoid resizing
-                        game.setScreen(new SettingsController(game));
-                        dispose();
                         break;
                     case "1024x768":
                         resize(1024, 768);
-                        //Resets settings UI to avoid resizing
-                        game.setScreen(new SettingsController(game));
-                        dispose();
                         break;
                     case "800x600":
                         resize(800, 600);
-                        //Resets settings UI to avoid resizing
-                        game.setScreen(new SettingsController(game));
-                        dispose();
                         break;
                     default:
                         //In case it fails
                         System.out.println("Unsupported resolution selected.");
                         break;
                 }
+                generalController.reset();
+                generalController = GeneralController.getInstance(game);
+                generalController.showSettingsScreen();
             }
         });
 
@@ -200,7 +193,6 @@ public class SettingsController implements Screen{
      * @param action what action is changing key
      */
     private void changeControls(UserAction action){
-
         for(int i = 0; i < Input.Keys.MAX_KEYCODE; i++){
             if (Gdx.input.isKeyJustPressed(i)) {
                 if(awaitingLeftKeyChange) {

@@ -70,4 +70,9 @@ public class GeneralController {
         pauseController.dispose();
         settingsController.dispose();
     }
+
+    public void reset(){
+        dispose();
+        instance = null;
+    }
 }
