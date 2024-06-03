@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.view.LoseScreen;
+import com.mygdx.game.view.minigameTutorial;
 
 public class GeneralController {
     public static GeneralController instance;
@@ -14,7 +15,7 @@ public class GeneralController {
     private PauseController pauseController;
     private SettingsController settingsController;
     private LoseScreen loseScreen;
-
+    private minigameTutorial mTutorial;
     private Screen previousScreen;
 
     private GeneralController(MyGdxGame game){
@@ -27,6 +28,7 @@ public class GeneralController {
         pauseController = new PauseController(game);
         settingsController = new SettingsController(game);
         loseScreen = new LoseScreen(game);
+        mTutorial = new minigameTutorial(game);
     }
     /**
      * Singleton pattern to ensure there is only one instance of the GeneralController that is accessible for all classes.
@@ -74,5 +76,9 @@ public class GeneralController {
     public void reset(){
         dispose();
         instance = null;
+    }
+
+    public void showMinigameTutorial(){
+        game.setScreen(mTutorial);
     }
 }
