@@ -250,6 +250,10 @@ public class SettingsController implements Screen{
      */
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
+        Config.setHeight(height);
+        Config.setWidth(width);
+        Gdx.graphics.setWindowedMode(Config.getWidth(), Config.getHeight());
     }
 
     @Override
